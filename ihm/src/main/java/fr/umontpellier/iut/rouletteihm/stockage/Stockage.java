@@ -13,6 +13,7 @@ public interface Stockage<T> {
     public T getById(int id);
 
     public List<T> getAll();
+
     public T findByEmail(String email);
 }
 

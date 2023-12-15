@@ -4,48 +4,28 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>fr.umontpellier.iut</groupId>
-  <artifactId>ihm</artifactId>
+  <groupId>ihm.umontpellier.iut</groupId>
+  <artifactId>demo</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>ihm</name>
+  <name>demo</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <junit.version>5.9.2</junit.version>  </properties>
+<junit.version>5.10.0</junit.version>  </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <version>21-ea+24</version>
+      <version>21</version>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>21-ea+24</version>
+      <version>21</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.oracle.database.jdbc</groupId>
-      <artifactId>ojdbc8</artifactId>
-      <version>21.9.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate.orm</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>6.3.0.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>com.gasquet</groupId>
-      <artifactId>hrepositories</artifactId>
-      <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>
-        ${project.basedir}/src/main/resources/libs/HibernateRepositories-1.0.jar
-      </systemPath>
-    </dependency>
-
-    <dependency>
+<dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>
@@ -78,7 +58,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>fr.umontpellier.iut.ihm/fr.umontpellier.iut.ihm.HelloApplication</mainClass>
+              <mainClass>ihm.umontpellier.iut.demo/ihm.umontpellier.iut.demo.HelloApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>

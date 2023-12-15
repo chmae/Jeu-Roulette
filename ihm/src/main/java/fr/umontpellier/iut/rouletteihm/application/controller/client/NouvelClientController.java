@@ -85,7 +85,7 @@ public class NouvelClientController {
 
     @FXML
     public void validerFormulaire(KeyEvent keyEvent) throws ServiceException {
-        if(keyEvent.getCode() == KeyCode.ENTER) {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
             this.creerClient();
         }
     }
