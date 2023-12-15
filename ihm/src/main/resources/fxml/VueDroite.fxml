@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<VBox fx:id="boxDroite" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="97.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="boxDroite" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="97.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <effect>
         <DropShadow color="#CC00FF" radius="10" />
     </effect>
@@ -18,7 +20,7 @@
                 <DropShadow color="#CC00FF" radius="10" />
             </effect>
             <children>
-                <ImageView fx:id="Backgroundcolor" fitHeight="543.0" fitWidth="103.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="Backgroundcolor" fitHeight="536.0" fitWidth="121.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/cards-support-Green.png" />
                     </image>
