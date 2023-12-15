@@ -9,7 +9,7 @@ import org.hibernate.id.IncrementGenerator;
 public class Client {
 
     @Id
-    @GenericGenerator(name="idCAuto", type = IncrementGenerator.class)
+    @GenericGenerator(name = "idCAuto", type = IncrementGenerator.class)
     @GeneratedValue(generator = "idCAuto")
     private int idClient;
 

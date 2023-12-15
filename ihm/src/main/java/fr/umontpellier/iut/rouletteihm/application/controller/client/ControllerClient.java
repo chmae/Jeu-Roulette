@@ -49,6 +49,7 @@ public class ControllerClient {
     private TextField nom;
     @FXML
     private TextField solde;
+
     public static int getIdClientConnecte() {
         return idClientConnecte;
     }
@@ -148,7 +149,6 @@ public class ControllerClient {
     }
 
 
-
     private boolean checkPassword(String plainPassword, String hashedPassword) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -226,7 +226,7 @@ public class ControllerClient {
 
 
     @FXML
-    public void updatePrenom(){
+    public void updatePrenom() {
         try (Session session = DBUtils.getSession()) {
             Transaction transaction = session.beginTransaction();
             try {

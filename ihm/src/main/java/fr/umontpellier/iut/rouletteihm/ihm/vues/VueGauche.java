@@ -83,8 +83,7 @@ public class VueGauche extends VBox {
         if (listeResultats.size() > 5) {
             listeResultats.remove(0);
             listeResultats.add(nouveauResultat);
-        }
-        else {
+        } else {
             listeResultats.add(nouveauResultat);
         }
 

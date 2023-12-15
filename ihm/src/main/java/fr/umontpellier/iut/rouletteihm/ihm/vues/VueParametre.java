@@ -166,7 +166,6 @@ public class VueParametre {
     }
 
 
-
     public Pane getPane() {
         return parametrePane;
     }

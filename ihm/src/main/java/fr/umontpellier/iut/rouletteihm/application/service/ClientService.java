@@ -26,7 +26,9 @@ public class ClientService {
     private final static ClientService INSTANCE = new ClientService();
     private HasheurSHA256 hasher = new HasheurSHA256();
     private EntityRepository<Client> repository = RepositoryManager.getRepository(Client.class);
-    public ClientService() {}
+
+    public ClientService() {
+    }
 
     public static ClientService getInstance() {
         return INSTANCE;
@@ -34,10 +36,11 @@ public class ClientService {
 
     /**
      * Instancie un objet {@link Client} puis le sauvegarde dans la source de données via le repository
-     * @param nom : Nom du client
-     * @param prenom : Prénom du client
-     * @param email : Email du client
-     * @param password : Mot de passe du client
+     *
+     * @param nom             : Nom du client
+     * @param prenom          : Prénom du client
+     * @param email           : Email du client
+     * @param password        : Mot de passe du client
      * @param paswwordConfirm : Confirmation du mot de passe du client
      */
     public int createClient(String nom, String prenom, String email, String password, String paswwordConfirm, int solde) throws ServiceException {
@@ -59,14 +62,14 @@ public class ClientService {
     }
 
 
-
     /**
      * Récupère une instance de {@link Client} depuis la source de données, met à jour son nom, son prénom,
      * son email, son password et son paswwordConfirm pas puis enregistre la mise à jour de l'entité via le repository.
-     * @param nom : Nom du client
-     * @param prenom : Prénom du client
-     * @param email : Email du client
-     * @param password : Mot de passe du client
+     *
+     * @param nom             : Nom du client
+     * @param prenom          : Prénom du client
+     * @param email           : Email du client
+     * @param password        : Mot de passe du client
      * @param paswwordConfirm : Confirmation du mot de passe du client
      */
     public void updateClient(int idClient, String nom, String prenom, String email, String password, String paswwordConfirm, int solde) {
@@ -93,8 +96,9 @@ public class ClientService {
 
     /**
      * Met à jour le solde du joueur après une partie.
-     * @param idClient       L'identifiant du joueur.
-     * @param nouveauSolde   Le montant gagné par le joueur (positif) ou perdu (négatif).
+     *
+     * @param idClient     L'identifiant du joueur.
+     * @param nouveauSolde Le montant gagné par le joueur (positif) ou perdu (négatif).
      */
     public void mettreAJourSolde(int idClient, int nouveauSolde) throws ServiceException {
         try {
@@ -148,6 +152,7 @@ public class ClientService {
 
     /**
      * Supprime un {@link Client} sur la source de données via le repository
+     *
      * @param idClient : identifiant du client à supprimer
      */
     public void deleteEtudiant(int idClient) {
@@ -156,6 +161,7 @@ public class ClientService {
 
     /**
      * Récupère une instance d'un {@link Client} depuis la source de données via le repository
+     *
      * @param idClient : identifiant du client à récupérer
      * @return L'instance de {@link Client} correspondant à l'identifiant
      */
@@ -165,6 +171,7 @@ public class ClientService {
 
     /**
      * Récupère une liste de tous les clients depuis la source de données via le repository
+     *
      * @return La liste de tous les clients.
      */
     public List<Client> getClients() {
