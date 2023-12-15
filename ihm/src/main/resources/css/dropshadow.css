@@ -1,0 +1,3 @@
+.pane-with-dropshadow {
+    -fx-effect: dropshadow(gaussian, #CC00FF, 30, 0, 30, 0);
+}

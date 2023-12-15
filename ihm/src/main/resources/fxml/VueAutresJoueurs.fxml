@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="VueAutresJoueurs" prefHeight="86.0" prefWidth="1125.0" xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fx:id="topBackground" fitHeight="99.0" fitWidth="1131.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/top-background.png"/>
+            </image>
+            <effect>
+                <DropShadow color="#CC00FF" radius="30"/>
+            </effect>
+        </ImageView>
+        <Group fx:id="Quit">
+            <children>
+                <ImageView fx:id="CornerBackground" fitHeight="323.0" fitWidth="1191.0" layoutX="-29.0" layoutY="1.0"
+                           pickOnBounds="true" preserveRatio="true" translateX="-6.0" translateY="-7.0">
+                    <image>
+                        <Image url="@../images/decorative-shop-frame.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fx:id="CornerQuit" fitHeight="171.0" fitWidth="237.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@../images/corner-icon-map.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fx:id="buttonQuit" fitHeight="53.0" fitWidth="59.0" layoutX="16.0" layoutY="22.0"
+                           pickOnBounds="true" preserveRatio="true" translateX="6.0">
+                    <image>
+                        <Image url="@../images/button-back-Left-Over.png"/>
+                    </image>
+                    <effect>
+                        <DropShadow color="#CC00FF" radius="30"/>
+                    </effect>
+                </ImageView>
+                <ImageView fx:id="parametre" fitHeight="64.0" fitWidth="67.0" layoutX="1059.0" layoutY="2.0"
+                           pickOnBounds="true" preserveRatio="true" translateX="-2.0" translateY="-5.0">
+                    <image>
+                        <Image url="@../images/parametre.png"/>
+                    </image>
+                </ImageView>
+                <HBox fx:id="autresJoueur" layoutX="359.0" layoutY="26.0" prefHeight="62.0" prefWidth="362.0">
+                    <children>
+                        <Group>
+                            <children>
+                                <ImageView fx:id="bgPlayer2" fitHeight="68.0" fitWidth="149.0" pickOnBounds="true"
+                                           preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/bg-player.png"/>
+                                    </image>
+                                </ImageView>
+                                <ImageView fx:id="couronnePlayer2" fitHeight="39.0" fitWidth="42.0" layoutX="8.0"
+                                           layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/big-red-gear.png"/>
+                                    </image>
+                                </ImageView>
+                                <ImageView fx:id="photoProfil2" fitHeight="33.0" fitWidth="32.0" layoutX="9.0"
+                                           layoutY="12.0" pickOnBounds="true" preserveRatio="true" translateX="2.0"
+                                           translateY="-1.0">
+                                    <image>
+                                        <Image url="@../images/photo-profil.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label fx:id="username2" layoutX="51.0" layoutY="36.0" text="Solde :" textFill="WHITE">
+                                    <font>
+                                        <Font name="Chalkduster" size="10.0"/>
+                                    </font>
+                                </Label>
+                                <Label layoutX="64.0" layoutY="9.0" text="Antoine" textFill="WHITE">
+                                    <font>
+                                        <Font name="Chalkduster" size="13.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="solde2" layoutX="95.0" layoutY="37.0" text="200" textFill="WHITE">
+                                    <font>
+                                        <Font name="Chalkduster" size="10.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </Group>
+                        <Group>
+                            <children>
+                                <ImageView fx:id="bgPlayer1" fitHeight="68.0" fitWidth="148.0" layoutX="7.0"
+                                           layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/bg-player.png"/>
+                                    </image>
+                                </ImageView>
+                                <ImageView fx:id="couronnePlayer1" fitHeight="39.0" fitWidth="42.0" layoutX="9.0"
+                                           layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/big-red-gear.png"/>
+                                    </image>
+                                </ImageView>
+                                <ImageView fx:id="photoProfil1" fitHeight="33.0" fitWidth="32.0" layoutX="10.0"
+                                           layoutY="11.0" pickOnBounds="true" preserveRatio="true" translateX="2.0"
+                                           translateY="-1.0">
+                                    <image>
+                                        <Image url="@../images/photo-profil.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label fx:id="username1" layoutX="55.0" layoutY="35.0" text="Solde :" textFill="WHITE">
+                                    <font>
+                                        <Font name="Chalkduster" size="10.0"/>
+                                    </font>
+                                </Label>
+                                <Label layoutX="70.0" layoutY="2.0" text="Antoine" textFill="WHITE" translateX="1.0"
+                                       translateY="6.0">
+                                    <font>
+                                        <Font name="Chalkduster" size="13.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="solde1" layoutX="106.0" layoutY="36.0" text="200" textFill="WHITE"
+                                       translateX="-7.0">
+                                    <font>
+                                        <Font name="Chalkduster" size="10.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </Group>
+                        <Group>
+                            <children>
+                                <ImageView fx:id="bgPlayer" fitHeight="68.0" fitWidth="149.0" pickOnBounds="true"
+                                           preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/bg-player.png"/>
+                                    </image>
+                                </ImageView>
+                                <ImageView fx:id="couronnePlayer" fitHeight="39.0" fitWidth="42.0" layoutX="9.0"
+                                           layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/big-red-gear.png"/>
+                                    </image>
+                                </ImageView>
+                                <ImageView fx:id="photoProfil" fitHeight="33.0" fitWidth="32.0" layoutX="10.0"
+                                           layoutY="11.0" pickOnBounds="true" preserveRatio="true" translateX="2.0"
+                                           translateY="-1.0">
+                                    <image>
+                                        <Image url="@../images/photo-profil.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label fx:id="username" layoutX="44.0" layoutY="34.0" text="Solde :" textFill="WHITE"
+                                       translateX="3.0" translateY="1.0">
+                                    <font>
+                                        <Font name="Chalkduster" size="10.0"/>
+                                    </font>
+                                </Label>
+                                <Label layoutX="67.0" text="Antoine" textFill="WHITE" translateX="-2.0"
+                                       translateY="8.0">
+                                    <font>
+                                        <Font name="Chalkduster" size="13.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="solde" layoutX="87.0" layoutY="35.0" text="200" textFill="WHITE"
+                                       translateX="4.0" translateY="1.0">
+                                    <font>
+                                        <Font name="Chalkduster" size="10.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </Group>
+                    </children>
+                </HBox>
+                <ImageView fx:id="lampe1" fitHeight="41.0" fitWidth="136.0" layoutX="189.0" layoutY="55.0"
+                           pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/lampe.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fx:id="lampe2" fitHeight="41.0" fitWidth="136.0" layoutX="850.0" layoutY="55.0"
+                           pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/lampe.png"/>
+                    </image>
+                </ImageView>
+            </children>
+        </Group>
+    </children>
+</Pane>
