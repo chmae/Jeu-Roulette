@@ -7,6 +7,7 @@ import java.sql.SQLException;
 public class SQLUtils {
     private static SQLUtils instance = null;
     private Connection connection;
+
     private SQLUtils() {
         String url = "jdbc:oracle:thin:@162.38.222.149:1521:iut";
         String driver = "oracle.jdbc.driver.OracleDriver";
@@ -20,11 +21,13 @@ public class SQLUtils {
             e.printStackTrace();
         }
     }
+
     public Connection getConnection() {
         return this.connection;
     }
+
     public static SQLUtils getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new SQLUtils();
         }
         return instance;

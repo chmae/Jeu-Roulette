@@ -58,10 +58,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.aether</groupId>
-      <artifactId>aether-util</artifactId>
-      <version>1.0.0.v20140518</version>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-media</artifactId>
+      <version>18.0.2</version>
     </dependency>
+
   </dependencies>
 
   <build>
@@ -84,7 +85,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>fr.umontpellier.iut.ihm/fr.umontpellier.iut.rouletteihm.HelloApplication</mainClass>
+              <mainClass>fr.umontpellier.iut.ihm/fr.umontpellier.iut.ihm.HelloApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>

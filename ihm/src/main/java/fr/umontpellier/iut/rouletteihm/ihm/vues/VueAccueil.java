@@ -1,6 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +32,9 @@ public class VueAccueil extends Pane {
     @FXML
     private Pane pane;
 
+    private GestionMusique musique = new GestionMusique();
+
+
     public VueAccueil() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueAccueil.fxml"));
@@ -42,6 +46,11 @@ public class VueAccueil extends Pane {
             vueInscription = new VueInscription();
             vueConnexion = new VueConnexion();
             getChildren().add(root);
+
+            // --Code de sauvegarde de la musique d'aceuil-- //
+            String cheminAudioGolde = "ihm/src/main/resources/musique/sonsVueAccueil.mp3";
+            musique.setMusique(cheminAudioGolde);
+            musique.setVolume(0.05);
 
 
             jouer.setOnMouseEntered(event -> jouer.setOpacity(0.7));
@@ -103,6 +112,9 @@ public class VueAccueil extends Pane {
         popupStage.show();
     }
 
+    public GestionMusique getMusique() {
+        return musique;
+    }
 
     public ImageView getBoutonJouer() {
         return jouer;

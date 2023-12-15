@@ -58,7 +58,7 @@ public class VueDuJeu extends GridPane {
         vueDroite = new VueDroite(jeu);
         vueGauche = new VueGauche(jeu);
         vuePlayerInfo = new VuePlayerInfo(jeu);
-        joueurCourantvue = new VueJoueurCourant(jeu, labelInstructions,vueInscription);
+        joueurCourantvue = new VueJoueurCourant(jeu, labelInstructions, vueInscription);
         elementsGauche = new HBox(10, vueGauche, autresJoueurs);
 
         add(vueRoue.getRoue(), 1, 1);

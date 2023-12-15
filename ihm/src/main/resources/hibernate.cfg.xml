@@ -16,8 +16,8 @@
 
         <property name="connection.pool_size">5</property>
         <property name="current_session_context_class">thread</property>
-        <mapping class="fr.umontpellier.iut.rouletteihm.metier.entite.Client" />
-        <mapping class="fr.umontpellier.iut.rouletteihm.metier.entite.Historique" />
-        <mapping class="fr.umontpellier.iut.rouletteihm.metier.entite.ParisGagner" />
+        <mapping class="fr.umontpellier.iut.rouletteihm.metier.entite.Client"/>
+        <mapping class="fr.umontpellier.iut.rouletteihm.metier.entite.Historique"/>
+        <mapping class="fr.umontpellier.iut.rouletteihm.metier.entite.ParisGagner"/>
     </session-factory>
 </hibernate-configuration>
