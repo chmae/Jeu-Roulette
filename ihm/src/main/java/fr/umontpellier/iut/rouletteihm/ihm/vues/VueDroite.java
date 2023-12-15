@@ -35,8 +35,6 @@ public class VueDroite extends VBox {
 
     private IJeu jeu;
 
-    private ClignoterThread clignoterThread;
-
     private StatistiquesRoulette statistiquesRoulette = new StatistiquesRoulette();
     @FXML
     private Label couleurs;
@@ -57,6 +55,7 @@ public class VueDroite extends VBox {
     private Label Noir;
     @FXML
     private Label Vert;
+
     public VueDroite(IJeu jeu) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueDroite.fxml"));
@@ -112,41 +111,6 @@ public class VueDroite extends VBox {
         });
     }
 
-    public void stopClignotement() {
-        if (clignoterThread != null) {
-            clignoterThread.interrupt();
-        }
-    }
-
-
-    public static class ClignoterThread extends Thread {
-
-        private ImageView couronne;
-
-        public ClignoterThread(ImageView couronne) {
-            this.couronne = couronne;
-        }
-
-        @Override
-        public void run() {
-            try {
-                while (!isInterrupted()) {
-                    Platform.runLater(() -> {
-                        DropShadow dropShadow = new DropShadow(10, Color.web("#CC00FF"));
-                        couronne.setEffect(dropShadow);
-                    });
-                    Thread.sleep(1000);
-                    Platform.runLater(() -> {
-                        DropShadow dropShadow = new DropShadow(10, Color.web("#FF00FF"));
-                        couronne.setEffect(dropShadow);
-                    });
-                    Thread.sleep(1000);
-                }
-            } catch (InterruptedException e) {
-                // Arrêt du thread
-            }
-        }
-    }
 
 
     public void setStatistiquesRoulette(StatistiquesRoulette statistiquesRoulette) {

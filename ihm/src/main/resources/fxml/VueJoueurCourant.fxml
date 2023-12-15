@@ -6,66 +6,72 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0"
+      prefWidth="200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <HBox prefHeight="109.0" prefWidth="110.0" />
+        <HBox prefHeight="109.0" prefWidth="110.0"/>
         <Pane prefHeight="169.0" prefWidth="99.0" translateX="12.0">
             <children>
                 <Group>
                     <children>
-                        <ImageView fx:id="miseJoueur" fitHeight="54.0" fitWidth="99.0" layoutX="-108.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" translateY="-5.0">
+                        <ImageView fx:id="miseJoueur" fitHeight="54.0" fitWidth="99.0" layoutX="-108.0" layoutY="21.0"
+                                   pickOnBounds="true" preserveRatio="true" translateY="-5.0">
                             <image>
-                                <Image url="@../images/player-info-support.png" />
+                                <Image url="@../images/player-info-support.png"/>
                             </image>
                         </ImageView>
-                        <ImageView fx:id="CouronneJoueur" fitHeight="150.0" fitWidth="200.0" layoutX="-85.0" layoutY="-24.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="CouronneJoueur" fitHeight="150.0" fitWidth="200.0" layoutX="-85.0"
+                                   layoutY="-24.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/couronne-joueur.png" />
+                                <Image url="@../images/couronne-joueur.png"/>
                             </image>
                         </ImageView>
-                        <ImageView fx:id="photoProfil" fitHeight="71.0" fitWidth="74.0" layoutX="-14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="photoProfil" fitHeight="71.0" fitWidth="74.0" layoutX="-14.0" layoutY="8.0"
+                                   pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/photo-profil.png" />
+                                <Image url="@../images/photo-profil.png"/>
                             </image>
                         </ImageView>
-                        <ImageView fx:id="flags" fitHeight="29.0" fitWidth="69.0" layoutX="-13.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" translateX="1.0">
+                        <ImageView fx:id="flags" fitHeight="29.0" fitWidth="69.0" layoutX="-13.0" layoutY="52.0"
+                                   pickOnBounds="true" preserveRatio="true" translateX="1.0">
                             <image>
-                                <Image url="@../images/Flag-solde.png" />
+                                <Image url="@../images/Flag-solde.png"/>
                             </image>
                         </ImageView>
                         <Label fx:id="soldePlayer" layoutX="-5.0" layoutY="57.0" text="0" translateX="8.0">
                             <font>
-                                <Font name="Chalkduster" size="13.0" />
+                                <Font name="Chalkduster" size="13.0"/>
                             </font>
                         </Label>
-                        <ImageView fitHeight="27.0" fitWidth="72.0" layoutX="-94.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" translateY="-5.0">
+                        <ImageView fitHeight="27.0" fitWidth="72.0" layoutX="-94.0" layoutY="68.0" pickOnBounds="true"
+                                   preserveRatio="true" translateY="-5.0">
                             <image>
-                                <Image url="@../images/tooltipBackground.png" />
+                                <Image url="@../images/tooltipBackground.png"/>
                             </image>
                         </ImageView>
-                        <Label layoutX="-86.0" layoutY="66.0" text="Antoine">
+                        <Label fx:id="nomJoueur" layoutX="-86.0" layoutY="66.0" text="Antoine">
                             <font>
-                                <Font name="Chalkduster" size="13.0" />
+                                <Font name="Chalkduster" size="13.0"/>
                             </font>
                         </Label>
                         <Label layoutX="-98.0" layoutY="18.0" prefHeight="18.0" prefWidth="48.0" text="Mise:">
                             <font>
-                                <Font name="Chalkduster" size="13.0" />
+                                <Font name="Chalkduster" size="13.0"/>
                             </font>
                         </Label>
                         <Label fx:id="soldePlayer2" layoutX="-50.0" layoutY="18.0" text="0">
                             <font>
-                                <Font name="Chalkduster" size="13.0" />
+                                <Font name="Chalkduster" size="13.0"/>
                             </font>
                         </Label>
                         <Label layoutX="-97.0" layoutY="34.0" text="MiseT:">
                             <font>
-                                <Font name="Chalkduster" size="13.0" />
+                                <Font name="Chalkduster" size="13.0"/>
                             </font>
                         </Label>
                         <Label fx:id="mise" layoutX="-59.0" layoutY="35.0" text="0">
                             <font>
-                                <Font name="Chalkduster" size="13.0" />
+                                <Font name="Chalkduster" size="13.0"/>
                             </font>
                         </Label>
                     </children>
@@ -87,6 +93,7 @@
                                 <Image url="@../images/button-next.png" />
                             </image>
                         </ImageView>
+
                     </children>
                 </Pane>
             </children>

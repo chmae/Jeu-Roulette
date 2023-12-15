@@ -46,7 +46,8 @@ public class VueJoueurCourant extends GridPane {
     private Label labelInstructions;
 
     private ClignoterThread clignoterThread;
-
+    @FXML
+    private Label nomJoueur;
     @FXML
     private ImageView couronne;
     @FXML
@@ -63,6 +64,7 @@ public class VueJoueurCourant extends GridPane {
             mise = (Label) root.lookup("#mise");
             passer = (ImageView) root.lookup("#passer");
             passer1 = (ImageView) root.lookup("#passer1");
+            nomJoueur = (Label) root.lookup("#nomJoueur");
             getChildren().addAll(root);
             hoverImagePasser(passer);
             hoverImagePasser(passer1);
@@ -75,6 +77,7 @@ public class VueJoueurCourant extends GridPane {
         SoldePlayer.setText(String.valueOf(jeu.joueurCourantProperty().getValue().soldeProperty().getValue()));
         soldePlayer2.setText(String.valueOf(jeu.joueurCourantProperty().getValue().getMiseActuelle()));
         this.labelInstructions = labelInstructions;
+        nomJoueur.setText(jeu.joueurCourantProperty().getValue().getNom());
         joueur = jeu.joueurCourantProperty().get();
         clignoterThread = new ClignoterThread(couronne);
         clignoterThread.start();

@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.StatistiquesRoulette;
 import javafx.animation.*;
 import javafx.beans.property.SimpleStringProperty;
@@ -196,9 +197,6 @@ public class VueDuJeu extends GridPane {
         });
     }
 
-    public void creerBindingPasser() {
-
-    }
 
     Stage primaryStage = RouletteIHM.getPrimaryStage();
 

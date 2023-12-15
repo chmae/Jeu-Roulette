@@ -154,10 +154,6 @@ public class RouletteIHM extends Application {
         return vueAccueil;
     }
 
-    public VueInscription getVueInscription() {
-        return vueInscription;
-    }
-
     public static RouletteIHM getInstance() {
         return instance;
     }
