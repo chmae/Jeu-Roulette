@@ -1,4 +1,4 @@
-package fr.umontpellier.iut.rouletteihm.ihm.mecaniques;
+package fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau;
 
 import javafx.scene.shape.*;
 import javafx.scene.paint.Color;

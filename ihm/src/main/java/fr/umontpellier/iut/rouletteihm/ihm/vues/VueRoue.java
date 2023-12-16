@@ -1,9 +1,9 @@
 /* Objet graphique pour la roulette */
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Boule;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Nombres;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.setNombres;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Nombres;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.setNombres;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;

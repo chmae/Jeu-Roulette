@@ -4,7 +4,7 @@ import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.etatsJeu.EtatJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.etatsJeu.InitialisationJoueurs;
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Nombres;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Nombres;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -158,7 +158,7 @@ public class Roulette implements IJeu {
             return valeur;
         }
 
-        public fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Nombres getNombres() {
+        public Nombres getNombres() {
             return new Nombres(valeur, couleur, 0);
         }
     }

@@ -1,7 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
 
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Boule;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
 
 public class VueRoulette {
     private static final double ANGLE = 9.72972973f;

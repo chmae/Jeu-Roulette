@@ -1,4 +1,4 @@
-package fr.umontpellier.iut.rouletteihm.ihm.mecaniques;
+package fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau;
 
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueBet;

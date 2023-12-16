@@ -2,9 +2,8 @@ package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.RouletteIHM;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Boule;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.CreationTable;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Nombres;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.CreationTable;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -22,18 +21,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.StatistiquesRoulette;
-import javafx.animation.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.ListChangeListener;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.control.Label;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.util.ArrayList;
 
 public class VueDuJeu extends GridPane {
     private IJeu jeu;
