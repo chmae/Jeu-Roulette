@@ -158,7 +158,7 @@ public class Roulette implements IJeu {
             return valeur;
         }
 
-        public Nombres getNombres() {
+        public fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Nombres getNombres() {
             return new Nombres(valeur, couleur, 0);
         }
     }

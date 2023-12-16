@@ -1,9 +1,10 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
-import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
+import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Boule;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.CreationTable;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Nombres;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;

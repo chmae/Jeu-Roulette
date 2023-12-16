@@ -1,11 +1,9 @@
 package fr.umontpellier.iut.rouletteihm.ihm.mecaniques;
 
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
+import fr.umontpellier.iut.rouletteihm.ihm.vues.VueBet;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
-import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
-import fr.umontpellier.iut.rouletteihm.ihm.vues.VueBet;
-import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -16,11 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.*;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.text.*;
-import javafx.scene.transform.*;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -52,6 +46,8 @@ public class CreationTable {
     private ArrayList<Integer> multiplicateursParis;
     private ArrayList<Integer> montantParis;
     private VueBet vueBet;
+    private Map<Integer, Rectangle> rectangleMap = new HashMap<>();
+    private List<Rectangle> espacesEntreCases = new ArrayList<>();
 
 
     public CreationTable(IJeu jeu, Label labelInstructions, VueBet vueBet) {
@@ -68,7 +64,22 @@ public class CreationTable {
         for (int i = 0; i < 37; i++) {
             montantParis.add(0);
         }
+
+        //TODO : supprimer la fonction suite à la fin de la création des DonneesGraphiques
+//        table.setOnMouseMoved(event -> {
+//            double x = event.getX();
+//            double y = event.getY();
+//            System.out.println("Coordonnées du curseur : (" + x + ", " + y + ")");
+//        });
     }
+
+    //TODO : supprimer la fonction suite à la fin de la création des DonneesGraphiques
+//    private void dessinerLigne(double startX, double startY, double endX, double endY) {
+//        Line ligne = new Line(startX, startY, endX, endY);
+//        ligne.setStrokeWidth(2);
+//        ligne.setFill(Color.MAGENTA);
+//        table.getChildren().add(ligne);
+//    }
 
 
     public Group getTable() {
@@ -237,23 +248,32 @@ public class CreationTable {
         double x = START_X;
         double y = START_Y + HAUTEUR;
 
-        // 1 à 18
+// 1 à 18
         Rectangle oneToEitheen = new Rectangle(x, y, LARGEUR * 2, 40);
-        Text textNode1 = new Text("1 à 18");
-        oneToEitheen.setStroke(Color.WHITE);
-        oneToEitheen.setStrokeWidth(3);
         oneToEitheen.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
         oneToEitheen.setArcHeight(10);
         oneToEitheen.setArcWidth(10);
+
+        Line ligneHaut1 = new Line(x, y, x + (LARGEUR * 2), y);
+        ligneHaut1.setStroke(Color.WHITE);
+        ligneHaut1.setStrokeWidth(3);
+
+        Line ligneBas1 = new Line(x, y + 40, x + (LARGEUR * 2), y + 40);
+        ligneBas1.setStroke(Color.WHITE);
+        ligneBas1.setStrokeWidth(3);
+
+        Line ligneGauche1 = new Line(x, y, x, y + 40);
+        ligneGauche1.setStroke(Color.WHITE);
+        ligneGauche1.setStrokeWidth(3);
+
+        Text textNode1 = new Text("1 à 18");
         textNode1.setFill(Color.WHITE);
         textNode1.xProperty().bind(oneToEitheen.xProperty().add(25));
         textNode1.yProperty().bind(oneToEitheen.yProperty().add(26));
         textNode1.scaleXProperty().bind(oneToEitheen.widthProperty().divide(60));
         textNode1.scaleYProperty().bind(oneToEitheen.heightProperty().divide(45));
-        table.getChildren().add(oneToEitheen);
-        table.getChildren().add(textNode1);
 
-        creerBindingParis(oneToEitheen, textNode1);
+        table.getChildren().addAll(oneToEitheen, ligneHaut1, ligneBas1, ligneGauche1, textNode1);
 
 
         oneToEitheen.setOnMouseEntered(event -> {
@@ -317,22 +337,33 @@ public class CreationTable {
             });
         });
 
-        //impair
+        // impair
         x += LARGEUR * 2;
         Rectangle impair = new Rectangle(x, y, LARGEUR * 2, 40);
-        Text textNode2 = new Text("IMPAIR");
-        impair.setStroke(Color.WHITE);
-        impair.setStrokeWidth(3);
         impair.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
         impair.setArcHeight(10);
         impair.setArcWidth(10);
+
+        Line ligneHaut2 = new Line(x, y, x + (LARGEUR * 2), y);
+        ligneHaut2.setStroke(Color.WHITE);
+        ligneHaut2.setStrokeWidth(3);
+
+        Line ligneBas2 = new Line(x, y + 40, x + (LARGEUR * 2), y + 40);
+        ligneBas2.setStroke(Color.WHITE);
+        ligneBas2.setStrokeWidth(3);
+
+        Line ligneGauche2 = new Line(x, y, x, y + 40);
+        ligneGauche2.setStroke(Color.WHITE);
+        ligneGauche2.setStrokeWidth(3);
+
+        Text textNode2 = new Text("IMPAIR");
         textNode2.setFill(Color.WHITE);
         textNode2.xProperty().bind(impair.xProperty().add(19));
         textNode2.yProperty().bind(impair.yProperty().add(26));
         textNode2.scaleXProperty().bind(impair.widthProperty().divide(60));
         textNode2.scaleYProperty().bind(impair.heightProperty().divide(45));
-        table.getChildren().add(impair);
-        table.getChildren().add(textNode2);
+
+        table.getChildren().addAll(impair, ligneHaut2, ligneBas2, ligneGauche2, textNode2);
 
         creerBindingParis(impair, textNode2);
 
@@ -398,22 +429,33 @@ public class CreationTable {
         });
 
 
-        // rouge
+        // Rouge
         x += LARGEUR * 2;
         Rectangle rouge = new Rectangle(x, y, LARGEUR * 2, 40);
         Rectangle losangeRouge = new Rectangle(x + 10, y + 10, 10, 10);
         losangeRouge.getTransforms().add(new Rotate(45, x + 10, y + 15));
-        rouge.setStroke(Color.WHITE);
-        rouge.setStrokeWidth(3);
-        rouge.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
-        rouge.setArcHeight(10);
-        rouge.setArcWidth(10);
         losangeRouge.setFill(Color.RED);
         losangeRouge.xProperty().bind(rouge.xProperty().add(9.7));
         losangeRouge.yProperty().bind(rouge.yProperty().add(1));
         losangeRouge.scaleXProperty().bind(rouge.widthProperty().divide(16));
         losangeRouge.scaleYProperty().bind(rouge.heightProperty().divide(16));
-        table.getChildren().add(rouge);
+        rouge.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
+        rouge.setArcHeight(10);
+        rouge.setArcWidth(10);
+
+        Line ligneHaut3 = new Line(x, y, x + (LARGEUR * 2), y);
+        ligneHaut3.setStroke(Color.WHITE);
+        ligneHaut3.setStrokeWidth(3);
+
+        Line ligneBas3 = new Line(x, y + 40, x + (LARGEUR * 2), y + 40);
+        ligneBas3.setStroke(Color.WHITE);
+        ligneBas3.setStrokeWidth(3);
+
+        Line ligneGauche3 = new Line(x, y, x, y + 40);
+        ligneGauche3.setStroke(Color.WHITE);
+        ligneGauche3.setStrokeWidth(3);
+
+        table.getChildren().addAll(rouge, ligneHaut3, ligneBas3, ligneGauche3);
         table.getChildren().add(losangeRouge);
 
         creerBindingParis(rouge, new Text("rouge"));
@@ -450,23 +492,33 @@ public class CreationTable {
         });
 
 
-        // noir
+        // Noir
         x += LARGEUR * 2;
-        Rectangle noir = new Rectangle(x, y, LARGEUR * 2, 40);
         Rectangle losangeNoir = new Rectangle(x + 10, y + 10, 10, 10);
         losangeNoir.getTransforms().add(new Rotate(45, x + 10, y + 15));
-        noir.setStroke(Color.WHITE);
-        noir.setStrokeWidth(3);
+
+        Rectangle noir = new Rectangle(x, y, LARGEUR * 2, 40);
         noir.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
         noir.setArcHeight(10);
         noir.setArcWidth(10);
-        losangeNoir.setFill(Color.BLACK);
-        //centre le losange noir sur le rectangle noir
         losangeNoir.xProperty().bind(noir.xProperty().add(9.7));
         losangeNoir.yProperty().bind(noir.yProperty().add(1));
         losangeNoir.scaleXProperty().bind(noir.widthProperty().divide(16));
         losangeNoir.scaleYProperty().bind(noir.heightProperty().divide(16));
-        table.getChildren().add(noir);
+
+        Line ligneHaut4 = new Line(x, y, x + (LARGEUR * 2), y);
+        ligneHaut4.setStroke(Color.WHITE);
+        ligneHaut4.setStrokeWidth(3);
+
+        Line ligneBas4 = new Line(x, y + 40, x + (LARGEUR * 2), y + 40);
+        ligneBas4.setStroke(Color.WHITE);
+        ligneBas4.setStrokeWidth(3);
+
+        Line ligneGauche4 = new Line(x, y, x, y + 40);
+        ligneGauche4.setStroke(Color.WHITE);
+        ligneGauche4.setStrokeWidth(3);
+
+        table.getChildren().addAll(noir, ligneHaut4, ligneBas4, ligneGauche4);
         table.getChildren().add(losangeNoir);
 
         creerBindingParis(noir, new Text("noir"));
@@ -503,22 +555,33 @@ public class CreationTable {
         });
 
 
-        // pair
+        // Pair
         x += LARGEUR * 2;
         Rectangle pair = new Rectangle(x, y, LARGEUR * 2, 40);
-        Text textNode3 = new Text("PAIR");
-        pair.setStroke(Color.WHITE);
-        pair.setStrokeWidth(3);
         pair.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
         pair.setArcHeight(10);
         pair.setArcWidth(10);
+
+        Line ligneHaut5 = new Line(x, y, x + (LARGEUR * 2), y);
+        ligneHaut5.setStroke(Color.WHITE);
+        ligneHaut5.setStrokeWidth(3);
+
+        Line ligneBas5 = new Line(x, y + 40, x + (LARGEUR * 2), y + 40);
+        ligneBas5.setStroke(Color.WHITE);
+        ligneBas5.setStrokeWidth(3);
+
+        Line ligneGauche5 = new Line(x, y, x, y + 40);
+        ligneGauche5.setStroke(Color.WHITE);
+        ligneGauche5.setStrokeWidth(3);
+
+        Text textNode3 = new Text("PAIR");
         textNode3.setFill(Color.WHITE);
-        textNode3.xProperty().bind(pair.xProperty().add(26));
+        textNode3.xProperty().bind(pair.xProperty().add(29));
         textNode3.yProperty().bind(pair.yProperty().add(26));
         textNode3.scaleXProperty().bind(pair.widthProperty().divide(60));
         textNode3.scaleYProperty().bind(pair.heightProperty().divide(45));
-        table.getChildren().add(pair);
-        table.getChildren().add(textNode3);
+
+        table.getChildren().addAll(pair, ligneHaut5, ligneBas5, ligneGauche5, textNode3);
 
         creerBindingParis(pair, textNode3);
 
@@ -590,19 +653,35 @@ public class CreationTable {
         // 19 à 36
         x += LARGEUR * 2;
         Rectangle nineteenToThirtySix = new Rectangle(x, y, LARGEUR * 2, 40);
-        Text textNode4 = new Text("19 à 36");
-        nineteenToThirtySix.setStroke(Color.WHITE);
-        nineteenToThirtySix.setStrokeWidth(3);
         nineteenToThirtySix.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
         nineteenToThirtySix.setArcHeight(10);
         nineteenToThirtySix.setArcWidth(10);
+
+        Line ligneHaut6 = new Line(x, y, x + (LARGEUR * 2), y);
+        ligneHaut6.setStroke(Color.WHITE);
+        ligneHaut6.setStrokeWidth(3);
+
+        Line ligneBas6 = new Line(x, y + 40, x + (LARGEUR * 2), y + 40);
+        ligneBas6.setStroke(Color.WHITE);
+        ligneBas6.setStrokeWidth(3);
+
+        Line ligneGauche6 = new Line(x, y, x, y + 40);
+        ligneGauche6.setStroke(Color.WHITE);
+        ligneGauche6.setStrokeWidth(3);
+
+        Line ligneDroite6 = new Line(x + (LARGEUR * 2), y, x + (LARGEUR * 2), y + 40);
+        ligneDroite6.setStroke(Color.WHITE);
+        ligneDroite6.setStrokeWidth(3);
+
+        Text textNode4 = new Text("19 à 36");
         textNode4.setFill(Color.WHITE);
-        textNode4.xProperty().bind(nineteenToThirtySix.xProperty().add(19));
+        textNode4.xProperty().bind(nineteenToThirtySix.xProperty().add(20));
         textNode4.yProperty().bind(nineteenToThirtySix.yProperty().add(26));
         textNode4.scaleXProperty().bind(nineteenToThirtySix.widthProperty().divide(60));
         textNode4.scaleYProperty().bind(nineteenToThirtySix.heightProperty().divide(45));
-        table.getChildren().add(nineteenToThirtySix);
-        table.getChildren().add(textNode4);
+
+        table.getChildren().addAll(nineteenToThirtySix, ligneHaut6, ligneBas6, ligneGauche6, ligneDroite6, textNode4);
+
 
         creerBindingParis(nineteenToThirtySix, textNode4);
 
@@ -682,7 +761,7 @@ public class CreationTable {
         triangle.setFill(Color.GREEN);
         triangle.setStroke(Color.WHITE);
         triangle.setStrokeWidth(3);
-        triangle.setTranslateX(START_X - 150);
+        triangle.setTranslateX(START_X - 153);
         triangle.setTranslateY(START_Y - 82);
         table.getChildren().add(triangle);
         Text textNode = new Text("0");
@@ -697,23 +776,12 @@ public class CreationTable {
         creerBindingParis(triangle, textNode);
     }
 
-
-    private Map<Integer, Rectangle> rectangleMap = new HashMap<>();
-    private List<Rectangle> espacesEntreCases = new ArrayList<>();
-
     private void creerNumeros(int i, double x, double y) {
         Rectangle r = new Rectangle(x, y, LARGEUR, HAUTEUR);
 
         for (Nombres n : setNombres.getNumberSet()) {
             if (n.getNumber() == i) {
-                if (n.getColor().equals("R")) {
-                    r.setFill(Color.RED);
-                } else {
-                    r.setFill(Color.BLACK);
-                }
-
-                r.setStroke(Color.WHITE);
-                r.setStrokeWidth(3);
+                r.setFill(n.getColor().equals("R") ? Color.RED : Color.BLACK);
 
                 Text textNode = new Text("" + i);
                 if (i < 10) {
@@ -736,9 +804,30 @@ public class CreationTable {
                 if (i > 1) {
                     survolerEspaceEntreCases(i - 1, i);
                 }
+
+                // Lignes horizontales
+                Line ligneHaut = new Line(x, y, x + LARGEUR, y);
+                Line ligneBas = new Line(x, y + HAUTEUR, x + LARGEUR, y + HAUTEUR);
+
+                // Lignes verticales
+                Line ligneGauche = new Line(x, y, x, y + HAUTEUR);
+                Line ligneDroite = new Line(x + LARGEUR, y, x + LARGEUR, y + HAUTEUR);
+
+                ligneHaut.setStroke(Color.WHITE);
+                ligneHaut.setStrokeWidth(3);
+                ligneBas.setStroke(Color.WHITE);
+                ligneBas.setStrokeWidth(3);
+                ligneGauche.setStroke(Color.WHITE);
+                ligneGauche.setStrokeWidth(3);
+                ligneDroite.setStroke(Color.WHITE);
+                ligneDroite.setStrokeWidth(3);
+
+                // Ajout des lignes au groupe parent
+                table.getChildren().addAll(ligneHaut, ligneBas, ligneGauche, ligneDroite);
             }
         }
     }
+
 
 
     private void survolerEspaceEntreCases(int numeroCase1, int numeroCase2) {
@@ -778,24 +867,35 @@ public class CreationTable {
         double x = START_X;
         double y = START_Y - (HAUTEUR * 3) + 25;
 
-        //1er 12
+        // Rectangle
         Rectangle r1 = new Rectangle(x, y, LARGEUR * 4, 40);
-        r1.setStroke(Color.WHITE);
-        r1.setStrokeWidth(3);
         r1.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
         r1.setArcHeight(10);
         r1.setArcWidth(10);
+
+        // Lignes horizontales
+        Line ligneHaut = new Line(x, y, x + (LARGEUR * 4), y);
+        ligneHaut.setStroke(Color.WHITE);
+        ligneHaut.setStrokeWidth(3);
+
+        Line ligneBas = new Line(x, y + 40, x + (LARGEUR * 4), y + 40);
+        ligneBas.setStroke(Color.WHITE);
+        ligneBas.setStrokeWidth(3);
+
+        // Ligne verticale
+        Line ligneGauche = new Line(x, y, x, y + 40);
+        ligneGauche.setStroke(Color.WHITE);
+        ligneGauche.setStrokeWidth(3);
+
+        // Texte
         Text textNode1 = new Text("1-12");
         textNode1.setFill(Color.WHITE);
         textNode1.xProperty().bind(r1.xProperty().add(65));
         textNode1.yProperty().bind(r1.yProperty().add(25));
         textNode1.scaleXProperty().bind(r1.widthProperty().divide(60));
         textNode1.scaleYProperty().bind(r1.heightProperty().divide(45));
-        table.getChildren().add(r1);
-        table.getChildren().add(textNode1);
 
-
-        creerBindingParis(r1, textNode1);
+        table.getChildren().addAll(r1, ligneHaut, ligneBas, ligneGauche, textNode1);
 
         r1.setOnMouseEntered(event -> {
             List<Pair<Rectangle, Paint>> originalColors = new ArrayList<>();
@@ -862,21 +962,34 @@ public class CreationTable {
         //2e 12
         x += LARGEUR * 4;
         Rectangle r2 = new Rectangle(x, y, LARGEUR * 4, 40);
-        r2.setStroke(Color.WHITE);
-        r2.setStrokeWidth(3);
         r2.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
         r2.setArcHeight(10);
         r2.setArcWidth(10);
+
+        Line ligneHaut2 = new Line(x, y, x + (LARGEUR * 4), y);
+        ligneHaut2.setStroke(Color.WHITE);
+        ligneHaut2.setStrokeWidth(3);
+
+        Line ligneBas2 = new Line(x, y + 40, x + (LARGEUR * 4), y + 40);
+        ligneBas2.setStroke(Color.WHITE);
+        ligneBas2.setStrokeWidth(3);
+
+        Line ligneGauche2 = new Line(x, y, x, y + 40);
+        ligneGauche2.setStroke(Color.WHITE);
+        ligneGauche2.setStrokeWidth(3);
+
+        Line ligneDroite2 = new Line(x + (LARGEUR * 4), y, x + (LARGEUR * 4), y + 40);
+        ligneDroite2.setStroke(Color.WHITE);
+        ligneDroite2.setStrokeWidth(3);
+
         Text textNode2 = new Text("13-24");
         textNode2.setFill(Color.WHITE);
         textNode2.xProperty().bind(r2.xProperty().add(65));
         textNode2.yProperty().bind(r2.yProperty().add(25));
         textNode2.scaleXProperty().bind(r2.widthProperty().divide(60));
         textNode2.scaleYProperty().bind(r2.heightProperty().divide(45));
-        table.getChildren().add(r2);
-        table.getChildren().add(textNode2);
 
-
+        table.getChildren().addAll(r2, ligneHaut2, ligneBas2, ligneGauche2, ligneDroite2, textNode2);
         creerBindingParis(r2, textNode2);
 
         r2.setOnMouseEntered(event -> {
@@ -944,21 +1057,34 @@ public class CreationTable {
         //3e 12
         x += LARGEUR * 4;
         Rectangle r3 = new Rectangle(x, y, LARGEUR * 4, 40);
-        r3.setStroke(Color.WHITE);
-        r3.setStrokeWidth(3);
+        r3.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
         r3.setArcHeight(10);
         r3.setArcWidth(10);
+
+        Line ligneHaut3 = new Line(x, y, x + (LARGEUR * 4), y);
+        ligneHaut3.setStroke(Color.WHITE);
+        ligneHaut3.setStrokeWidth(3);
+
+        Line ligneBas3 = new Line(x, y + 40, x + (LARGEUR * 4), y + 40);
+        ligneBas3.setStroke(Color.WHITE);
+        ligneBas3.setStrokeWidth(3);
+
+        Line ligneGauche3 = new Line(x, y, x, y + 40);
+        ligneGauche3.setStroke(Color.WHITE);
+        ligneGauche3.setStrokeWidth(3);
+
+        Line ligneDroite3 = new Line(x + (LARGEUR * 4), y, x + (LARGEUR * 4), y + 40);
+        ligneDroite3.setStroke(Color.WHITE);
+        ligneDroite3.setStrokeWidth(3);
+
         Text textNode3 = new Text("25-36");
-        r3.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
         textNode3.setFill(Color.WHITE);
         textNode3.xProperty().bind(r3.xProperty().add(65));
         textNode3.yProperty().bind(r3.yProperty().add(25));
         textNode3.scaleXProperty().bind(r3.widthProperty().divide(60));
         textNode3.scaleYProperty().bind(r3.heightProperty().divide(45));
-        table.getChildren().add(r3);
-        table.getChildren().add(textNode3);
 
-
+        table.getChildren().addAll(r3, ligneHaut3, ligneBas3, ligneGauche3, ligneDroite3, textNode3);
         creerBindingParis(r3, textNode3);
 
         r3.setOnMouseEntered(event -> {

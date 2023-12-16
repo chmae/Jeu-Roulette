@@ -30,7 +30,7 @@ public class VueJoueurCourant extends GridPane {
     @FXML
     private Label SoldePlayer;
     @FXML
-    private ImageView miseJoueur;
+    private ImageView miseJoueur; // Change this from HBox to ImageView
     @FXML
     private ImageView CouronneJoueur;
     @FXML

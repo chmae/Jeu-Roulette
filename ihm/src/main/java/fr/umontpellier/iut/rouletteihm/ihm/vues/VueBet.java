@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -121,7 +122,7 @@ public class VueBet extends GridPane {
     }
 
     private void creerBidingsJeton(ImageView jeton, int valeurJeton) {
-        EventHandler<javafx.scene.input.MouseEvent> miseJoueurChange = mouseEvent -> {
+        EventHandler<MouseEvent> miseJoueurChange = mouseEvent -> {
             if (jeu.joueurCourantProperty().get().soldeProperty().getValue() - jeu.joueurCourantProperty().get().getMiseTotale() < valeurJeton) {
                 LabelInstruction.setText("Vous n'avez pas assez d'argent pour faire ce paris !");
             } else {
@@ -130,7 +131,7 @@ public class VueBet extends GridPane {
             }
         };
 
-        jeton.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, miseJoueurChange);
+        jeton.addEventHandler(MouseEvent.MOUSE_CLICKED, miseJoueurChange);
 
     }
 
@@ -171,7 +172,7 @@ public class VueBet extends GridPane {
     }
 
     private void creerBindingValider(ImageView valider) {
-        EventHandler<javafx.scene.input.MouseEvent> validationJoueur = mouseEvent -> {
+        EventHandler<MouseEvent> validationJoueur = mouseEvent -> {
             if (jeu.joueurCourantProperty().get().soldeProperty().getValue() < jeu.joueurCourantProperty().get().getMiseTotale()) {
                 LabelInstruction.setText("Vous n'avez pas assez d'argent pour faire ce paris !");
             } else if (jeu.joueurCourantProperty().get().getMiseTotale() == 0 && ok) {
@@ -187,7 +188,7 @@ public class VueBet extends GridPane {
             }
         };
 
-        valider.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, validationJoueur);
+        valider.addEventHandler(MouseEvent.MOUSE_CLICKED, validationJoueur);
     }
 
     public void creerBinding() {
