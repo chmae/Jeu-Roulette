@@ -1,5 +1,6 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -20,6 +21,8 @@ public class VueLoose {
     @FXML
     private Button rejouer = new Button();
     private boolean rejouerClicked = false;
+
+    private GestionMusique sonsTrompette;
 
     public VueLoose(Stage p) {
         primaryStage = p;
@@ -51,6 +54,18 @@ public class VueLoose {
 
     public void afficher() {
         stage.show();
+
+        // --Code de sauvegarde de la musique Win-- //
+        sonsTrompette = new GestionMusique();
+        sonsTrompette.setMusique("ihm/src/main/resources/musique/SadTrompette.mp3");
+        sonsTrompette.setVolume(0.3);
+        sonsTrompette.lireMusique();
+
+        stage.setOnHidden(event -> {
+            sonsTrompette.arreterMusique();
+            stage.close();
+        });
+
         Duration pauseDuration = Duration.seconds(10);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> {
             if (!isRejouerClicked()) {

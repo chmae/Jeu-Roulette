@@ -1,5 +1,6 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,8 +46,15 @@ public class VueParametre {
     private ImageView valideNom;
     @FXML
     private ImageView valideSolde;
+    @FXML
+    private ImageView music ;
 
-    public VueParametre(Stage p) {
+    private Stage primaryStage;
+    private Stage stage;
+
+
+
+    public VueParametre(Stage p, GestionMusique gestionmusique) {
         primaryStage = p;
 
         try {
@@ -55,6 +63,7 @@ public class VueParametre {
             parametrePane = (Pane) root.lookup("#parametrePane");
             titleLabel = (Label) root.lookup("#Title");
             volumeSlider = (Slider) root.lookup("#volume");
+            music = (ImageView) root.lookup("#music");
             franceIcon = (ImageView) root.lookup("#buttonFrancais");
             ukIcon = (ImageView) root.lookup("#buttonAnglais");
             languesLabel = (Label) root.lookup("#languesLabel");
@@ -70,7 +79,44 @@ public class VueParametre {
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
 
+            // -- Media-- //
+            Image playImage = new Image("images/button-music-On.png");
+            Image pauseImage = new Image("images/button-music-Off.png");
+            music.setImage(playImage);
+
+            // Ajout d'un événement au bouton de musique
+            music.setOnMouseClicked(event -> {
+                if (gestionmusique.getStatus()) {
+                    gestionmusique.mettrePauseMusique();
+                    // Changer l'image en mode pause
+                    music.setImage(pauseImage);
+                } else {
+                    gestionmusique.lireMusiqueProgressivement(gestionmusique.getVolume());
+                    // Changer l'image en mode play
+                    music.setImage(playImage);
+                }
+            });
+
+            volumeSlider.setMin(0);
+            volumeSlider.setMax(10);
+            volumeSlider.setValue(2);
+
+            // Liaison entre le Slider et la propriété volume du MediaPlayer
+            volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+                double volumeValue = newValue.doubleValue() / 10.0;
+                gestionmusique.setVolume(volumeValue);
+            });
+
+
             quitButton.setOnMouseClicked(event -> {
+                // sons bouton quit //
+                GestionMusique sonsBoutonQuit = new GestionMusique();
+                String cheminAudioBouton = "ihm/src/main/resources/musique/sonsBouton.mp3";
+                sonsBoutonQuit.setMusique(cheminAudioBouton);
+                sonsBoutonQuit.setVolume(0.2);
+                sonsBoutonQuit.lireMusique();
+                sonsBoutonQuit.remettreMusiqueAuDebut();
+
                 stage = (Stage) quitButton.getScene().getWindow();
                 stage.close();
             });
@@ -106,6 +152,9 @@ public class VueParametre {
 
             HoverImage(franceIcon);
             HoverImage(ukIcon);
+            HoverImage(valideNom);
+            HoverImage(valideSolde);
+            HoverImage(music);
 
 
         } catch (IOException e) {

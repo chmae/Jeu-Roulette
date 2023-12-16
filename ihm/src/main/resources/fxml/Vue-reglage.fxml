@@ -24,9 +24,8 @@
                 <Font name="Chalkduster" size="16.0"/>
             </font>
         </Label>
-        <Slider fx:id="volume" layoutX="60.0" layoutY="60.0" prefHeight="15.0" prefWidth="189.0"/>
-        <ImageView fitHeight="38.0" fitWidth="43.0" layoutX="10.0" layoutY="49.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <Slider fx:id="volume" layoutX="60.0" layoutY="60.0" prefHeight="15.0" prefWidth="189.0" />
+        <ImageView fx:id="music" fitHeight="38.0" fitWidth="43.0" layoutX="10.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../images/Group_71.png"/>
             </image>

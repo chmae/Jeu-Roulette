@@ -51,7 +51,9 @@ public class RouletteIHM extends Application {
             vueInscription = new VueInscription();
             stage = new Stage();
             stage.setResizable(false);
+            vueAccueil.getMusique().lireMusiqueProgressivement(0.2);
             vueAccueil.getBoutonJouer().setOnMouseClicked(mouseEvent -> {
+                vueAccueil.getMusique().arreterMusique();
                 demarrerPartie("Chollet", 9999);
             });
 
@@ -153,6 +155,10 @@ public class RouletteIHM extends Application {
         return vueAccueil;
     }
 
+    public VueInscription getVueInscription() {
+        return vueInscription;
+    }
+
     public static RouletteIHM getInstance() {
         return instance;
     }
@@ -160,7 +166,6 @@ public class RouletteIHM extends Application {
     public IJeu getJeu() {
         return jeu;
     }
-
 
     public NouvelClientController getNouvelClientController() {
         return nouvelClientController;

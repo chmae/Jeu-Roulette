@@ -2,6 +2,7 @@ package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -26,6 +27,10 @@ public class VueAutresJoueurs extends Pane {
     private Label solde1;
     private Label solde2;
     private VueAccueil vueAccueil = new VueAccueil();
+
+    private GestionMusique musiqueCasino = new GestionMusique();
+
+    private GestionMusique sonsBoutonParametre = new GestionMusique();
 
     @FXML
     private ImageView lampe1;
@@ -56,7 +61,24 @@ public class VueAutresJoueurs extends Pane {
             HoverImage(parametre);
             Stage primaryStage = new Stage();
 
+            //-- sons bouton-- //
+            String cheminAudioBouton = "ihm/src/main/resources/musique/sonsBouton.mp3";
+            sonsBoutonParametre.setMusique(cheminAudioBouton);
+            sonsBoutonParametre.setVolume(0.2);
+
+            //-- Musique Casino -- //
+            String cheminAudioCasino = "ihm/src/main/resources/musique/casino.mp3";
+            musiqueCasino.setMusique(cheminAudioCasino);
+            musiqueCasino.setVolume(0.2);
+            musiqueCasino.mettreLaMusiqueEnBoucle(true);
+            musiqueCasino.lireMusiqueProgressivement(musiqueCasino.getVolume());
+
             buttonQuit.setOnMouseClicked(event -> {
+                sonsBoutonParametre.lireMusique();
+                sonsBoutonParametre.remettreMusiqueAuDebut();
+                musiqueCasino.arreterMusique();
+                musiqueCasino.remettreMusiqueAuDebut();
+
                 Stage stage = (Stage) buttonQuit.getScene().getWindow();
                 stage.close();
                 if (vueAccueil.getScene() == null) {
@@ -76,7 +98,11 @@ public class VueAutresJoueurs extends Pane {
                 stage.show();
             });
 
-            parametre.setOnMouseClicked(event -> afficherVueParametre());
+            parametre.setOnMouseClicked(event -> {
+                afficherVueParametre(musiqueCasino);
+                sonsBoutonParametre.lireMusique();
+                sonsBoutonParametre.remettreMusiqueAuDebut();
+            });
 
 
         } catch (IOException e) {
@@ -128,8 +154,9 @@ public class VueAutresJoueurs extends Pane {
             scaleTransition.play();
         });
     }
-    private void afficherVueParametre() {
-        VueParametre vueParametre = new VueParametre((Stage) getScene().getWindow());
+
+    private void afficherVueParametre(GestionMusique music) {
+        VueParametre vueParametre = new VueParametre((Stage) getScene().getWindow(), music);
         vueParametre.show();
     }
 

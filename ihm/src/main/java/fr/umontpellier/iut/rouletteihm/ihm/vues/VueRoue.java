@@ -1,9 +1,10 @@
 /* Objet graphique pour la roulette */
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Nombres;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.setNombres;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Boule;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Nombres;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.setNombres;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
@@ -43,6 +44,8 @@ public class VueRoue {
     private ArrayList<Double> listeX = new ArrayList<>();
     private ArrayList<Double> listeY = new ArrayList<>();
     private Map<Integer, Coordonnees> coordonneesChiffres;
+
+    private GestionMusique musique = new GestionMusique();
 
 
     public VueRoue() {
@@ -180,6 +183,12 @@ public class VueRoue {
 
     public void animation(Nombres gagnant) {
         double angleRotation = START_ANGLE + gagnant.getAngle();  // Angle de rotation de la boule
+
+        // -- sons de la roue -- //
+        String sonsRoulette = "ihm/src/main/resources/musique/sonsRoulette.mp3";
+        musique.setMusique(sonsRoulette);
+        musique.setVolume(0.2);
+        musique.lireMusique();
 
         // Création du cercle
         Circle path = new Circle(110, -130, 80);

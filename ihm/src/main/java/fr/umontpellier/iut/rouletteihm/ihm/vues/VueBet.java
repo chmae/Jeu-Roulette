@@ -1,6 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
@@ -172,7 +173,16 @@ public class VueBet extends GridPane {
     }
 
     private void creerBindingValider(ImageView valider) {
-        EventHandler<MouseEvent> validationJoueur = mouseEvent -> {
+        EventHandler<javafx.scene.input.MouseEvent> validationJoueur = mouseEvent -> {
+
+            // sons bouton valider //
+            GestionMusique sonsBoutonValider= new GestionMusique();
+            String cheminAudioBouton = "ihm/src/main/resources/musique/sonsValider.mp3";
+            sonsBoutonValider.setMusique(cheminAudioBouton);
+            sonsBoutonValider.setVolume(0.2);
+            sonsBoutonValider.lireMusique();
+            sonsBoutonValider.remettreMusiqueAuDebut();
+
             if (jeu.joueurCourantProperty().get().soldeProperty().getValue() < jeu.joueurCourantProperty().get().getMiseTotale()) {
                 LabelInstruction.setText("Vous n'avez pas assez d'argent pour faire ce paris !");
             } else if (jeu.joueurCourantProperty().get().getMiseTotale() == 0 && ok) {
