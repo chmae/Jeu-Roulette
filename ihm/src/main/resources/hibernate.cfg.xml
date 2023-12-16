@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="connection.url">jdbc:oracle:thin:@162.38.222.149:1521:iut</property>
+        <property name="connection.username">asiamarc</property>
+        <property name="connection.password">jorklanJ44*</property>
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="dialect">org.hibernate.dialect.OracleDialect</property>
+
+        <property name="format_sql">true</property>
+        <property name="hbm2ddl.auto">update</property>
+
+        <property name="connection.pool_size">5</property>
+        <property name="current_session_context_class">thread</property>
+        <mapping class="fr.umontpellier.iut.rouletteihm.metier.entite.Client"/>
+        <mapping class="fr.umontpellier.iut.rouletteihm.metier.entite.Historique"/>
+        <mapping class="fr.umontpellier.iut.rouletteihm.metier.entite.ParisGagner"/>
+    </session-factory>
+</hibernate-configuration>

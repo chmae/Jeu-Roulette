@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      onKeyPressed="#validerFormulaire" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FFEAEA;"
+      xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="fr.umontpellier.iut.rouletteihm.application.controller.client.NouvelClientController">
+    <children>
+        <ImageView fitHeight="400.0" fitWidth="386.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/bg-inscription.png"/>
+            </image>
+        </ImageView>
+        <Label fx:id="titre" layoutX="407.0" layoutY="20.0" text="Inscription">
+            <font>
+                <Font name="Chalkboard SE Light" size="36.0"/>
+            </font>
+        </Label>
+        <ImageView fitHeight="244.0" fitWidth="240.0" layoutX="396.0" layoutY="90.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../images/pop-up-inscription.png"/>
+            </image>
+        </ImageView>
+        <PasswordField fx:id="password" layoutX="470.0" layoutY="243.0" prefHeight="27.0" prefWidth="81.0"
+                       style="-fx-background-color: #FBE9D2; -fx-background-radius: 15;"/>
+        <TextField fx:id="nom" layoutX="470.0" layoutY="111.0" prefHeight="26.0" prefWidth="81.0"
+                   style="-fx-background-color: #FBE9D2; -fx-background-radius: 15;"/>
+        <TextField fx:id="prenom" layoutX="470.0" layoutY="155.0" prefHeight="26.0" prefWidth="81.0"
+                   style="-fx-background-color: #FBE9D2; -fx-background-radius: 15;"/>
+        <TextField fx:id="email" layoutX="470.0" layoutY="199.0" prefHeight="26.0" prefWidth="81.0"
+                   style="-fx-background-color: #FBE9D2; -fx-background-radius: 15;"/>
+        <PasswordField fx:id="paswwordConfirm" layoutX="470.0" layoutY="287.0" prefHeight="27.0" prefWidth="81.0"
+                       style="-fx-background-color: #FBE9D2; -fx-background-radius: 15;"/>
+        <ImageView fx:id="inscription" fitHeight="39.0" fitWidth="88.0" layoutX="453.0" layoutY="346.0"
+                   onMouseClicked="#creerClient" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/button-Green-settings-disabled.png"/>
+            </image>
+        </ImageView>
+        <Label layoutX="465.0" layoutY="352.0" text="s'inscrire" textFill="WHITE" translateX="7.0">
+            <font>
+                <Font name="Chalkduster" size="11.0"/>
+            </font>
+        </Label>
+    </children>
+</Pane>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="boxDroite" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="536.0" prefWidth="97.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <effect>
+        <DropShadow color="#CC00FF" radius="10"/>
+    </effect>
+    <children>
+        <Pane fx:id="Background" prefHeight="536.0" prefWidth="97.0">
+            <effect>
+                <DropShadow color="#CC00FF" radius="10"/>
+            </effect>
+            <children>
+                <ImageView fx:id="Backgroundcolor" fitHeight="536.0" fitWidth="116.0" layoutY="-1.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@../images/cards-support-Green.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fx:id="couronne" fitHeight="60.0" fitWidth="121.0" layoutX="-9.0" layoutY="409.0"
+                           pickOnBounds="true" preserveRatio="true" translateY="-20.0">
+                    <image>
+                        <Image url="@../images/couronne.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fx:id="passer" fitHeight="21.0" fitWidth="47.0" layoutX="14.0" layoutY="431.0"
+                           pickOnBounds="true" preserveRatio="true" translateY="-20.0" y="-1.0">
+                    <image>
+                        <Image url="@../images/button-passer.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="33.0" fitWidth="32.0" layoutX="70.0" layoutY="423.0" pickOnBounds="true"
+                           preserveRatio="true" translateX="-5.0" translateY="-19.0">
+                    <image>
+                        <Image url="@../images/button-next.png"/>
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+    </children>
+</VBox>

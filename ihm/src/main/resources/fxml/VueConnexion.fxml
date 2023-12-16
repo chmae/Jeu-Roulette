@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      onKeyPressed="#validerFormulaire" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FFEAEA;"
+      xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="fr.umontpellier.iut.rouletteihm.application.controller.client.ControllerClient">
+    <children>
+        <ImageView fitHeight="400.0" fitWidth="386.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/bg-inscription.png"/>
+            </image>
+        </ImageView>
+        <Label fx:id="titre" layoutX="415.0" layoutY="20.0" text="Connexion">
+            <font>
+                <Font name="Chalkboard SE Light" size="36.0"/>
+            </font>
+        </Label>
+        <ImageView fitHeight="178.0" fitWidth="176.0" layoutX="407.0" layoutY="121.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../images/pop-up-connexion.png"/>
+            </image>
+        </ImageView>
+        <PasswordField fx:id="password" layoutX="474.0" layoutY="203.0" prefHeight="26.0" prefWidth="71.0"
+                       style="-fx-background-color: #FBE9D2; -fx-background-radius: 15;"/>
+        <TextField fx:id="email" layoutX="474.0" layoutY="152.0" prefHeight="26.0" prefWidth="71.0"
+                   style="-fx-background-color: #FBE9D2; -fx-background-radius: 15;"/>
+        <ImageView fx:id="seconnecter" fitHeight="39.0" fitWidth="88.0" layoutX="453.0" layoutY="284.0"
+                   onMouseClicked="#actionConnexion" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/button-Green-settings-disabled.png"/>
+            </image>
+        </ImageView>
+        <Label layoutX="451.0" layoutY="291.0" text="se connecter" textFill="WHITE" translateX="11.0">
+            <font>
+                <Font name="Chalkduster" size="10.0"/>
+            </font>
+        </Label>
+    </children>
+</Pane>
