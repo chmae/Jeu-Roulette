@@ -66,7 +66,6 @@ public class VueAccueil extends Pane {
             inscription.setOnMouseExited(event -> inscription.setOpacity(1.0));
 
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -127,6 +126,7 @@ public class VueAccueil extends Pane {
     public void fermerPlateforme() {
         Platform.exit();
     }
+
     public void fermerFenetre() {
         if (pane.getScene() != null) {
             Stage stage = (Stage) pane.getScene().getWindow();

@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,10 +39,9 @@ public class VueParametre {
     private ImageView quitButton;
     @FXML
     private Label disconnectLabel;
-    @FXML
-    private TextField nom;
-    @FXML
-    private TextField solde;
+
+    private Stage primaryStage;
+    private Stage stage;
     @FXML
     private ImageView valideNom;
     @FXML
@@ -72,10 +70,10 @@ public class VueParametre {
             disconnectButton = (ImageView) root.lookup("#disconnect");
             quitButton = (ImageView) root.lookup("#buttonQuit");
             disconnectLabel = (Label) root.lookup("#disconnectLabel");
-            nom = (TextField) root.lookup("#nom");
-            solde = (TextField) root.lookup("#solde");
             valideNom = (ImageView) root.lookup("#valideNom");
             valideSolde = (ImageView) root.lookup("#valideSolde");
+            HoverImage(valideNom);
+            HoverImage(valideSolde);
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
@@ -121,7 +119,6 @@ public class VueParametre {
 
                 stage = (Stage) quitButton.getScene().getWindow();
                 stage.close();
-
             });
             quitButton.setOnMouseEntered(event -> {
                 addShadowEffect(quitButton);
@@ -171,7 +168,6 @@ public class VueParametre {
         scaleTransition.setToY(scaleFactor);
         scaleTransition.play();
     }
-
     private void addShadowEffect(ImageView button) {
         button.setEffect(new DropShadow());
     }

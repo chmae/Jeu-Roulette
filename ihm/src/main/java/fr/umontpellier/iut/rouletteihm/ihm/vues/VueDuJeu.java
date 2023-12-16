@@ -1,9 +1,9 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
-import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.Boule;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.CreationTable;
+import fr.umontpellier.iut.rouletteihm.RouletteIHM;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.CreationTable;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.StatistiquesRoulette;
 
 public class VueDuJeu extends GridPane {
     private IJeu jeu;
@@ -38,10 +40,10 @@ public class VueDuJeu extends GridPane {
     private ArrayList<Integer> montantsParis;
     private Boule boule = new Boule();
     private VueRoue vueRoue = new VueRoue();
+    private StatistiquesRoulette statistiquesRoulette = new StatistiquesRoulette();
 
     private RouletteIHM rouletteIHM;
     private StringProperty valeurGagneeProperty = new SimpleStringProperty("0");
-    private VueInscription vueInscription = new VueInscription();
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
@@ -88,6 +90,39 @@ public class VueDuJeu extends GridPane {
         multiplicateursGain = table.getMultiplicateursParis();
         montantsParis = table.getMontantParis();
 
+        joueurCourantvue.getPasser().setOnMouseClicked(mouseEvent -> {
+            labelInstructions.setText("Vous avez décidé de passer !");
+            vueRoue.animation(jeu.getResultatTourActuel().getNombres());
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
+
+            pauseTransition.setOnFinished(event -> {
+                vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
+                vueDroite.afficherStats();
+                vueDroite.setStatistiquesRoulette(statistiquesRoulette);
+            });
+            pauseTransition.play();
+            jeu.tournerTour();
+            statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
+            statistiquesRoulette.afficherStatistique();
+
+        });
+
+        joueurCourantvue.getPasser1().setOnMouseClicked(mouseEvent -> {
+            labelInstructions.setText("Vous avez décidé de passer !");
+            vueRoue.animation(jeu.getResultatTourActuel().getNombres());
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
+
+            pauseTransition.setOnFinished(event -> {
+                vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
+                vueDroite.afficherStats();
+                vueDroite.setStatistiquesRoulette(statistiquesRoulette);
+            });
+            pauseTransition.play();
+            jeu.tournerTour();
+            statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
+            statistiquesRoulette.afficherStatistique();
+
+        });
     }
 
     public CreationTable getTable() {
@@ -109,13 +144,17 @@ public class VueDuJeu extends GridPane {
         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 System.out.println(listeParis.toString());
+                jeu.tournerTour();
                 vueRoue.animation(jeu.getResultatTourActuel().getNombres());
-
+                statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
+                statistiquesRoulette.afficherStatistique();
                 // Ajouter un délai de 5 secondes avant d'afficher whenWin / whenLose
                 PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
 
                 pauseTransition.setOnFinished(event -> {
                     vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
+                    vueDroite.afficherStats();
+                    vueDroite.setStatistiquesRoulette(statistiquesRoulette);
                     if (listeParis.contains(jeu.getResultatTourActuel().getValeur())) {
                         whenWin();
                     } else {
@@ -184,7 +223,6 @@ public class VueDuJeu extends GridPane {
         Duration pauseDuration = Duration.seconds(10);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> vueLoose.getStage().close()));
         timeline.play();
-
     }
 
     public static VueDuJeu getInstance() {
