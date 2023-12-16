@@ -55,7 +55,7 @@ public class VueJoueurCourant extends GridPane {
     @FXML
     private ImageView passer1;
 
-    public VueJoueurCourant(IJeu jeu, Label labelInstructions) {
+    public VueJoueurCourant(IJeu jeu, Label labelInstructions, VueInscription vueInscription) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueJoueurCourant.fxml"));
             loader.setController(this);

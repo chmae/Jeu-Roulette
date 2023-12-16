@@ -4,6 +4,7 @@ import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.CreationTable;
+import fr.umontpellier.iut.rouletteihm.ihm.vues.VueInscription;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -44,6 +45,7 @@ public class VueDuJeu extends GridPane {
 
     private RouletteIHM rouletteIHM;
     private StringProperty valeurGagneeProperty = new SimpleStringProperty("0");
+    private VueInscription vueInscription = new VueInscription();
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;

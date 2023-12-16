@@ -49,9 +49,6 @@ public class VueParametre {
     @FXML
     private ImageView music ;
 
-    private Stage primaryStage;
-    private Stage stage;
-
 
 
     public VueParametre(Stage p, GestionMusique gestionmusique) {
@@ -155,8 +152,6 @@ public class VueParametre {
             HoverImage(valideNom);
             HoverImage(valideSolde);
             HoverImage(music);
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
