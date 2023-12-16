@@ -112,7 +112,6 @@ public class VueDroite extends VBox {
     }
 
 
-
     public void setStatistiquesRoulette(StatistiquesRoulette statistiquesRoulette) {
         this.statistiquesRoulette = statistiquesRoulette;
     }

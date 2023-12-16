@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -40,14 +41,16 @@ public class VueParametre {
 
     private Stage primaryStage;
     private Stage stage;
+    @FXML
+    private ImageView valideNom;
+    @FXML
+    private ImageView valideSolde;
 
     public VueParametre(Stage p) {
         primaryStage = p;
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/Vue-reglage.fxml"));
-            loader.setController(this);
-            Parent root = loader.load();
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Vue-reglage.fxml"));
 
             parametrePane = (Pane) root.lookup("#parametrePane");
             titleLabel = (Label) root.lookup("#Title");
@@ -58,6 +61,10 @@ public class VueParametre {
             disconnectButton = (ImageView) root.lookup("#disconnect");
             quitButton = (ImageView) root.lookup("#buttonQuit");
             disconnectLabel = (Label) root.lookup("#disconnectLabel");
+            valideNom = (ImageView) root.lookup("#valideNom");
+            valideSolde = (ImageView) root.lookup("#valideSolde");
+            HoverImage(valideNom);
+            HoverImage(valideSolde);
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);

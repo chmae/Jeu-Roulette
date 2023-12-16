@@ -78,19 +78,22 @@
                 </Group>
                 <Pane layoutX="-27.0" layoutY="-116.0" prefHeight="117.0" prefWidth="122.0" translateX="1.0">
                     <children>
-                        <ImageView fx:id="couronne" fitHeight="71.0" fitWidth="129.0" layoutX="-20.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="couronne" fitHeight="71.0" fitWidth="129.0" layoutX="-20.0" layoutY="23.0"
+                                   pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/couronne.png" />
+                                <Image url="@../images/couronne.png"/>
                             </image>
                         </ImageView>
-                        <ImageView fx:id="passer" fitHeight="27.0" fitWidth="48.0" layoutX="9.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="passer" fitHeight="27.0" fitWidth="48.0" layoutX="9.0" layoutY="47.0"
+                                   pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/button-passer.png" />
+                                <Image url="@../images/button-passer.png"/>
                             </image>
                         </ImageView>
-                        <ImageView fx:id="passer1" fitHeight="41.0" fitWidth="45.0" layoutX="59.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="passer1" fitHeight="41.0" fitWidth="45.0" layoutX="59.0" layoutY="38.0"
+                                   pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/button-next.png" />
+                                <Image url="@../images/button-next.png"/>
                             </image>
                         </ImageView>
 
