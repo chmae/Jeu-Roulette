@@ -34,7 +34,6 @@ public class RouletteIHM extends Application {
     private Client client = new Client();
 
 
-
     @Override
     public void start(Stage primaryStage) {
         instance = this;
@@ -46,7 +45,8 @@ public class RouletteIHM extends Application {
 
 
     }
-    public void fonctionnaliteAccueil(){
+
+    public void fonctionnaliteAccueil() {
         if (avecAccueil) {
             vueAccueil = new VueAccueil();
             vueInscription = new VueInscription();
@@ -154,13 +154,11 @@ public class RouletteIHM extends Application {
         return vueAccueil;
     }
 
-    public VueInscription getVueInscription(){
-        return vueInscription;
-    }
     public static RouletteIHM getInstance() {
         return instance;
     }
-    public IJeu getJeu(){
+
+    public IJeu getJeu() {
         return jeu;
     }
 
