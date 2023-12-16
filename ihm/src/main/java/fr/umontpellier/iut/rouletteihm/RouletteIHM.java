@@ -2,8 +2,8 @@ package fr.umontpellier.iut.rouletteihm;
 
 import fr.umontpellier.iut.rouletteihm.application.controller.client.ControllerClient;
 import fr.umontpellier.iut.rouletteihm.application.controller.client.NouvelClientController;
-import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.CreationTable;
+import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.Joueur;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.Roulette;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.utils.Interaction;

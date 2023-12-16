@@ -1,6 +1,5 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
-import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
 import javafx.animation.ScaleTransition;
@@ -8,6 +7,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -59,7 +59,11 @@ public class VueAutresJoueurs extends Pane {
             buttonQuit.setOnMouseClicked(event -> {
                 Stage stage = (Stage) buttonQuit.getScene().getWindow();
                 stage.close();
-                RouletteIHM.getInstance().fonctionnaliteAccueil();
+                if (vueAccueil.getScene() == null) {
+                    primaryStage.setScene(new Scene(vueAccueil, 599, 390));
+                }
+                primaryStage.setTitle("Accueil");
+                primaryStage.show();
             });
 
 
@@ -124,7 +128,6 @@ public class VueAutresJoueurs extends Pane {
             scaleTransition.play();
         });
     }
-
     private void afficherVueParametre() {
         VueParametre vueParametre = new VueParametre((Stage) getScene().getWindow());
         vueParametre.show();

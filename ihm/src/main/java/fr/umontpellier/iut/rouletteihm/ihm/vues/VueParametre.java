@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -38,14 +37,6 @@ public class VueParametre {
     private ImageView quitButton;
     @FXML
     private Label disconnectLabel;
-    @FXML
-    private TextField nom;
-    @FXML
-    private TextField solde;
-    @FXML
-    private ImageView valideNom;
-    @FXML
-    private ImageView valideSolde;
 
     private Stage primaryStage;
     private Stage stage;
@@ -54,7 +45,9 @@ public class VueParametre {
         primaryStage = p;
 
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Vue-reglage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/Vue-reglage.fxml"));
+            loader.setController(this);
+            Parent root = loader.load();
 
             parametrePane = (Pane) root.lookup("#parametrePane");
             titleLabel = (Label) root.lookup("#Title");
@@ -65,10 +58,6 @@ public class VueParametre {
             disconnectButton = (ImageView) root.lookup("#disconnect");
             quitButton = (ImageView) root.lookup("#buttonQuit");
             disconnectLabel = (Label) root.lookup("#disconnectLabel");
-            nom = (TextField) root.lookup("#nom");
-            solde = (TextField) root.lookup("#solde");
-            valideNom = (ImageView) root.lookup("#valideNom");
-            valideSolde = (ImageView) root.lookup("#valideSolde");
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
@@ -77,7 +66,6 @@ public class VueParametre {
             quitButton.setOnMouseClicked(event -> {
                 stage = (Stage) quitButton.getScene().getWindow();
                 stage.close();
-
             });
             quitButton.setOnMouseEntered(event -> {
                 addShadowEffect(quitButton);
@@ -111,8 +99,6 @@ public class VueParametre {
 
             HoverImage(franceIcon);
             HoverImage(ukIcon);
-            HoverImage(valideNom);
-            HoverImage(valideSolde);
 
 
         } catch (IOException e) {
@@ -126,7 +112,6 @@ public class VueParametre {
         scaleTransition.setToY(scaleFactor);
         scaleTransition.play();
     }
-
     private void addShadowEffect(ImageView button) {
         button.setEffect(new DropShadow());
     }
@@ -164,8 +149,6 @@ public class VueParametre {
             scaleTransition.playFromStart();
         });
     }
-
-
 
     public Pane getPane() {
         return parametrePane;

@@ -19,7 +19,7 @@ public class VueJoueurCourant extends GridPane {
     @FXML
     private Label SoldePlayer;
     @FXML
-    private ImageView miseJoueur;
+    private ImageView miseJoueur; // Change this from HBox to ImageView
     @FXML
     private ImageView CouronneJoueur;
     @FXML
@@ -33,19 +33,14 @@ public class VueJoueurCourant extends GridPane {
     @FXML
     private Label mise;
     private Label labelInstructions;
-    @FXML
-    private Label nomJoueur;
-    private VueInscription vueInscription;
 
-    public VueJoueurCourant(IJeu jeu, Label labelInstructions, VueInscription vueInscription) {
-        this.vueInscription = vueInscription;
+    public VueJoueurCourant(IJeu jeu, Label labelInstructions) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueJoueurCourant.fxml"));
             loader.setController(this);
             Parent root = loader.load();
             SoldePlayer = (Label) root.lookup("#soldePlayer");
             mise = (Label) root.lookup("#mise");
-            nomJoueur = (Label) root.lookup("#nomJoueur");
             getChildren().addAll(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,7 +50,6 @@ public class VueJoueurCourant extends GridPane {
         this.creerBindings();
         SoldePlayer.setText(String.valueOf(jeu.joueurCourantProperty().getValue().soldeProperty().getValue()));
         soldePlayer2.setText(String.valueOf(jeu.joueurCourantProperty().getValue().getMiseActuelle()));
-        nomJoueur.setText(jeu.joueurCourantProperty().getValue().getNom());
         this.labelInstructions = labelInstructions;
         joueur = jeu.joueurCourantProperty().get();
     }
@@ -81,6 +75,4 @@ public class VueJoueurCourant extends GridPane {
             jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());
         });
     }
-
-
 }
