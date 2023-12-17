@@ -101,7 +101,6 @@ public class VueJoueurCourant extends GridPane {
 
         jeu.joueurCourantProperty().get().getMiseActuelleProperty().addListener((observable, oldValue, newValue) -> {
             soldePlayer2.setText(String.valueOf(joueur.getMiseActuelle()));
-            jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());
         });
     }
 
