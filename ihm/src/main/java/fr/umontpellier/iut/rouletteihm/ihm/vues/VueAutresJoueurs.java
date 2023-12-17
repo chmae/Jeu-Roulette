@@ -5,6 +5,7 @@ import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +28,7 @@ public class VueAutresJoueurs extends Pane {
     private Label solde1;
     private Label solde2;
     private VueAccueil vueAccueil = new VueAccueil();
+    private VueParametre vueParametre;
 
     private GestionMusique musiqueCasino = new GestionMusique();
 
@@ -60,6 +62,7 @@ public class VueAutresJoueurs extends Pane {
             HoverImage(buttonQuit);
             HoverImage(parametre);
             Stage primaryStage = new Stage();
+            vueParametre = VueParametre.getInstance(primaryStage, musiqueCasino);
 
             //-- sons bouton-- //
             String cheminAudioBouton = "ihm/src/main/resources/musique/sonsBouton.mp3";
@@ -156,8 +159,12 @@ public class VueAutresJoueurs extends Pane {
     }
 
     private void afficherVueParametre(GestionMusique music) {
-        VueParametre vueParametre = new VueParametre((Stage) getScene().getWindow(), music);
+        vueParametre = VueParametre.getInstance((Stage) new Scene(new Parent() {}).getWindow(), music);
         vueParametre.show();
+    }
+
+    public IntegerProperty getLangueProperty() {
+        return vueParametre.getLangueProperty();
     }
 
 }

@@ -2,25 +2,32 @@ package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.io.IOException;
 
 public class VueParametre {
 
+    private static VueParametre instance;
     @FXML
     private Pane parametrePane;
     @FXML
@@ -42,6 +49,7 @@ public class VueParametre {
 
     private Stage primaryStage;
     private Stage stage;
+    private IntegerProperty langue;
     @FXML
     private ImageView valideNom;
     @FXML
@@ -51,7 +59,7 @@ public class VueParametre {
 
 
 
-    public VueParametre(Stage p, GestionMusique gestionmusique) {
+    private VueParametre(Stage p, GestionMusique gestionmusique) {
         primaryStage = p;
 
         try {
@@ -60,9 +68,12 @@ public class VueParametre {
             parametrePane = (Pane) root.lookup("#parametrePane");
             titleLabel = (Label) root.lookup("#Title");
             volumeSlider = (Slider) root.lookup("#volume");
+            langue = new SimpleIntegerProperty();
             music = (ImageView) root.lookup("#music");
             franceIcon = (ImageView) root.lookup("#buttonFrancais");
+            creerBindingsLangue(franceIcon, 1);
             ukIcon = (ImageView) root.lookup("#buttonAnglais");
+            creerBindingsLangue(ukIcon, 0);
             languesLabel = (Label) root.lookup("#languesLabel");
             disconnectButton = (ImageView) root.lookup("#disconnect");
             quitButton = (ImageView) root.lookup("#buttonQuit");
@@ -199,6 +210,37 @@ public class VueParametre {
             scaleTransition.setToY(1.0);
             scaleTransition.playFromStart();
         });
+    }
+
+    private void creerBindingsLangue(ImageView imageLangue, int choixLangue){
+        EventHandler<MouseEvent> changeLangue = mouseEvent -> {
+
+            if(choixLangue==0) {
+                titleLabel.setText("Settings");
+                disconnectLabel.setText("Log off");
+                languesLabel.setText("Languages :");
+                langue.set(0);
+            }
+            else {
+                titleLabel.setText("Réglages");
+                disconnectLabel.setText("Se déconnecter");
+                languesLabel.setText("Langues :");
+                langue.set(1);
+            }
+        };
+
+        imageLangue.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, changeLangue);
+    }
+
+    public IntegerProperty getLangueProperty() {
+        return langue;
+    }
+
+    public static VueParametre getInstance(Stage p, GestionMusique gestionmusique) {
+        if (instance == null) {
+            instance = new VueParametre(p, gestionmusique);
+        }
+        return instance;
     }
 
 

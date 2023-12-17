@@ -5,6 +5,7 @@ import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.CreationTable;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueInscription;
+import javafx.beans.property.IntegerProperty;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -45,20 +46,22 @@ public class VueDuJeu extends GridPane {
 
     private RouletteIHM rouletteIHM;
     private StringProperty valeurGagneeProperty = new SimpleStringProperty("0");
+    private IntegerProperty langue;
     private VueInscription vueInscription = new VueInscription();
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
         instance = this;
 
+        autresJoueurs = new VueAutresJoueurs(jeu);
+        langue = autresJoueurs.getLangueProperty();
 
-        vueBet = new VueBet(jeu);
+        vueBet = new VueBet(jeu, autresJoueurs.getLangueProperty());
         labelInstructions = vueBet.getLabelInstruction();
         table = new CreationTable(jeu, labelInstructions, vueBet);
         listeParis = table.getListeParis();
 
         plateau = new VuePlateau(jeu);
-        autresJoueurs = new VueAutresJoueurs(jeu);
         vueDroite = new VueDroite(jeu);
         vueGauche = new VueGauche(jeu);
         vuePlayerInfo = new VuePlayerInfo(jeu);
@@ -142,7 +145,7 @@ public class VueDuJeu extends GridPane {
         elementsGauche.prefHeightProperty().bind(heightProperty());
         vueDroite.prefHeightProperty().bind(heightProperty());
 
-        vueBet.creerBinding();
+        vueBet.creerBinding(langue);
         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 System.out.println(listeParis.toString());

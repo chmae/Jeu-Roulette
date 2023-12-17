@@ -5,6 +5,7 @@ import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -49,7 +50,7 @@ public class VueBet extends GridPane {
         ok = bool;
     }
 
-    public VueBet(IJeu jeu) {
+    public VueBet(IJeu jeu, IntegerProperty langueProperty) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueBet.fxml"));
             loader.setController(this);
@@ -59,27 +60,27 @@ public class VueBet extends GridPane {
             Jetons.setAlignment(Pos.CENTER);
 
             ImageView token1 = (ImageView) Jetons.lookup("#Token1");
-            creerBidingsJeton(token1, 1);
+            creerBindingsJeton(token1, 1, langueProperty);
             HoverImage(token1);
 
             ImageView token5 = (ImageView) Jetons.lookup("#Token5");
-            creerBidingsJeton(token5, 5);
+            creerBindingsJeton(token5, 5, langueProperty);
             HoverImage(token5);
 
             ImageView token25 = (ImageView) Jetons.lookup("#Token25");
-            creerBidingsJeton(token25, 25);
+            creerBindingsJeton(token25, 25, langueProperty);
             HoverImage(token25);
 
             ImageView token100 = (ImageView) Jetons.lookup("#Token100");
-            creerBidingsJeton(token100, 100);
+            creerBindingsJeton(token100, 100, langueProperty);
             HoverImage(token100);
 
             ImageView token500 = (ImageView) Jetons.lookup("#Token500");
-            creerBidingsJeton(token500, 500);
+            creerBindingsJeton(token500, 500, langueProperty);
             HoverImage(token500);
 
             ImageView token1000 = (ImageView) Jetons.lookup("#Token1000");
-            creerBidingsJeton(token1000, 1000);
+            creerBindingsJeton(token1000, 1000, langueProperty);
             HoverImage(token1000);
             Pane InstructionBox = (Pane) root.lookup("#InstructionBox");
             ImageView valider = (ImageView) InstructionBox.lookup("#valider");
@@ -95,7 +96,12 @@ public class VueBet extends GridPane {
         }
         this.jeu = jeu;
         setId("vueBet");
-        LabelInstruction.setText("Quel somme voulez-vous miser ?");
+        if (langueProperty.getValue() == 0){
+            LabelInstruction.setText("Combien voulez-vous miser ?");
+        }
+        else if (langueProperty.getValue() == 1){
+            LabelInstruction.setText("How much do you want to bet ?");
+        }
         ok = false;
     }
 
@@ -122,13 +128,23 @@ public class VueBet extends GridPane {
         });
     }
 
-    private void creerBidingsJeton(ImageView jeton, int valeurJeton) {
+    private void creerBindingsJeton(ImageView jeton, int valeurJeton, IntegerProperty langueProperty) {
         EventHandler<MouseEvent> miseJoueurChange = mouseEvent -> {
             if (jeu.joueurCourantProperty().get().soldeProperty().getValue() - jeu.joueurCourantProperty().get().getMiseTotale() < valeurJeton) {
-                LabelInstruction.setText("Vous n'avez pas assez d'argent pour faire ce paris !");
+                if (langueProperty.getValue() == 0) {
+                    LabelInstruction.setText("Vous n'avez pas assez d'argent pour miser cette somme !");
+                }
+                else if (langueProperty.getValue() == 1){
+                    LabelInstruction.setText("You don't have enough money make this bet !");
+                }
             } else {
                 jeu.joueurCourantProperty().get().setMiseActuelle(valeurJeton);
-                LabelInstruction.setText("La valeur de la mise a été changée à : " + valeurJeton);
+                if (langueProperty.getValue() == 0) {
+                    LabelInstruction.setText("Vous avez misé " + valeurJeton);
+                }
+                else if (langueProperty.getValue() == 1){
+                    LabelInstruction.setText("You bet " + valeurJeton);
+                }
             }
         };
 
@@ -201,10 +217,18 @@ public class VueBet extends GridPane {
         valider.addEventHandler(MouseEvent.MOUSE_CLICKED, validationJoueur);
     }
 
-    public void creerBinding() {
+    public void creerBinding(IntegerProperty langueProperty) {
         jeu.joueurCourantProperty().addListener((observableValue, iJoueur, t1) -> {
             validation.set(false);
             jeu.tournerTour();
+        });
+
+        langueProperty.addListener(observable -> {
+            if (langueProperty.getValue()==1) {
+                getLabelInstruction().setText("The language has been changed !");
+            } else {
+                getLabelInstruction().setText("La langue a été changée !");
+            }
         });
     }
 }

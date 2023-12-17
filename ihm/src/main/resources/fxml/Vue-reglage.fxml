@@ -18,7 +18,7 @@
                 <Image url="@../images/cross-promo-game-info-support.png"/>
             </image>
         </ImageView>
-        <Label fx:id="Title" layoutX="103.0" layoutY="-6.0" prefHeight="33.0" prefWidth="78.0" text="Settings"
+        <Label fx:id="Title" layoutX="103.0" layoutY="-6.0" prefHeight="33.0" prefWidth="78.0" text="Réglages"
                textFill="WHITE">
             <font>
                 <Font name="Chalkduster" size="16.0"/>
@@ -71,7 +71,7 @@
                 <Image url="@../images/button-cross-orange.png"/>
             </image>
         </ImageView>
-        <Label fx:id="disconnectLabel" layoutX="132.0" layoutY="452.0" text="se déconnecter" textFill="WHITE">
+        <Label fx:id="disconnectLabel" layoutX="132.0" layoutY="452.0" text="Se déconnecter" textFill="WHITE">
             <font>
                 <Font name="Chalkduster" size="10.0"/>
             </font>
