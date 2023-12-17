@@ -1252,7 +1252,6 @@ public class CreationTable {
             multiplicateursParis.set(nombre, multiplicateursParis.get(nombre) + 3);
             montantParis.set(nombre, jeu.joueurCourantProperty().get().getMiseActuelle() + montantParis.get(nombre));
         }
-        jeu.joueurCourantProperty().get().setMiseActuelle(0);
     }
 
     private void bimontant(ArrayList<Integer> nombresGagnants) {
@@ -1260,13 +1259,11 @@ public class CreationTable {
             multiplicateursParis.set(nombre, multiplicateursParis.get(nombre) + 2);
             montantParis.set(nombre, jeu.joueurCourantProperty().get().getMiseActuelle() + montantParis.get(nombre));
         }
-        jeu.joueurCourantProperty().get().setMiseActuelle(0);
     }
 
     private void unimontant(int nombreGagnant) {
         multiplicateursParis.set(nombreGagnant, multiplicateursParis.get(nombreGagnant) + 36);
         montantParis.set(nombreGagnant, jeu.joueurCourantProperty().get().getMiseActuelle() + montantParis.get(nombreGagnant));
-        jeu.joueurCourantProperty().get().setMiseActuelle(0);
     }
 
 
@@ -1340,7 +1337,7 @@ public class CreationTable {
         EventHandler<javafx.scene.input.MouseEvent> parisJoueur = mouseEvent -> {
             System.out.println(jeu.getResultatTourActuel().getCouleur());
             System.out.println(jeu.getResultatTourActuel().getValeur());
-            if (jeu.joueurCourantProperty().get().getMiseTotale() != 0) {
+            if (jeu.joueurCourantProperty().get().getMiseActuelle() != 0) {
                 switch (textNode.getText()) {
                     default:
                         if (langueChoisie.intValue()==0){
@@ -1724,6 +1721,8 @@ public class CreationTable {
                         break;
 
                 }
+                jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());
+                jeu.joueurCourantProperty().get().setMiseActuelle(0);
             }
         };
         n.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, parisJoueur);
