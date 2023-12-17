@@ -45,12 +45,13 @@ public class VueBet extends GridPane {
 
     private BooleanProperty validation;
     private boolean ok;
+    private IntegerProperty langueChoisie;
 
     public void setOk(boolean bool) {
         ok = bool;
     }
 
-    public VueBet(IJeu jeu, IntegerProperty langueProperty) {
+    public VueBet(IJeu jeu, IntegerProperty langueChoisie) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueBet.fxml"));
             loader.setController(this);
@@ -60,27 +61,27 @@ public class VueBet extends GridPane {
             Jetons.setAlignment(Pos.CENTER);
 
             ImageView token1 = (ImageView) Jetons.lookup("#Token1");
-            creerBindingsJeton(token1, 1, langueProperty);
+            creerBindingsJeton(token1, 1);
             HoverImage(token1);
 
             ImageView token5 = (ImageView) Jetons.lookup("#Token5");
-            creerBindingsJeton(token5, 5, langueProperty);
+            creerBindingsJeton(token5, 5);
             HoverImage(token5);
 
             ImageView token25 = (ImageView) Jetons.lookup("#Token25");
-            creerBindingsJeton(token25, 25, langueProperty);
+            creerBindingsJeton(token25, 25);
             HoverImage(token25);
 
             ImageView token100 = (ImageView) Jetons.lookup("#Token100");
-            creerBindingsJeton(token100, 100, langueProperty);
+            creerBindingsJeton(token100, 100);
             HoverImage(token100);
 
             ImageView token500 = (ImageView) Jetons.lookup("#Token500");
-            creerBindingsJeton(token500, 500, langueProperty);
+            creerBindingsJeton(token500, 500);
             HoverImage(token500);
 
             ImageView token1000 = (ImageView) Jetons.lookup("#Token1000");
-            creerBindingsJeton(token1000, 1000, langueProperty);
+            creerBindingsJeton(token1000, 1000);
             HoverImage(token1000);
             Pane InstructionBox = (Pane) root.lookup("#InstructionBox");
             ImageView valider = (ImageView) InstructionBox.lookup("#valider");
@@ -95,11 +96,11 @@ public class VueBet extends GridPane {
             e.printStackTrace();
         }
         this.jeu = jeu;
+        this.langueChoisie = langueChoisie;
         setId("vueBet");
-        if (langueProperty.getValue() == 0){
+        if (langueChoisie.getValue() == 0){
             LabelInstruction.setText("Combien voulez-vous miser ?");
-        }
-        else if (langueProperty.getValue() == 1){
+        } else {
             LabelInstruction.setText("How much do you want to bet ?");
         }
         ok = false;
@@ -128,22 +129,22 @@ public class VueBet extends GridPane {
         });
     }
 
-    private void creerBindingsJeton(ImageView jeton, int valeurJeton, IntegerProperty langueProperty) {
+    private void creerBindingsJeton(ImageView jeton, int valeurJeton) {
         EventHandler<MouseEvent> miseJoueurChange = mouseEvent -> {
             if (jeu.joueurCourantProperty().get().soldeProperty().getValue() - jeu.joueurCourantProperty().get().getMiseTotale() < valeurJeton) {
-                if (langueProperty.getValue() == 0) {
+                if (langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("Vous n'avez pas assez d'argent pour miser cette somme !");
                 }
-                else if (langueProperty.getValue() == 1){
+                else if (langueChoisie.getValue() == 1){
                     LabelInstruction.setText("You don't have enough money make this bet !");
                 }
             } else {
                 jeu.joueurCourantProperty().get().setMiseActuelle(valeurJeton);
-                if (langueProperty.getValue() == 0) {
-                    LabelInstruction.setText("Vous avez misé " + valeurJeton);
+                if (langueChoisie.getValue() == 0) {
+                    LabelInstruction.setText("La valeur de la mise à été changée à : " + valeurJeton);
                 }
-                else if (langueProperty.getValue() == 1){
-                    LabelInstruction.setText("You bet " + valeurJeton);
+                else if (langueChoisie.getValue() == 1){
+                    LabelInstruction.setText("The bet value has been changed to : " + valeurJeton);
                 }
             }
         };
@@ -200,11 +201,23 @@ public class VueBet extends GridPane {
             sonsBoutonValider.remettreMusiqueAuDebut();
 
             if (jeu.joueurCourantProperty().get().soldeProperty().getValue() < jeu.joueurCourantProperty().get().getMiseTotale()) {
-                LabelInstruction.setText("Vous n'avez pas assez d'argent pour faire ce paris !");
+                if (this.langueChoisie.getValue()==0) {
+                    LabelInstruction.setText("Vous n'avez pas assez d'argent pour faire ce paris !");
+                } else {
+                    LabelInstruction.setText("You don't have enough money to make this bet!");
+                }
             } else if (jeu.joueurCourantProperty().get().getMiseTotale() == 0 && ok) {
-                LabelInstruction.setText("Vous n'avez pas encore parié !");
+                if (this.langueChoisie.getValue()==0) {
+                    LabelInstruction.setText("Vous n'avez pas encore parié !");
+                } else {
+                    LabelInstruction.setText("You haven't bet yet !");
+                }
             } else {
-                LabelInstruction.setText("Paris confirmé(s), roulette lancée ! ");
+                if (this.langueChoisie.getValue()==0) {
+                    LabelInstruction.setText("Paris confirmé(s), roulette lancée ! ");
+                } else {
+                    LabelInstruction.setText("Bets confirmed, roulette launched !");
+                }
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -215,20 +228,5 @@ public class VueBet extends GridPane {
         };
 
         valider.addEventHandler(MouseEvent.MOUSE_CLICKED, validationJoueur);
-    }
-
-    public void creerBinding(IntegerProperty langueProperty) {
-        jeu.joueurCourantProperty().addListener((observableValue, iJoueur, t1) -> {
-            validation.set(false);
-            jeu.tournerTour();
-        });
-
-        langueProperty.addListener(observable -> {
-            if (langueProperty.getValue()==1) {
-                getLabelInstruction().setText("The language has been changed !");
-            } else {
-                getLabelInstruction().setText("La langue a été changée !");
-            }
-        });
     }
 }

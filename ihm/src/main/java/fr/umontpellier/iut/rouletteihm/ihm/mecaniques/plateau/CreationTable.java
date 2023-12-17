@@ -4,6 +4,7 @@ import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueBet;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -42,6 +43,7 @@ public class CreationTable {
     private static final ArrayList<String> topLine = new ArrayList<String>(Arrays.asList("1-12", "13-24", "25-36"));
     private List<Pair<Rectangle, Paint>> originalColors = new ArrayList<>();
     private Label labelInstructions;
+    private IntegerProperty langueChoisie;
     private ArrayList<Integer> listeParis;
     private ArrayList<Integer> multiplicateursParis;
     private ArrayList<Integer> montantParis;
@@ -50,11 +52,12 @@ public class CreationTable {
     private List<Rectangle> espacesEntreCases = new ArrayList<>();
 
 
-    public CreationTable(IJeu jeu, Label labelInstructions, VueBet vueBet) {
+    public CreationTable(IJeu jeu, Label labelInstructions, VueBet vueBet, IntegerProperty langueChoisie) {
         this.vueBet = vueBet;
         dessinerGrille();
         this.jeu = jeu;
         this.labelInstructions = labelInstructions;
+        this.langueChoisie = langueChoisie;
         listeParis = new ArrayList<>();
         multiplicateursParis = new ArrayList<>();
         for (int i = 0; i < 37; i++) {
@@ -1236,7 +1239,12 @@ public class CreationTable {
     }
 
     private void changerLabelInstructions(String pari) {
-        labelInstructions.setText("Pari " + pari + " ajouté");
+        if (langueChoisie.intValue()==0){
+            labelInstructions.setText("Paris sur " + pari);
+        }
+        else{
+            labelInstructions.setText("Bet on " + pari);
+        }
     }
 
     private void multimontant(ArrayList<Integer> nombresGagnants) {
@@ -1335,7 +1343,12 @@ public class CreationTable {
             if (jeu.joueurCourantProperty().get().getMiseTotale() != 0) {
                 switch (textNode.getText()) {
                     default:
-                        labelInstructions.setText("Paris Incorrect");
+                        if (langueChoisie.intValue()==0){
+                            labelInstructions.setText("Paris Incorret");
+                        }
+                        else{
+                            labelInstructions.setText("Bet are Incorrect");
+                        }
                         break;
 
                     case "2 pour 1-1":

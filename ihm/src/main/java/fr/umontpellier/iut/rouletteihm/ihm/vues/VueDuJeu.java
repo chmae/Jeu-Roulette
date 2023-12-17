@@ -54,18 +54,16 @@ public class VueDuJeu extends GridPane {
         instance = this;
 
         autresJoueurs = new VueAutresJoueurs(jeu);
-        langue = autresJoueurs.getLangueProperty();
 
-        vueBet = new VueBet(jeu, autresJoueurs.getLangueProperty());
+        vueBet = new VueBet(jeu, autresJoueurs.getLangueChoisie());
         labelInstructions = vueBet.getLabelInstruction();
-        table = new CreationTable(jeu, labelInstructions, vueBet);
+        table = new CreationTable(jeu, labelInstructions, vueBet, autresJoueurs.getLangueChoisie());
         listeParis = table.getListeParis();
-
         plateau = new VuePlateau(jeu);
         vueDroite = new VueDroite(jeu);
         vueGauche = new VueGauche(jeu);
         vuePlayerInfo = new VuePlayerInfo(jeu);
-        joueurCourantvue = new VueJoueurCourant(jeu, labelInstructions, vueInscription);
+        joueurCourantvue = new VueJoueurCourant(jeu, labelInstructions, vueInscription, autresJoueurs.getLangueChoisie());
         elementsGauche = new HBox(10, vueGauche, autresJoueurs);
 
         add(vueRoue.getRoue(), 1, 1);
@@ -145,7 +143,6 @@ public class VueDuJeu extends GridPane {
         elementsGauche.prefHeightProperty().bind(heightProperty());
         vueDroite.prefHeightProperty().bind(heightProperty());
 
-        vueBet.creerBinding(langue);
         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 System.out.println(listeParis.toString());
@@ -167,7 +164,17 @@ public class VueDuJeu extends GridPane {
                     }
                     // Uniquement pour le sprint 2 (1 joueur)
                     vueBet.validationProperty().set(false);
-                    labelInstructions.setText("Le " + jeu.getResultatTourActuel().getValeur() + " " + jeu.getResultatTourActuel().getCouleur() + " est tombé ! Misez pour rejouer");
+                    if (autresJoueurs.getLangueChoisie().getValue()==0) {
+                        labelInstructions.setText("Le " + jeu.getResultatTourActuel().getValeur() + " " + jeu.getResultatTourActuel().getCouleur() + " est tombé ! Misez pour rejouer");
+                    } else {
+                        if (jeu.getResultatTourActuel().getCouleur().equals("Noir")) {
+                            labelInstructions.setText("The Black " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                        } else if(jeu.getResultatTourActuel().getCouleur().equals("Rouge")) {
+                            labelInstructions.setText("The Red " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                        } else {
+                            labelInstructions.setText("The Green " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                        }
+                    }
                     jeu.tournerTour();
                     table.viderListeParis();
                     table.viderMontantsParis();
@@ -187,6 +194,14 @@ public class VueDuJeu extends GridPane {
 
         table.getListeParisObserver().addListener((ListChangeListener<Integer>) c -> {
             vueBet.setOk(true);
+        });
+
+        autresJoueurs.getLangueChoisie().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue()==0) {
+                labelInstructions.setText("La langue a bien été changée !");
+            } else {
+                labelInstructions.setText("Language has been change successfully !");
+            }
         });
     }
 

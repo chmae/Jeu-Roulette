@@ -27,7 +27,6 @@ import java.io.IOException;
 
 public class VueParametre {
 
-    private static VueParametre instance;
     @FXML
     private Pane parametrePane;
     @FXML
@@ -41,6 +40,12 @@ public class VueParametre {
     @FXML
     private Label languesLabel;
     @FXML
+    private Label modificationProfilLabel;
+    @FXML
+    private Label nomModifLabel;
+    @FXML
+    private Label soldeModifLabel;
+    @FXML
     private ImageView disconnectButton;
     @FXML
     private ImageView quitButton;
@@ -50,6 +55,7 @@ public class VueParametre {
     private Stage primaryStage;
     private Stage stage;
     private IntegerProperty langue;
+    private static VueParametre instance;
     @FXML
     private ImageView valideNom;
     @FXML
@@ -68,13 +74,16 @@ public class VueParametre {
             parametrePane = (Pane) root.lookup("#parametrePane");
             titleLabel = (Label) root.lookup("#Title");
             volumeSlider = (Slider) root.lookup("#volume");
-            langue = new SimpleIntegerProperty();
+            langue = new SimpleIntegerProperty(0);
             music = (ImageView) root.lookup("#music");
             franceIcon = (ImageView) root.lookup("#buttonFrancais");
-            creerBindingsLangue(franceIcon, 1);
+            creerBindingsLangue(franceIcon, 0);
             ukIcon = (ImageView) root.lookup("#buttonAnglais");
-            creerBindingsLangue(ukIcon, 0);
+            creerBindingsLangue(ukIcon, 1);
             languesLabel = (Label) root.lookup("#languesLabel");
+            modificationProfilLabel = (Label) root.lookup("#modificationProfilLabel");
+            nomModifLabel = (Label) root.lookup("#nomModifLabel");
+            soldeModifLabel = (Label) root.lookup("#soldeModifLabel");
             disconnectButton = (ImageView) root.lookup("#disconnect");
             quitButton = (ImageView) root.lookup("#buttonQuit");
             disconnectLabel = (Label) root.lookup("#disconnectLabel");
@@ -212,35 +221,42 @@ public class VueParametre {
         });
     }
 
-    private void creerBindingsLangue(ImageView imageLangue, int choixLangue){
-        EventHandler<MouseEvent> changeLangue = mouseEvent -> {
-
-            if(choixLangue==0) {
-                titleLabel.setText("Settings");
-                disconnectLabel.setText("Log off");
-                languesLabel.setText("Languages :");
-                langue.set(0);
-            }
-            else {
-                titleLabel.setText("Réglages");
-                disconnectLabel.setText("Se déconnecter");
-                languesLabel.setText("Langues :");
-                langue.set(1);
+    private void creerBindingsLangue(ImageView imageView, int langue) {
+        EventHandler<MouseEvent> langueChange = mouseEvent -> {
+            this.langue.set(langue);
+            if(langue==0) {
+                this.languesLabel.setText("Langues :");
+                this.disconnectLabel.setText("Se déconnecter");
+                this.modificationProfilLabel.setText("Modification profil :");
+                this.nomModifLabel.setText("Nom");
+                this.soldeModifLabel.setText("Solde");
+                this.titleLabel.setText("Réglages");
+            } else {
+                this.languesLabel.setText("Languages :");
+                this.disconnectLabel.setText("Log Off");
+                this.modificationProfilLabel.setText("Update profile :");
+                this.nomModifLabel.setText("Name");
+                this.soldeModifLabel.setText("Balance");
+                this.titleLabel.setText("Settings");
             }
         };
 
-        imageLangue.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, changeLangue);
+        imageView.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, langueChange);
     }
 
     public IntegerProperty getLangueProperty() {
         return langue;
     }
 
-    public static VueParametre getInstance(Stage p, GestionMusique gestionmusique) {
+    public synchronized static VueParametre getInstance(Stage p, GestionMusique gestionmusique) {
         if (instance == null) {
             instance = new VueParametre(p, gestionmusique);
         }
         return instance;
+    }
+
+    public IntegerProperty getLangueChoisie() {
+        return langue;
     }
 
 
