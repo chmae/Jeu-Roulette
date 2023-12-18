@@ -25,7 +25,6 @@ public class VueWin {
     private boolean rejouerClicked = false;
     @FXML
     private Label gainJeton;
-
     private GestionMusique gestionMusique;
 
     public VueWin(Stage p) {
