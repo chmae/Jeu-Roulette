@@ -14,7 +14,9 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -161,6 +163,12 @@ public class VueDuJeu extends GridPane {
                         whenWin();
                     } else {
                         whenLose();
+                    }
+                    for (Node node : table.getTable().getChildren()) {
+                        if (node instanceof ImageView) {
+                            ImageView imageView = (ImageView) node;
+                            imageView.setVisible(false);
+                        }
                     }
                     // Uniquement pour le sprint 2 (1 joueur)
                     vueBet.validationProperty().set(false);

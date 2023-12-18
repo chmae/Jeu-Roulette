@@ -1,6 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau;
 
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
+import fr.umontpellier.iut.rouletteihm.ihm.vues.DonneesGraphiques;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueBet;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
@@ -12,6 +13,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
@@ -278,6 +280,7 @@ public class CreationTable {
         textNode1.scaleYProperty().bind(oneToEitheen.heightProperty().divide(45));
 
         table.getChildren().addAll(oneToEitheen, ligneHaut1, ligneBas1, ligneGauche1, textNode1);
+        creerBindingParis(oneToEitheen, textNode1);
 
 
         oneToEitheen.setOnMouseEntered(event -> {
@@ -900,6 +903,7 @@ public class CreationTable {
         textNode1.scaleYProperty().bind(r1.heightProperty().divide(45));
 
         table.getChildren().addAll(r1, ligneHaut, ligneBas, ligneGauche, textNode1);
+        creerBindingParis(r1, textNode1);
 
         r1.setOnMouseEntered(event -> {
             List<Pair<Rectangle, Paint>> originalColors = new ArrayList<>();
@@ -1209,18 +1213,18 @@ public class CreationTable {
             }
         });
 
-        node.setOnMouseClicked(event -> {
-            scaleTransition.stop();
-            fadeTransition.stop();
-
-            casesJetonPlace.put(node, true);
-
-            if (node instanceof Rectangle) {
-                placerJeton((Rectangle) node);
-            } else if (node instanceof Polygon) {
-                placerJetonZero((Polygon) node);
-            }
-        });
+//            node.setOnMouseClicked(event -> {
+//                scaleTransition.stop();
+//                fadeTransition.stop();
+//
+//                casesJetonPlace.put(node, true);
+//
+//                if (node instanceof Rectangle) {
+//                    placerJeton((Rectangle) node);
+//                } else if (node instanceof Polygon) {
+//                    placerJetonZero((Polygon) node);
+//                }
+//            });
     }
 
 
@@ -1268,70 +1272,73 @@ public class CreationTable {
     }
 
 
-    public void placerJeton(Rectangle rectangle) {
-        ImagePattern imageCase;
-        switch (jeu.joueurCourantProperty().get().getMiseTotale()) {
+    public void placerJeton(String caseInt) {
+        ImageView imageCase =  new ImageView();
+        switch (jeu.joueurCourantProperty().get().getMiseActuelle()) {
             case 1:
-                imageCase = new ImagePattern(new Image("images/token_1_2.png"));
-                rectangle.setFill(imageCase);
+                imageCase = new ImageView(new Image("images/token_1_2.png"));
                 break;
             case 5:
-                imageCase = new ImagePattern(new Image("images/token_5_2.png"));
-                rectangle.setFill(imageCase);
+                imageCase = new ImageView(new Image("images/token_5_2.png"));
                 break;
             case 25:
-                imageCase = new ImagePattern(new Image("images/token_25_2.png"));
-                rectangle.setFill(imageCase);
+                imageCase = new ImageView(new Image("images/token_25_2.png"));
                 break;
             case 100:
-                imageCase = new ImagePattern(new Image("images/token_100_2.png"));
-                rectangle.setFill(imageCase);
+                imageCase = new ImageView(new Image("images/token_100_2.png"));
                 break;
             case 500:
-                imageCase = new ImagePattern(new Image("images/token_500_2.png"));
-                rectangle.setFill(imageCase);
+                imageCase = new ImageView(new Image("images/token_500_2.png"));
                 break;
             case 1000:
-                imageCase = new ImagePattern(new Image("images/token_1k_2.png"));
-                rectangle.setFill(imageCase);
+                imageCase = new ImageView(new Image("images/token_1k_2.png"));
                 break;
             default:
                 break;
         }
+        DonneesGraphiques.Coordonnees coordonnees = DonneesGraphiques.cases.get(caseInt).get(0);
+        double startX = coordonnees.getxStart();
+        double startY = coordonnees.getyStart();
+        imageCase.setFitWidth(38);
+        imageCase.setFitHeight(38);
+        imageCase.setPreserveRatio(false);
+        imageCase.setLayoutX(startX - 19);
+        imageCase.setLayoutY(startY - 19);
+        table.getChildren().add(imageCase);
     }
 
 
-    private void placerJetonZero(Polygon p) {
-        ImagePattern imageCase;
-        switch (jeu.joueurCourantProperty().get().getMiseTotale()) {
-            case 1:
-                imageCase = new ImagePattern(new Image("images/token_1_2.png"));
-                p.setFill(imageCase);
-                break;
-            case 5:
-                imageCase = new ImagePattern(new Image("images/token_5_2.png"));
-                p.setFill(imageCase);
-                break;
-            case 25:
-                imageCase = new ImagePattern(new Image("images/token_25_2.png"));
-                p.setFill(imageCase);
-                break;
-            case 100:
-                imageCase = new ImagePattern(new Image("images/token_100_2.png"));
-                p.setFill(imageCase);
-                break;
-            case 500:
-                imageCase = new ImagePattern(new Image("images/token_500_2.png"));
-                p.setFill(imageCase);
-                break;
-            case 1000:
-                imageCase = new ImagePattern(new Image("images/token_1k_2.png"));
-                p.setFill(imageCase);
-                break;
-            default:
-                break;
-        }
-    }
+//    private void placerJetonZero(Polygon p) {
+//        ImagePattern imageCase;
+//        switch (jeu.joueurCourantProperty().get().getMiseTotale()) {
+//            case 1:
+//                imageCase = new ImagePattern(new Image("images/token_1_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            case 5:
+//                imageCase = new ImagePattern(new Image("images/token_5_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            case 25:
+//                imageCase = new ImagePattern(new Image("images/token_25_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            case 100:
+//                imageCase = new ImagePattern(new Image("images/token_100_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            case 500:
+//                imageCase = new ImagePattern(new Image("images/token_500_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            case 1000:
+//                imageCase = new ImagePattern(new Image("images/token_1k_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
 
     private void creerBindingParis(Node n, Text textNode) {
@@ -1354,7 +1361,7 @@ public class CreationTable {
                         ajouterParis(nombresGagnants2pour11);
                         multimontant(nombresGagnants2pour11);
                         changerLabelInstructions("2 pour 1-1");
-                        placerJeton((Rectangle) n);
+                        placerJeton("2pour1-1");
                         break;
 
                     case "2 pour 1-2":
@@ -1362,7 +1369,7 @@ public class CreationTable {
                         ajouterParis(nombresGagnants2pour12);
                         multimontant(nombresGagnants2pour12);
                         changerLabelInstructions("2 pour 1-2");
-                        placerJeton((Rectangle) n);
+                        placerJeton("2pour1-2");
                         break;
 
                     case "2 pour 1-3":
@@ -1370,7 +1377,7 @@ public class CreationTable {
                         ajouterParis(nombresGagnants2pour13);
                         multimontant(nombresGagnants2pour13);
                         changerLabelInstructions("2 pour 1-3");
-                        placerJeton((Rectangle) n);
+                        placerJeton("2pour1-3");
                         break;
 
                     case "1 à 18":
@@ -1378,7 +1385,7 @@ public class CreationTable {
                         ajouterParis(nombresGagnants1a18);
                         bimontant(nombresGagnants1a18);
                         changerLabelInstructions("1 à 18");
-                        placerJeton((Rectangle) n);
+                        placerJeton("1 à 18");
                         break;
 
                     case "19 à 36":
@@ -1386,7 +1393,7 @@ public class CreationTable {
                         ajouterParis(nombresGagnants19a36);
                         bimontant(nombresGagnants19a36);
                         changerLabelInstructions("19 à 36");
-                        placerJeton((Rectangle) n);
+                        placerJeton("19 à 36");
                         break;
 
                     case "1-12":
@@ -1394,7 +1401,7 @@ public class CreationTable {
                         ajouterParis(nombresGagnants1a12);
                         changerLabelInstructions("1-12");
                         multimontant(nombresGagnants1a12);
-                        placerJeton((Rectangle) n);
+                        placerJeton("1-12");
                         break;
 
                     case "13-24":
@@ -1402,7 +1409,7 @@ public class CreationTable {
                         ajouterParis(nombresGagnants13a24);
                         multimontant(nombresGagnants13a24);
                         changerLabelInstructions("13-24");
-                        placerJeton((Rectangle) n);
+                        placerJeton("13-24");
                         break;
 
                     case "25-36":
@@ -1410,7 +1417,7 @@ public class CreationTable {
                         ajouterParis(nombresGagnants25a36);
                         multimontant(nombresGagnants25a36);
                         changerLabelInstructions("25-36");
-                        placerJeton((Rectangle) n);
+                        placerJeton("25-36");
                         break;
 
                     case "IMPAIR":
@@ -1421,7 +1428,7 @@ public class CreationTable {
                         ajouterParis(impaire);
                         bimontant(impaire);
                         changerLabelInstructions("IMPAIR");
-                        placerJeton((Rectangle) n);
+                        placerJeton("impair");
                         break;
 
                     case "PAIR":
@@ -1432,7 +1439,7 @@ public class CreationTable {
                         ajouterParis(paire);
                         bimontant(paire);
                         changerLabelInstructions("PAIR");
-                        placerJeton((Rectangle) n);
+                        placerJeton("pair");
                         break;
 
                     case "rouge":
@@ -1445,7 +1452,7 @@ public class CreationTable {
                         ajouterParis(rouge);
                         bimontant(rouge);
                         changerLabelInstructions("rouge");
-                        placerJeton((Rectangle) n);
+                        placerJeton("rouge");
                         break;
 
                     case "noir":
@@ -1458,7 +1465,7 @@ public class CreationTable {
                         ajouterParis(noir);
                         bimontant(noir);
                         changerLabelInstructions("noir");
-                        placerJeton((Rectangle) n);
+                        placerJeton("noir");
                         break;
 
 
@@ -1466,325 +1473,327 @@ public class CreationTable {
                         ajouterNombreParis(0);
                         unimontant(0);
                         changerLabelInstructions("0");
-                        placerJetonZero((Polygon) n);
+                        placerJeton("0");
                         break;
 
                     case "1":
                         ajouterNombreParis(1);
                         unimontant(1);
                         changerLabelInstructions("1");
-                        placerJeton((Rectangle) n);
+                        placerJeton("1");
                         break;
 
                     case "2":
                         ajouterNombreParis(2);
                         unimontant(2);
                         changerLabelInstructions("2");
-                        placerJeton((Rectangle) n);
+                        placerJeton("2");
                         break;
 
                     case "3":
                         ajouterNombreParis(3);
                         unimontant(3);
                         changerLabelInstructions("3");
-                        placerJeton((Rectangle) n);
+                        placerJeton("3");
                         break;
 
                     case "4":
                         ajouterNombreParis(4);
                         unimontant(4);
                         changerLabelInstructions("4");
-                        placerJeton((Rectangle) n);
+                        placerJeton("4");
                         break;
 
                     case "5":
                         ajouterNombreParis(5);
                         unimontant(5);
                         changerLabelInstructions("5");
-                        placerJeton((Rectangle) n);
+                        placerJeton("5");
                         break;
 
                     case "6":
                         ajouterNombreParis(6);
                         unimontant(6);
                         changerLabelInstructions("6");
-                        placerJeton((Rectangle) n);
+                        placerJeton("6");
                         break;
 
                     case "7":
                         ajouterNombreParis(7);
                         unimontant(7);
                         changerLabelInstructions("7");
-                        placerJeton((Rectangle) n);
+                        placerJeton("7");
                         break;
 
                     case "8":
                         ajouterNombreParis(8);
                         unimontant(8);
                         changerLabelInstructions("8");
-                        placerJeton((Rectangle) n);
+                        placerJeton("8");
                         break;
 
                     case "9":
                         ajouterNombreParis(9);
                         unimontant(9);
                         changerLabelInstructions("9");
-                        placerJeton((Rectangle) n);
+                        placerJeton("9");
                         break;
 
                     case "10":
                         ajouterNombreParis(10);
                         unimontant(10);
                         changerLabelInstructions("10");
-                        placerJeton((Rectangle) n);
+                        placerJeton("10");
                         break;
 
                     case "11":
                         ajouterNombreParis(11);
                         unimontant(11);
                         changerLabelInstructions("11");
-                        placerJeton((Rectangle) n);
+                        placerJeton("11");
                         break;
 
                     case "12":
                         ajouterNombreParis(12);
                         unimontant(12);
                         changerLabelInstructions("12");
-                        placerJeton((Rectangle) n);
+                        placerJeton("12");
                         break;
 
                     case "13":
                         ajouterNombreParis(13);
                         unimontant(13);
                         changerLabelInstructions("13");
-                        placerJeton((Rectangle) n);
+                        placerJeton("13");
                         break;
 
                     case "14":
                         ajouterNombreParis(14);
                         unimontant(14);
                         changerLabelInstructions("14");
-                        placerJeton((Rectangle) n);
+                        placerJeton("14");
                         break;
 
                     case "15":
                         ajouterNombreParis(15);
                         unimontant(15);
                         changerLabelInstructions("15");
-                        placerJeton((Rectangle) n);
+                        placerJeton("15");
                         break;
 
                     case "16":
                         ajouterNombreParis(16);
                         unimontant(16);
                         changerLabelInstructions("16");
-                        placerJeton((Rectangle) n);
+                        placerJeton("16");
                         break;
 
                     case "17":
                         ajouterNombreParis(17);
                         unimontant(17);
                         changerLabelInstructions("17");
-                        placerJeton((Rectangle) n);
+                        placerJeton("17");
                         break;
 
                     case "18":
                         ajouterNombreParis(18);
                         unimontant(18);
                         changerLabelInstructions("18");
-                        placerJeton((Rectangle) n);
+                        placerJeton("18");
                         break;
 
                     case "19":
                         ajouterNombreParis(19);
                         unimontant(19);
                         changerLabelInstructions("19");
-                        placerJeton((Rectangle) n);
+                        placerJeton("19");
                         break;
 
                     case "20":
                         ajouterNombreParis(20);
                         unimontant(20);
                         changerLabelInstructions("20");
-                        placerJeton((Rectangle) n);
+                        placerJeton("20");
                         break;
 
                     case "21":
                         ajouterNombreParis(21);
                         unimontant(21);
                         changerLabelInstructions("21");
-                        placerJeton((Rectangle) n);
+                        placerJeton("21");
                         break;
 
                     case "22":
                         ajouterNombreParis(22);
                         unimontant(22);
                         changerLabelInstructions("22");
-                        placerJeton((Rectangle) n);
+                        placerJeton("22");
                         break;
 
                     case "23":
                         ajouterNombreParis(23);
                         unimontant(23);
                         changerLabelInstructions("23");
-                        placerJeton((Rectangle) n);
+                        placerJeton("23");
                         break;
 
                     case "24":
                         ajouterNombreParis(24);
                         unimontant(24);
                         changerLabelInstructions("24");
-                        placerJeton((Rectangle) n);
+                        placerJeton("24");
                         break;
 
                     case "25":
                         ajouterNombreParis(25);
                         unimontant(25);
                         changerLabelInstructions("25");
-                        placerJeton((Rectangle) n);
+                        placerJeton("25");
                         break;
 
                     case "26":
                         ajouterNombreParis(26);
                         unimontant(26);
                         changerLabelInstructions("26");
-                        placerJeton((Rectangle) n);
+                        placerJeton("26");
                         break;
 
                     case "27":
                         ajouterNombreParis(27);
                         unimontant(27);
                         changerLabelInstructions("27");
-                        placerJeton((Rectangle) n);
+                        placerJeton("27");
                         break;
 
                     case "28":
                         ajouterNombreParis(28);
                         unimontant(28);
                         changerLabelInstructions("28");
-                        placerJeton((Rectangle) n);
+                        placerJeton("28");
                         break;
 
                     case "29":
                         ajouterNombreParis(29);
                         unimontant(29);
                         changerLabelInstructions("29");
-                        placerJeton((Rectangle) n);
+                        placerJeton("29");
                         break;
 
                     case "30":
                         ajouterNombreParis(30);
                         unimontant(30);
                         changerLabelInstructions("30");
-                        placerJeton((Rectangle) n);
+                        placerJeton("30");
                         break;
 
                     case "31":
                         ajouterNombreParis(31);
                         unimontant(31);
                         changerLabelInstructions("31");
-                        placerJeton((Rectangle) n);
+                        placerJeton("31");
                         break;
 
                     case "32":
                         ajouterNombreParis(32);
                         unimontant(32);
                         changerLabelInstructions("32");
-                        placerJeton((Rectangle) n);
+                        placerJeton("32");
                         break;
 
                     case "33":
                         ajouterNombreParis(33);
                         unimontant(33);
                         changerLabelInstructions("33");
-                        placerJeton((Rectangle) n);
+                        placerJeton("33");
                         break;
 
                     case "34":
                         ajouterNombreParis(34);
                         unimontant(34);
                         changerLabelInstructions("34");
-                        placerJeton((Rectangle) n);
+                        placerJeton("34");
                         break;
 
                     case "35":
                         ajouterNombreParis(35);
                         unimontant(35);
                         changerLabelInstructions("35");
-                        placerJeton((Rectangle) n);
+                        placerJeton("35");
                         break;
 
                     case "36":
                         ajouterNombreParis(36);
                         unimontant(36);
                         changerLabelInstructions("36");
-                        placerJeton((Rectangle) n);
+                        placerJeton("36");
                         break;
 
                 }
-                jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());
-                jeu.joueurCourantProperty().get().setMiseActuelle(0);
             }
+
+            if (textNode.getText().equals("0")) {
+                vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
+                    Polygon polygon = (Polygon) n;
+                    polygon.setFill(Color.GREEN);
+                    polygon.setOpacity(0.7);
+                });
+
+            } else {
+                boolean nombre = false;
+                for (int i = 1; i < 37; i++) {
+                    if (textNode.getText().equals(String.valueOf(i))) {
+                        nombre = true;
+                        break;
+                    }
+                }
+
+                if (nombre) {
+                    vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
+                        Rectangle rectangle = (Rectangle) n;
+                        if (getCouleurPourNumero(Integer.parseInt(textNode.getText())).equals(Color.RED)) {
+                            rectangle.setFill(Color.RED);
+                        } else {
+                            rectangle.setFill(Color.BLACK);
+                        }
+                        rectangle.setOpacity(0.7);
+                    });
+                } else if (textNode.getText().equals("noir") || textNode.getText().equals("rouge")) {
+                    double x = START_X + (LARGEUR * 12);
+                    double y = START_Y;
+                    if (textNode.getText().equals("rouge")) {
+                        vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
+                            Rectangle rouge = (Rectangle) n;
+                            Rectangle losangeRouge = new Rectangle(x + 10, y + 10, 10, 10);
+                            losangeRouge.getTransforms().add(new Rotate(45, x + 10, y + 15));
+                            losangeRouge.setFill(Color.RED);
+                            losangeRouge.xProperty().bind(rouge.xProperty().add(9.7));
+                            losangeRouge.yProperty().bind(rouge.yProperty().add(1));
+                            losangeRouge.scaleXProperty().bind(rouge.widthProperty().divide(16));
+                            losangeRouge.scaleYProperty().bind(rouge.heightProperty().divide(16));
+                        });
+                    } else {
+                        Rectangle noir = (Rectangle) n;
+                        Rectangle losangeNoir = new Rectangle(x + 10, y + 10, 10, 10);
+                        losangeNoir.getTransforms().add(new Rotate(45, x + 10, y + 15));
+                        losangeNoir.setFill(Color.BLACK);
+                        losangeNoir.xProperty().bind(noir.xProperty().add(9.7));
+                        losangeNoir.yProperty().bind(noir.yProperty().add(1));
+                        losangeNoir.scaleXProperty().bind(noir.widthProperty().divide(16));
+                        losangeNoir.scaleYProperty().bind(noir.heightProperty().divide(16));
+                    }
+                } else {
+                    vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
+                        Rectangle rectangle = (Rectangle) n;
+                        rectangle.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
+                        rectangle.setOpacity(0.7);
+                    });
+                }
+            }
+
+            jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());
+            jeu.joueurCourantProperty().get().setMiseActuelle(0);
         };
         n.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, parisJoueur);
-        if (textNode.getText().equals("0")) {
-            vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-                Polygon polygon = (Polygon) n;
-                polygon.setFill(Color.GREEN);
-                polygon.setOpacity(0.7);
-            });
-
-        } else {
-            boolean nombre = false;
-            for (int i = 1; i < 37; i++) {
-                if (textNode.getText().equals(String.valueOf(i))) {
-                    nombre = true;
-                    break;
-                }
-            }
-
-            if (nombre) {
-                vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-                    Rectangle rectangle = (Rectangle) n;
-                    if (getCouleurPourNumero(Integer.parseInt(textNode.getText())).equals(Color.RED)) {
-                        rectangle.setFill(Color.RED);
-                    } else {
-                        rectangle.setFill(Color.BLACK);
-                    }
-                    rectangle.setOpacity(0.7);
-                });
-            } else if (textNode.getText().equals("noir") || textNode.getText().equals("rouge")) {
-                double x = START_X + (LARGEUR * 12);
-                double y = START_Y;
-                if (textNode.getText().equals("rouge")) {
-                    vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-                        Rectangle rouge = (Rectangle) n;
-                        Rectangle losangeRouge = new Rectangle(x + 10, y + 10, 10, 10);
-                        losangeRouge.getTransforms().add(new Rotate(45, x + 10, y + 15));
-                        losangeRouge.setFill(Color.RED);
-                        losangeRouge.xProperty().bind(rouge.xProperty().add(9.7));
-                        losangeRouge.yProperty().bind(rouge.yProperty().add(1));
-                        losangeRouge.scaleXProperty().bind(rouge.widthProperty().divide(16));
-                        losangeRouge.scaleYProperty().bind(rouge.heightProperty().divide(16));
-                    });
-                } else {
-                    Rectangle noir = (Rectangle) n;
-                    Rectangle losangeNoir = new Rectangle(x + 10, y + 10, 10, 10);
-                    losangeNoir.getTransforms().add(new Rotate(45, x + 10, y + 15));
-                    losangeNoir.setFill(Color.BLACK);
-                    losangeNoir.xProperty().bind(noir.xProperty().add(9.7));
-                    losangeNoir.yProperty().bind(noir.yProperty().add(1));
-                    losangeNoir.scaleXProperty().bind(noir.widthProperty().divide(16));
-                    losangeNoir.scaleYProperty().bind(noir.heightProperty().divide(16));
-                }
-            } else {
-                vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-                    Rectangle rectangle = (Rectangle) n;
-                    rectangle.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
-                    rectangle.setOpacity(0.7);
-                });
-            }
-        }
     }
 
 

@@ -444,7 +444,7 @@ public class DonneesGraphiques {
         cases.put("13", new ArrayList<>() {{
             add(new Coordonnees(583.5, 594.5, 583.5, 594.5));
         }});
-        cases.put("13", new ArrayList<>() {{
+        cases.put("14", new ArrayList<>() {{
             add(new Coordonnees(583.5, 530.5, 583.5, 530.5));
         }});
         cases.put("15", new ArrayList<>() {{
@@ -535,13 +535,13 @@ public class DonneesGraphiques {
         }});
 
         //Top
-        cases.put("1 à 18", new ArrayList<>() {{
+        cases.put("1-12", new ArrayList<>() {{
             add(new Coordonnees(477.5, 414, 477.5, 414));
         }});
-        cases.put("impair", new ArrayList<>() {{
+        cases.put("13-24", new ArrayList<>() {{
             add(new Coordonnees(640.5, 414, 640.5, 414));
         }});
-        cases.put("rouge", new ArrayList<>() {{
+        cases.put("25-36", new ArrayList<>() {{
             add(new Coordonnees(803.5, 414, 803.5, 414));
         }});
 
