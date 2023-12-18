@@ -148,7 +148,6 @@ public class VueDuJeu extends GridPane {
         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 System.out.println(listeParis.toString());
-                jeu.tournerTour();
                 vueRoue.animation(jeu.getResultatTourActuel().getNombres());
                 statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
                 statistiquesRoulette.afficherStatistique();

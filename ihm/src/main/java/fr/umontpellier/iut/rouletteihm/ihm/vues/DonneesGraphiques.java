@@ -415,103 +415,103 @@ public class DonneesGraphiques {
             add(new Coordonnees(419.5, 464.5, 419.5, 464.5));
         }});
         cases.put("4", new ArrayList<>() {{
-            add(new Coordonnees(460.5, 594.5, 460.5, 594.5));
+            add(new Coordonnees(460, 594.5, 460.5, 594.5));
         }});
         cases.put("5", new ArrayList<>() {{
-            add(new Coordonnees(460.5, 530.5, 460.5, 530.5));
+            add(new Coordonnees(460, 530.5, 460.5, 530.5));
         }});
         cases.put("6", new ArrayList<>() {{
-            add(new Coordonnees(460.5, 464.5, 460.5, 464.5));
+            add(new Coordonnees(460, 464.5, 460.5, 464.5));
         }});
         cases.put("7", new ArrayList<>() {{
-            add(new Coordonnees(501.5, 594.5, 501.5, 594.5));
+            add(new Coordonnees(500, 594.5, 501.5, 594.5));
         }});
         cases.put("8", new ArrayList<>() {{
-            add(new Coordonnees(501.5, 530.5, 501.5, 530.5));
+            add(new Coordonnees(500, 530.5, 501.5, 530.5));
         }});
         cases.put("9", new ArrayList<>() {{
-            add(new Coordonnees(501.5, 464.5, 501.5, 464.5));
+            add(new Coordonnees(500, 464.5, 501.5, 464.5));
         }});
         cases.put("10", new ArrayList<>() {{
-            add(new Coordonnees(542.5, 594.5, 542.5, 594.5));
+            add(new Coordonnees(540, 594.5, 542.5, 594.5));
         }});
         cases.put("11", new ArrayList<>() {{
-            add(new Coordonnees(542.5, 530.5, 542.5, 530.5));
+            add(new Coordonnees(540, 530.5, 542.5, 530.5));
         }});
         cases.put("12", new ArrayList<>() {{
-            add(new Coordonnees(542.5, 464.5, 542.5, 464.5));
+            add(new Coordonnees(540, 464.5, 542.5, 464.5));
         }});
         cases.put("13", new ArrayList<>() {{
-            add(new Coordonnees(583.5, 594.5, 583.5, 594.5));
+            add(new Coordonnees(580, 594.5, 583.5, 594.5));
         }});
         cases.put("14", new ArrayList<>() {{
-            add(new Coordonnees(583.5, 530.5, 583.5, 530.5));
+            add(new Coordonnees(580, 530.5, 583.5, 530.5));
         }});
         cases.put("15", new ArrayList<>() {{
-            add(new Coordonnees(583.5, 464.5, 583.5, 464.5));
+            add(new Coordonnees(580, 464.5, 583.5, 464.5));
         }});
         cases.put("16", new ArrayList<>() {{
-            add(new Coordonnees(624.5, 594.5, 624.5, 594.5));
+            add(new Coordonnees(620, 594.5, 624.5, 594.5));
         }});
         cases.put("17", new ArrayList<>() {{
-            add(new Coordonnees(624.5, 530.5, 624.5, 530.5));
+            add(new Coordonnees(620, 530.5, 624.5, 530.5));
         }});
         cases.put("18", new ArrayList<>() {{
-            add(new Coordonnees(624.5, 464.5, 624.5, 464.5));
+            add(new Coordonnees(620, 464.5, 624.5, 464.5));
         }});
         cases.put("19", new ArrayList<>() {{
-            add(new Coordonnees(665.5, 594.5, 665.5, 594.5));
+            add(new Coordonnees(660, 594.5, 665.5, 594.5));
         }});
         cases.put("20", new ArrayList<>() {{
-            add(new Coordonnees(665.5, 530.5, 665.5, 530.5));
+            add(new Coordonnees(660, 530.5, 665.5, 530.5));
         }});
         cases.put("21", new ArrayList<>() {{
-            add(new Coordonnees(665.5, 464.5, 665.5, 464.5));
+            add(new Coordonnees(660, 464.5, 665.5, 464.5));
         }});
         cases.put("22", new ArrayList<>() {{
-            add(new Coordonnees(706.5, 594.5, 706.5, 594.5));
+            add(new Coordonnees(700, 594.5, 706.5, 594.5));
         }});
         cases.put("23", new ArrayList<>() {{
-            add(new Coordonnees(706.5, 530.5, 706.5, 530.5));
+            add(new Coordonnees(700, 530.5, 706.5, 530.5));
         }});
         cases.put("24", new ArrayList<>() {{
-            add(new Coordonnees(706.5, 464.5, 706.5, 464.5));
+            add(new Coordonnees(700, 464.5, 706.5, 464.5));
         }});
         cases.put("25", new ArrayList<>() {{
-            add(new Coordonnees(747.5, 594.5, 747.5, 594.5));
+            add(new Coordonnees(740, 594.5, 747.5, 594.5));
         }});
         cases.put("26", new ArrayList<>() {{
-            add(new Coordonnees(747.5, 530.5, 747.5, 530.5));
+            add(new Coordonnees(740, 530.5, 747.5, 530.5));
         }});
         cases.put("27", new ArrayList<>() {{
-            add(new Coordonnees(747.5, 464.5, 747.5, 464.5));
+            add(new Coordonnees(740, 464.5, 747.5, 464.5));
         }});
         cases.put("28", new ArrayList<>() {{
-            add(new Coordonnees(788.5, 594.5, 788.5, 594.5));
+            add(new Coordonnees(780, 594.5, 788.5, 594.5));
         }});
         cases.put("29", new ArrayList<>() {{
-            add(new Coordonnees(788.5, 530.5, 788.5, 530.5));
+            add(new Coordonnees(780, 530.5, 788.5, 530.5));
         }});
         cases.put("30", new ArrayList<>() {{
-            add(new Coordonnees(788.5, 464.5, 788.5, 464.5));
+            add(new Coordonnees(780, 464.5, 788.5, 464.5));
         }});
         cases.put("31", new ArrayList<>() {{
-            add(new Coordonnees(829.5, 594.5, 829.5, 594.5));
+            add(new Coordonnees(820, 594.5, 829.5, 594.5));
         }});
         cases.put("32", new ArrayList<>() {{
-            add(new Coordonnees(829.5, 530.5, 829.5, 530.5));
+            add(new Coordonnees(820, 530.5, 829.5, 530.5));
         }});
         cases.put("33", new ArrayList<>() {{
-            add(new Coordonnees(829.5, 464.5, 829.5, 464.5));
+            add(new Coordonnees(820, 464.5, 829.5, 464.5));
         }});
         cases.put("34", new ArrayList<>() {{
-            add(new Coordonnees(870.5, 594.5, 870.5, 594.5));
+            add(new Coordonnees(860, 594.5, 870.5, 594.5));
         }});
         cases.put("35", new ArrayList<>() {{
-            add(new Coordonnees(870.5, 530.5, 870.5, 530.5));
+            add(new Coordonnees(860, 530.5, 870.5, 530.5));
         }});
         cases.put("36", new ArrayList<>() {{
-            add(new Coordonnees(870.5, 464.5, 870.5, 464.5));
+            add(new Coordonnees(860, 464.5, 870.5, 464.5));
         }});
 
         //Bottom
