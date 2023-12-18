@@ -401,11 +401,15 @@ public class DonneesGraphiques {
     static {
         cases = new LinkedHashMap<>();
 
+        //Number
+        cases.put("0", new ArrayList<>() {{
+            add(new Coordonnees(356.5, 530.5, 356.5, 530.5));
+        }});
         cases.put("1", new ArrayList<>() {{
             add(new Coordonnees(419.5, 594.5, 419.5, 594.5));
         }});
         cases.put("2", new ArrayList<>() {{
-            add(new Coordonnees(419.5, 528.5, 419.5, 528.5));
+            add(new Coordonnees(419.5, 530.5, 419.5, 530.5));
         }});
         cases.put("3", new ArrayList<>() {{
             add(new Coordonnees(419.5, 464.5, 419.5, 464.5));
@@ -414,7 +418,7 @@ public class DonneesGraphiques {
             add(new Coordonnees(460.5, 594.5, 460.5, 594.5));
         }});
         cases.put("5", new ArrayList<>() {{
-            add(new Coordonnees(460.5, 528.5, 460.5, 528.5));
+            add(new Coordonnees(460.5, 530.5, 460.5, 530.5));
         }});
         cases.put("6", new ArrayList<>() {{
             add(new Coordonnees(460.5, 464.5, 460.5, 464.5));
@@ -423,7 +427,7 @@ public class DonneesGraphiques {
             add(new Coordonnees(501.5, 594.5, 501.5, 594.5));
         }});
         cases.put("8", new ArrayList<>() {{
-            add(new Coordonnees(501.5, 528.5, 501.5, 528.5));
+            add(new Coordonnees(501.5, 530.5, 501.5, 530.5));
         }});
         cases.put("9", new ArrayList<>() {{
             add(new Coordonnees(501.5, 464.5, 501.5, 464.5));
@@ -432,7 +436,7 @@ public class DonneesGraphiques {
             add(new Coordonnees(542.5, 594.5, 542.5, 594.5));
         }});
         cases.put("11", new ArrayList<>() {{
-            add(new Coordonnees(542.5, 528.5, 542.5, 528.5));
+            add(new Coordonnees(542.5, 530.5, 542.5, 530.5));
         }});
         cases.put("12", new ArrayList<>() {{
             add(new Coordonnees(542.5, 464.5, 542.5, 464.5));
@@ -441,7 +445,7 @@ public class DonneesGraphiques {
             add(new Coordonnees(583.5, 594.5, 583.5, 594.5));
         }});
         cases.put("13", new ArrayList<>() {{
-            add(new Coordonnees(583.5, 528.5, 583.5, 528.5));
+            add(new Coordonnees(583.5, 530.5, 583.5, 530.5));
         }});
         cases.put("15", new ArrayList<>() {{
             add(new Coordonnees(583.5, 464.5, 583.5, 464.5));
@@ -450,7 +454,7 @@ public class DonneesGraphiques {
             add(new Coordonnees(624.5, 594.5, 624.5, 594.5));
         }});
         cases.put("17", new ArrayList<>() {{
-            add(new Coordonnees(624.5, 528.5, 624.5, 528.5));
+            add(new Coordonnees(624.5, 530.5, 624.5, 530.5));
         }});
         cases.put("18", new ArrayList<>() {{
             add(new Coordonnees(624.5, 464.5, 624.5, 464.5));
@@ -459,7 +463,7 @@ public class DonneesGraphiques {
             add(new Coordonnees(665.5, 594.5, 665.5, 594.5));
         }});
         cases.put("20", new ArrayList<>() {{
-            add(new Coordonnees(665.5, 528.5, 665.5, 528.5));
+            add(new Coordonnees(665.5, 530.5, 665.5, 530.5));
         }});
         cases.put("21", new ArrayList<>() {{
             add(new Coordonnees(665.5, 464.5, 665.5, 464.5));
@@ -468,7 +472,7 @@ public class DonneesGraphiques {
             add(new Coordonnees(706.5, 594.5, 706.5, 594.5));
         }});
         cases.put("23", new ArrayList<>() {{
-            add(new Coordonnees(706.5, 528.5, 706.5, 528.5));
+            add(new Coordonnees(706.5, 530.5, 706.5, 530.5));
         }});
         cases.put("24", new ArrayList<>() {{
             add(new Coordonnees(706.5, 464.5, 706.5, 464.5));
@@ -477,7 +481,7 @@ public class DonneesGraphiques {
             add(new Coordonnees(747.5, 594.5, 747.5, 594.5));
         }});
         cases.put("26", new ArrayList<>() {{
-            add(new Coordonnees(747.5, 528.5, 747.5, 528.5));
+            add(new Coordonnees(747.5, 530.5, 747.5, 530.5));
         }});
         cases.put("27", new ArrayList<>() {{
             add(new Coordonnees(747.5, 464.5, 747.5, 464.5));
@@ -486,7 +490,7 @@ public class DonneesGraphiques {
             add(new Coordonnees(788.5, 594.5, 788.5, 594.5));
         }});
         cases.put("29", new ArrayList<>() {{
-            add(new Coordonnees(788.5, 528.5, 788.5, 528.5));
+            add(new Coordonnees(788.5, 530.5, 788.5, 530.5));
         }});
         cases.put("30", new ArrayList<>() {{
             add(new Coordonnees(788.5, 464.5, 788.5, 464.5));
@@ -495,7 +499,7 @@ public class DonneesGraphiques {
             add(new Coordonnees(829.5, 594.5, 829.5, 594.5));
         }});
         cases.put("32", new ArrayList<>() {{
-            add(new Coordonnees(829.5, 528.5, 829.5, 528.5));
+            add(new Coordonnees(829.5, 530.5, 829.5, 530.5));
         }});
         cases.put("33", new ArrayList<>() {{
             add(new Coordonnees(829.5, 464.5, 829.5, 464.5));
@@ -504,10 +508,52 @@ public class DonneesGraphiques {
             add(new Coordonnees(870.5, 594.5, 870.5, 594.5));
         }});
         cases.put("35", new ArrayList<>() {{
-            add(new Coordonnees(870.5, 528.5, 870.5, 528.5));
+            add(new Coordonnees(870.5, 530.5, 870.5, 530.5));
         }});
         cases.put("36", new ArrayList<>() {{
             add(new Coordonnees(870.5, 464.5, 870.5, 464.5));
+        }});
+
+        //Bottom
+        cases.put("1 à 18", new ArrayList<>() {{
+            add(new Coordonnees(437.5, 649.5, 437.5, 649.5));
+        }});
+        cases.put("impair", new ArrayList<>() {{
+            add(new Coordonnees(520.5, 649.5, 520.5, 649.5));
+        }});
+        cases.put("rouge", new ArrayList<>() {{
+            add(new Coordonnees(600.5, 649.5, 600.5, 649.5));
+        }});
+        cases.put("noir", new ArrayList<>() {{
+            add(new Coordonnees(680.5, 649.5, 680.5, 649.5));
+        }});
+        cases.put("pair", new ArrayList<>() {{
+            add(new Coordonnees(760.5, 649.5, 760.5, 649.5));
+        }});
+        cases.put("19 à 36", new ArrayList<>() {{
+            add(new Coordonnees(840.5, 649.5, 840.5, 649.5));
+        }});
+
+        //Top
+        cases.put("1 à 18", new ArrayList<>() {{
+            add(new Coordonnees(477.5, 414, 477.5, 414));
+        }});
+        cases.put("impair", new ArrayList<>() {{
+            add(new Coordonnees(640.5, 414, 640.5, 414));
+        }});
+        cases.put("rouge", new ArrayList<>() {{
+            add(new Coordonnees(803.5, 414, 803.5, 414));
+        }});
+
+        //Right
+        cases.put("2pour1-1", new ArrayList<>() {{
+            add(new Coordonnees(901.5, 594.5, 901.5, 594.5));
+        }});
+        cases.put("2pour1-2", new ArrayList<>() {{
+            add(new Coordonnees(901.5, 530.5, 901.5, 530.5));
+        }});
+        cases.put("2pour1-3", new ArrayList<>() {{
+            add(new Coordonnees(901.5, 464.5, 901.5, 464.5));
         }});
     }
 
