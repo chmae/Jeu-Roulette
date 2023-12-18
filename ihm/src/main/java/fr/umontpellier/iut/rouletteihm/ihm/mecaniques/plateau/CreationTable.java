@@ -69,20 +69,20 @@ public class CreationTable {
         }
 
         //TODO : supprimer la fonction suite à la fin de la création des DonneesGraphiques
-//        table.setOnMouseMoved(event -> {
-//            double x = event.getX();
-//            double y = event.getY();
-//            System.out.println("Coordonnées du curseur : (" + x + ", " + y + ")");
-//        });
+        table.setOnMouseMoved(event -> {
+            double x = event.getX();
+            double y = event.getY();
+            System.out.println("Coordonnées du curseur : (" + x + ", " + y + ")");
+        });
     }
 
     //TODO : supprimer la fonction suite à la fin de la création des DonneesGraphiques
-//    private void dessinerLigne(double startX, double startY, double endX, double endY) {
-//        Line ligne = new Line(startX, startY, endX, endY);
-//        ligne.setStrokeWidth(2);
-//        ligne.setFill(Color.MAGENTA);
-//        table.getChildren().add(ligne);
-//    }
+    private void dessinerLigne(double startX, double startY, double endX, double endY) {
+        Line ligne = new Line(startX, startY, endX, endY);
+        ligne.setStrokeWidth(2);
+        ligne.setFill(Color.CYAN);
+        table.getChildren().add(ligne);
+    }
 
 
     public Group getTable() {
