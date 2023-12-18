@@ -5,6 +5,7 @@ import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,7 +27,11 @@ public class VueAutresJoueurs extends Pane {
     private Label solde;
     private Label solde1;
     private Label solde2;
+    private Label username;
+    private Label username1;
+    private Label username2;
     private VueAccueil vueAccueil = new VueAccueil();
+    private VueParametre vueParametre;
 
     private GestionMusique musiqueCasino = new GestionMusique();
 
@@ -54,12 +59,16 @@ public class VueAutresJoueurs extends Pane {
             solde2 = (Label) root.lookup("#solde2");
             solde1 = (Label) root.lookup("#solde1");
             solde = (Label) root.lookup("#solde");
+            username = (Label) root.lookup("#username");
+            username1 = (Label) root.lookup("#username1");
+            username2 = (Label) root.lookup("#username2");
             getChildren().addAll(topBackground, CornerBackground, CornerQuit, buttonQuit, parametre, autresJoueur, lampe1, lampe2);
 
 
             HoverImage(buttonQuit);
             HoverImage(parametre);
             Stage primaryStage = new Stage();
+            vueParametre = VueParametre.getInstance(primaryStage, musiqueCasino);
 
             //-- sons bouton-- //
             String cheminAudioBouton = "ihm/src/main/resources/musique/sonsBouton.mp3";
@@ -99,7 +108,7 @@ public class VueAutresJoueurs extends Pane {
             });
 
             parametre.setOnMouseClicked(event -> {
-                afficherVueParametre(musiqueCasino);
+                afficherVueParametre();
                 sonsBoutonParametre.lireMusique();
                 sonsBoutonParametre.remettreMusiqueAuDebut();
             });
@@ -155,9 +164,30 @@ public class VueAutresJoueurs extends Pane {
         });
     }
 
-    private void afficherVueParametre(GestionMusique music) {
-        VueParametre vueParametre = new VueParametre((Stage) getScene().getWindow(), music);
+    private void afficherVueParametre() {
+        vueParametre = VueParametre.getInstance((Stage) new Scene(new Parent() {}).getWindow(), musiqueCasino);
         vueParametre.show();
+    }
+
+    public IntegerProperty getLangueChoisie() {
+        if (getScene() == null) {
+            return VueParametre.getInstance((Stage) new Scene(new Parent() {}).getWindow(), musiqueCasino).getLangueChoisie();
+        }
+        return VueParametre.getInstance((Stage) getScene().getWindow(), musiqueCasino).getLangueChoisie();
+    }
+
+    public void creerBindings() {
+        VueParametre.getInstance((Stage) new Scene(new Parent() {}).getWindow(), musiqueCasino).getLangueChoisie().addListener((observable, oldValue, newValue) -> {
+            String texte = "";
+            if(newValue.intValue()==0) {
+                texte = "Solde :";
+            } else {
+                texte = "Balance :";
+            }
+            username.setText(texte);
+            username1.setText(texte);
+            username2.setText(texte);
+        });
     }
 
 }

@@ -5,6 +5,7 @@ import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.CreationTable;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueInscription;
+import javafx.beans.property.IntegerProperty;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -13,7 +14,9 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -45,24 +48,24 @@ public class VueDuJeu extends GridPane {
 
     private RouletteIHM rouletteIHM;
     private StringProperty valeurGagneeProperty = new SimpleStringProperty("0");
+    private IntegerProperty langue;
     private VueInscription vueInscription = new VueInscription();
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
         instance = this;
 
-
-        vueBet = new VueBet(jeu);
-        labelInstructions = vueBet.getLabelInstruction();
-        table = new CreationTable(jeu, labelInstructions, vueBet);
-        listeParis = table.getListeParis();
-
-        plateau = new VuePlateau(jeu);
         autresJoueurs = new VueAutresJoueurs(jeu);
+
+        vueBet = new VueBet(jeu, autresJoueurs.getLangueChoisie());
+        labelInstructions = vueBet.getLabelInstruction();
+        table = new CreationTable(jeu, labelInstructions, vueBet, autresJoueurs.getLangueChoisie());
+        listeParis = table.getListeParis();
+        plateau = new VuePlateau(jeu);
         vueDroite = new VueDroite(jeu);
         vueGauche = new VueGauche(jeu);
         vuePlayerInfo = new VuePlayerInfo(jeu);
-        joueurCourantvue = new VueJoueurCourant(jeu, labelInstructions, vueInscription);
+        joueurCourantvue = new VueJoueurCourant(jeu, labelInstructions, vueInscription, autresJoueurs.getLangueChoisie());
         elementsGauche = new HBox(10, vueGauche, autresJoueurs);
 
         add(vueRoue.getRoue(), 1, 1);
@@ -142,11 +145,9 @@ public class VueDuJeu extends GridPane {
         elementsGauche.prefHeightProperty().bind(heightProperty());
         vueDroite.prefHeightProperty().bind(heightProperty());
 
-        vueBet.creerBinding();
         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 System.out.println(listeParis.toString());
-                jeu.tournerTour();
                 vueRoue.animation(jeu.getResultatTourActuel().getNombres());
                 statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
                 statistiquesRoulette.afficherStatistique();
@@ -162,9 +163,25 @@ public class VueDuJeu extends GridPane {
                     } else {
                         whenLose();
                     }
+                    for (Node node : table.getTable().getChildren()) {
+                        if (node instanceof ImageView) {
+                            ImageView imageView = (ImageView) node;
+                            imageView.setVisible(false);
+                        }
+                    }
                     // Uniquement pour le sprint 2 (1 joueur)
                     vueBet.validationProperty().set(false);
-                    labelInstructions.setText("Le " + jeu.getResultatTourActuel().getValeur() + " " + jeu.getResultatTourActuel().getCouleur() + " est tombé ! Misez pour rejouer");
+                    if (autresJoueurs.getLangueChoisie().getValue()==0) {
+                        labelInstructions.setText("Le " + jeu.getResultatTourActuel().getValeur() + " " + jeu.getResultatTourActuel().getCouleur() + " est tombé ! Misez pour rejouer");
+                    } else {
+                        if (jeu.getResultatTourActuel().getCouleur().equals("Noir")) {
+                            labelInstructions.setText("The Black " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                        } else if(jeu.getResultatTourActuel().getCouleur().equals("Rouge")) {
+                            labelInstructions.setText("The Red " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                        } else {
+                            labelInstructions.setText("The Green " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                        }
+                    }
                     jeu.tournerTour();
                     table.viderListeParis();
                     table.viderMontantsParis();
@@ -184,6 +201,14 @@ public class VueDuJeu extends GridPane {
 
         table.getListeParisObserver().addListener((ListChangeListener<Integer>) c -> {
             vueBet.setOk(true);
+        });
+
+        autresJoueurs.getLangueChoisie().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue()==0) {
+                labelInstructions.setText("La langue a bien été changée !");
+            } else {
+                labelInstructions.setText("Language has been change successfully !");
+            }
         });
     }
 

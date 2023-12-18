@@ -46,7 +46,7 @@
                     </effect>
                 </ImageView>
                 <Label fx:id="LabelInstruction" layoutX="127.0" layoutY="5.0" prefHeight="33.0" prefWidth="520.0"
-                       text="Instruction" textAlignment="CENTER" textFill="WHITE" translateX="170.0" translateY="-40.0"
+                       text="Instructions" textAlignment="CENTER" textFill="WHITE" translateX="170.0" translateY="-40.0"
                        wrapText="true" alignment="CENTER">
                     <font>
                         <Font name="Chalkduster" size="24.0"/>

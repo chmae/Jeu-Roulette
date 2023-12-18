@@ -2,21 +2,27 @@ package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.io.IOException;
 
 public class VueParametre {
@@ -34,6 +40,12 @@ public class VueParametre {
     @FXML
     private Label languesLabel;
     @FXML
+    private Label modificationProfilLabel;
+    @FXML
+    private Label nomModifLabel;
+    @FXML
+    private Label soldeModifLabel;
+    @FXML
     private ImageView disconnectButton;
     @FXML
     private ImageView quitButton;
@@ -42,6 +54,8 @@ public class VueParametre {
 
     private Stage primaryStage;
     private Stage stage;
+    private IntegerProperty langue;
+    private static VueParametre instance;
     @FXML
     private ImageView valideNom;
     @FXML
@@ -51,7 +65,7 @@ public class VueParametre {
 
 
 
-    public VueParametre(Stage p, GestionMusique gestionmusique) {
+    private VueParametre(Stage p, GestionMusique gestionmusique) {
         primaryStage = p;
 
         try {
@@ -60,10 +74,16 @@ public class VueParametre {
             parametrePane = (Pane) root.lookup("#parametrePane");
             titleLabel = (Label) root.lookup("#Title");
             volumeSlider = (Slider) root.lookup("#volume");
+            langue = new SimpleIntegerProperty(0);
             music = (ImageView) root.lookup("#music");
             franceIcon = (ImageView) root.lookup("#buttonFrancais");
+            creerBindingsLangue(franceIcon, 0);
             ukIcon = (ImageView) root.lookup("#buttonAnglais");
+            creerBindingsLangue(ukIcon, 1);
             languesLabel = (Label) root.lookup("#languesLabel");
+            modificationProfilLabel = (Label) root.lookup("#modificationProfilLabel");
+            nomModifLabel = (Label) root.lookup("#nomModifLabel");
+            soldeModifLabel = (Label) root.lookup("#soldeModifLabel");
             disconnectButton = (ImageView) root.lookup("#disconnect");
             quitButton = (ImageView) root.lookup("#buttonQuit");
             disconnectLabel = (Label) root.lookup("#disconnectLabel");
@@ -199,6 +219,44 @@ public class VueParametre {
             scaleTransition.setToY(1.0);
             scaleTransition.playFromStart();
         });
+    }
+
+    private void creerBindingsLangue(ImageView imageView, int langue) {
+        EventHandler<MouseEvent> langueChange = mouseEvent -> {
+            this.langue.set(langue);
+            if(langue==0) {
+                this.languesLabel.setText("Langues :");
+                this.disconnectLabel.setText("Se déconnecter");
+                this.modificationProfilLabel.setText("Modification profil :");
+                this.nomModifLabel.setText("Nom");
+                this.soldeModifLabel.setText("Solde");
+                this.titleLabel.setText("Réglages");
+            } else {
+                this.languesLabel.setText("Languages :");
+                this.disconnectLabel.setText("Log Off");
+                this.modificationProfilLabel.setText("Update profile :");
+                this.nomModifLabel.setText("Name");
+                this.soldeModifLabel.setText("Balance");
+                this.titleLabel.setText("Settings");
+            }
+        };
+
+        imageView.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, langueChange);
+    }
+
+    public IntegerProperty getLangueProperty() {
+        return langue;
+    }
+
+    public synchronized static VueParametre getInstance(Stage p, GestionMusique gestionmusique) {
+        if (instance == null) {
+            instance = new VueParametre(p, gestionmusique);
+        }
+        return instance;
+    }
+
+    public IntegerProperty getLangueChoisie() {
+        return langue;
     }
 
 
