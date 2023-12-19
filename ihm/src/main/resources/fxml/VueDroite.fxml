@@ -41,7 +41,7 @@
                         <Circle fx:id="vert" fill="#0da80b" layoutX="49.0" layoutY="62.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" translateX="3.0" />
                         <Label fx:id="numero" layoutX="21.0" layoutY="20.0" text="Numéro " textFill="WHITE" translateX="7.0" />
 
-                        <Label fx:id="Rouge" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="82.0" prefHeight="36.0" prefWidth="103.0" style="-fx-padding: 15;" textFill="WHITE" translateX="1.0">
+                        <Label fx:id="Rouge" alignment="CENTER" contentDisplay="CENTER" layoutX="44.0" layoutY="98.0" textFill="WHITE" translateX="-5.0">
                             <font>
                                 <Font name="Chalkduster" size="13.0" />
                             </font>
@@ -49,8 +49,22 @@
                                 <Insets />
                             </opaqueInsets>
                         </Label>
-                        <Label fx:id="Vert" layoutX="44.0" layoutY="54.0" textFill="WHITE" translateX="2.0" />
-                        <Label fx:id="Noir" layoutX="45.0" layoutY="142.0" textFill="WHITE" translateX="-7.0" />
+                        <Label fx:id="Vert" alignment="CENTER" layoutX="44.0" layoutY="54.0" textFill="WHITE" translateX="-5.0">
+                        <font>
+                            <Font name="Chalkduster" size="13.0" />
+                        </font>
+                        <opaqueInsets>
+                            <Insets />
+                        </opaqueInsets>
+                        </Label>
+                        <Label fx:id="Noir" alignment="CENTER" layoutX="44.0" layoutY="142.0" textFill="WHITE" translateX="-5.0">
+                        <font>
+                            <Font name="Chalkduster" size="13.0" />
+                        </font>
+                        <opaqueInsets>
+                            <Insets />
+                        </opaqueInsets>
+                        </Label>
                     </children>
                 </Pane>
             </children>
