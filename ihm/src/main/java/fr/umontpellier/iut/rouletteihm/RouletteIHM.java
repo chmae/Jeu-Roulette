@@ -66,6 +66,9 @@ public class RouletteIHM extends Application {
             vueAccueil.getInscription().setOnMouseClicked(mouseEvent -> {
                 vueAccueil.afficherInscriptionPopup();
             });
+            vueAccueil.getInfo().setOnMouseClicked(mouseEvent -> {
+                vueAccueil.afficherRulesPopUp();
+            });
             stage.setTitle("Accueil");
             Scene scene = new Scene(vueAccueil, 599, 390);
             scene.getRoot().getProperties().put("RouletteIHM", this);
