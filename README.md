@@ -1,6 +1,8 @@
 # GoldenMilion.co
 
-Ce projet est un simple jeu de casino, la roulette européenne. Il a été développé par une jeune équipe de développeurs suivant la méthodologie Agile.
+GoldenMilion.co est un jeu de casino en ligne qui permet de jouer à la roulette européenne. Ce projet est développé par une équipe de jeunes développeurs passionnés, utilisant la méthodologie Agile pour assurer une gestion efficace du projet.
+
+Le jeu offre une expérience réaliste de roulette en ligne, avec des fonctionnalités telles que l'affichage des derniers numéros sortis, les statistiques de sortie de couleur et les 3 numéros les plus sortis. Ces informations aident les joueurs à prendre des décisions éclairées lors de leurs paris.
 
 
 ## Fonctionnalités
