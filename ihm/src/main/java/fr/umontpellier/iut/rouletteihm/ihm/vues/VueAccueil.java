@@ -1,6 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,12 @@ public class VueAccueil extends Pane {
     private VueConnexion vueConnexion;
     @FXML
     private Pane pane;
+    @FXML
+    private ImageView info;
+
+    private GestionMusique musique = new GestionMusique();
+    private  VueRules vueRules;
+
 
     public VueAccueil() {
         try {
@@ -39,10 +46,19 @@ public class VueAccueil extends Pane {
             connexion = (Label) root.lookup("#connexion");
             inscription = (Label) root.lookup("#inscription");
             pane = (Pane) root.lookup("#pane");
+            info = (ImageView) root.lookup("#info");
             vueInscription = new VueInscription();
             vueConnexion = new VueConnexion();
+            vueRules = new VueRules();
             getChildren().add(root);
 
+            // --Code de sauvegarde de la musique d'aceuil-- //
+            String cheminAudioGolde = "ihm/src/main/resources/musique/sonsVueAccueil.mp3";
+            musique.setMusique(cheminAudioGolde);
+            musique.setVolume(0.05);
+
+            info.setOnMouseEntered(event -> info.setOpacity(0.7));
+            info.setOnMouseExited(event -> info.setOpacity(1.0));
 
             jouer.setOnMouseEntered(event -> jouer.setOpacity(0.7));
             jouer.setOnMouseExited(event -> jouer.setOpacity(1.0));
@@ -85,7 +101,23 @@ public class VueAccueil extends Pane {
         popupStage.showAndWait();
     }
 
-    public void afficherInscriptionPopup() {
+    public void afficherRulesPopUp() {
+            vueRules = new VueRules();
+
+        Stage popupStage = new Stage();
+        popupStage.setResizable(false);
+        popupStage.initOwner(getScene().getWindow());
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        Scene scene = new Scene(vueRules, getScene().getWidth(), getScene().getHeight());
+        popupStage.setScene(scene);
+        popupStage.setWidth(250);
+        popupStage.setHeight(465);
+        popupStage.setTitle("Règles du jeu");
+        popupStage.show();
+    }
+
+
+        public void afficherInscriptionPopup() {
         if (vueInscription == null) {
             vueInscription = new VueInscription();
         }
@@ -102,6 +134,9 @@ public class VueAccueil extends Pane {
         popupStage.show();
     }
 
+    public GestionMusique getMusique() {
+        return musique;
+    }
 
     public ImageView getBoutonJouer() {
         return jouer;
@@ -124,4 +159,7 @@ public class VueAccueil extends Pane {
         }
     }
 
+    public ImageView getInfo() {
+        return info;
+    }
 }

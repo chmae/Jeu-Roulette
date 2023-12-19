@@ -8,6 +8,7 @@ import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -44,6 +45,11 @@ public class VueJoueurCourant extends GridPane {
     @FXML
     private Label mise;
     private Label labelInstructions;
+    private IntegerProperty langueChoisie;
+    @FXML
+    private Label labelMise;
+    @FXML
+    private Label labelMiseTotale;
 
     private ClignoterThread clignoterThread;
     @FXML
@@ -55,7 +61,7 @@ public class VueJoueurCourant extends GridPane {
     @FXML
     private ImageView passer1;
 
-    public VueJoueurCourant(IJeu jeu, Label labelInstructions) {
+    public VueJoueurCourant(IJeu jeu, Label labelInstructions, VueInscription vueInscription, IntegerProperty langueChoisie) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueJoueurCourant.fxml"));
             loader.setController(this);
@@ -68,15 +74,19 @@ public class VueJoueurCourant extends GridPane {
             getChildren().addAll(root);
             hoverImagePasser(passer);
             hoverImagePasser(passer1);
+            labelMise = (Label) root.lookup("#labelMise");
+            labelMiseTotale = (Label) root.lookup("#labelMiseTotale");
         } catch (IOException e) {
             e.printStackTrace();
         }
         this.jeu = jeu;
+        this.langueChoisie = langueChoisie;
         setId("vueJoueurCourant");
         this.creerBindings();
         SoldePlayer.setText(String.valueOf(jeu.joueurCourantProperty().getValue().soldeProperty().getValue()));
         soldePlayer2.setText(String.valueOf(jeu.joueurCourantProperty().getValue().getMiseActuelle()));
         this.labelInstructions = labelInstructions;
+        creerBindingsMisesInfo();
         nomJoueur.setText(jeu.joueurCourantProperty().getValue().getNom());
         joueur = jeu.joueurCourantProperty().get();
         clignoterThread = new ClignoterThread(couronne);
@@ -89,8 +99,11 @@ public class VueJoueurCourant extends GridPane {
             SoldePlayer.setText(String.valueOf(joueur.soldeProperty().getValue()));
             soldePlayer2.setText(String.valueOf(joueur.getMiseActuelle()));
             jeu.tournerTour();
-            labelInstructions.setText("Quelle valeur voulez-vous miser ?");
-        });
+            if (langueChoisie.intValue()==0) {
+                labelInstructions.setText("Quelle valeur voulez-vous miser ?");
+            } else {
+                labelInstructions.setText("Which value do you want to bet?");
+            }        });
 
         jeu.joueurCourantProperty().get().getMiseTotaleProperty().addListener((observableValue, number, t1) -> mise.setText(String.valueOf(t1)));
 
@@ -101,7 +114,6 @@ public class VueJoueurCourant extends GridPane {
 
         jeu.joueurCourantProperty().get().getMiseActuelleProperty().addListener((observable, oldValue, newValue) -> {
             soldePlayer2.setText(String.valueOf(joueur.getMiseActuelle()));
-            jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());
         });
     }
 
@@ -184,6 +196,18 @@ public class VueJoueurCourant extends GridPane {
                 // Arrêt du thread
             }
         }
+    }
+
+    public void creerBindingsMisesInfo() {
+        langueChoisie.addListener((observable, oldValue, newValue) -> {
+            if(newValue.intValue()==0) {
+                labelMise.setText("Mise:");
+                labelMiseTotale.setText("MiseT:");
+            } else {
+                labelMise.setText("Bet:");
+                labelMiseTotale.setText("TBet:");
+            }
+        });
     }
 }
 

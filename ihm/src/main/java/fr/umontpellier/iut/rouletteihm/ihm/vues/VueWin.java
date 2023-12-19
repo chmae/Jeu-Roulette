@@ -1,5 +1,6 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -24,6 +25,7 @@ public class VueWin {
     private boolean rejouerClicked = false;
     @FXML
     private Label gainJeton;
+    private GestionMusique gestionMusique;
 
     public VueWin(Stage p) {
         primaryStage = p;
@@ -60,6 +62,20 @@ public class VueWin {
 
     public void afficher() {
         stage.show();
+
+        // --Code de sauvegarde de la musique Win-- //
+        gestionMusique = new GestionMusique();
+        gestionMusique.setMusique("ihm/src/main/resources/musique/Bruitdepièces.mp3");
+        gestionMusique.setVolume(0.4);
+        gestionMusique.lireMusique();
+
+        // Événement pour arrêter la musique lorsque la fenêtre se ferme
+        stage.setOnHidden(event -> {
+            gestionMusique.arreterMusique();
+            stage.close();
+        });
+
+
         Duration pauseDuration = Duration.seconds(10);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> {
             if (!isRejouerClicked()) {

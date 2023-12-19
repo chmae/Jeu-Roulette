@@ -3,6 +3,7 @@ package fr.umontpellier.iut.rouletteihm.ihm.vues;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ public class DonneesGraphiques {
     public final static Map<String, ArrayList<Coordonnees>> carre;
     public final static Map<String, ArrayList<Coordonnees>> transversale;
     public final static Map<String, ArrayList<Coordonnees>> sixain;
+    public final static Map<String, ArrayList<Coordonnees>> cases;
 
     static {
         cheval = new LinkedHashMap<>();

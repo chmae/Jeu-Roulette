@@ -8,5 +8,6 @@ open module fr.umontpellier.iut.ihm {
     requires org.hibernate.orm.core;
     requires jakarta.persistence;
     requires HibernateRepositories;
+    requires javafx.media;
 
 }
