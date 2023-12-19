@@ -1,7 +1,10 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DonneesGraphiques {
@@ -129,6 +132,84 @@ public class DonneesGraphiques {
         cheval.put("33-36", new ArrayList<>() {{
             add(new Coordonnees(838.5, 435.0, 841.5, 493.0));
         }});
+        //Coordonnées des chevaux ligne 1-2
+        cheval.put("1-2", new ArrayList<>() {{
+            add(new Coordonnees(403.0, 561.5, 436.5, 564.5));
+        }});
+        cheval.put("4-5", new ArrayList<>() {{
+            add(new Coordonnees(442.5, 561.5, 475.5, 564.5));
+        }});
+        cheval.put("7-8", new ArrayList<>() {{
+            add(new Coordonnees(482.5, 561.5, 515.5, 564.5));
+        }});
+        cheval.put("10-11", new ArrayList<>() {{
+            add(new Coordonnees(522.5, 561.5, 555.5, 564.5));
+        }});
+        cheval.put("13-14", new ArrayList<>() {{
+            add(new Coordonnees(562.5, 561.5, 595.5, 564.5));
+        }});
+        cheval.put("16-17", new ArrayList<>() {{
+            add(new Coordonnees(602.5, 561.5, 635.5, 564.5));
+        }});
+        cheval.put("19-20", new ArrayList<>() {{
+            add(new Coordonnees(642.5, 561.5, 675.5, 564.5));
+        }});
+        cheval.put("22-23", new ArrayList<>() {{
+            add(new Coordonnees(682.5, 561.5, 715.5, 564.5));
+        }});
+        cheval.put("25-26", new ArrayList<>() {{
+            add(new Coordonnees(722.5, 561.5, 755.5, 564.5));
+        }});
+        cheval.put("28-29", new ArrayList<>() {{
+            add(new Coordonnees(762.5, 561.5, 795.5, 564.5));
+        }});
+        cheval.put("31-32", new ArrayList<>() {{
+            add(new Coordonnees(802.5, 561.5, 835.5, 564.5));
+        }});
+        cheval.put("34-35", new ArrayList<>() {{
+            add(new Coordonnees(842.5, 561.5, 875.5, 564.5));
+        }});
+
+        //Coordonnées des chevaux ligne 2-3
+        cheval.put("2-3", new ArrayList<>() {{
+            add(new Coordonnees(403.0, 496.5, 436.5, 499.5));
+        }});
+        cheval.put("5-6", new ArrayList<>() {{
+            add(new Coordonnees(442.5, 496.5, 475.5, 499.5));
+        }});
+        cheval.put("8-9", new ArrayList<>() {{
+            add(new Coordonnees(482.5, 496.5, 515.5, 499.5));
+        }});
+        cheval.put("11-12", new ArrayList<>() {{
+            add(new Coordonnees(522.5, 496.5, 555.5, 499.5));
+        }});
+        cheval.put("14-15", new ArrayList<>() {{
+            add(new Coordonnees(562.5, 496.5, 595.5, 499.5));
+        }});
+        cheval.put("17-18", new ArrayList<>() {{
+            add(new Coordonnees(602.5, 496.5, 635.5, 499.5));
+        }});
+        cheval.put("20-21", new ArrayList<>() {{
+            add(new Coordonnees(642.5, 496.5, 675.5, 499.5));
+        }});
+        cheval.put("23-24", new ArrayList<>() {{
+            add(new Coordonnees(682.5, 496.5, 715.5, 499.5));
+        }});
+        cheval.put("26-27", new ArrayList<>() {{
+            add(new Coordonnees(722.5, 496.5, 755.5, 499.5));
+        }});
+        cheval.put("29-30", new ArrayList<>() {{
+            add(new Coordonnees(762.5, 496.5, 795.5, 499.5));
+        }});
+        cheval.put("32-33", new ArrayList<>() {{
+            add(new Coordonnees(802.5, 496.5, 835.5, 499.5));
+        }});
+        cheval.put("35-36", new ArrayList<>() {{
+            add(new Coordonnees(842.5, 496.5, 875.5, 499.5));
+        }});
+
+
+
     }
 
     static {
@@ -320,6 +401,7 @@ public class DonneesGraphiques {
         }});
     }
 
+
     public static class Coordonnees {
         private double xStart;
         private double yStart;
@@ -348,5 +430,6 @@ public class DonneesGraphiques {
         public double getyEnd() {
             return yEnd;
         }
+
     }
 }
