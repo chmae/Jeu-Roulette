@@ -1345,7 +1345,7 @@ public class CreationTable {
 //                    placerJetonZero((Polygon) node);
 //                }
 //            });
-    }
+//        }
 
 
         private void ajouterParis(ArrayList<Integer> paris) {
@@ -1913,7 +1913,7 @@ public class CreationTable {
                     });
                 }
             }
-        }
+        };
     };
 
 
