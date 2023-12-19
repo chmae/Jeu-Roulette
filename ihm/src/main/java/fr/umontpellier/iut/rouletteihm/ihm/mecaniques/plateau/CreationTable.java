@@ -12,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -863,9 +862,14 @@ public class CreationTable {
                 }
                 ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2), liaisonRect);
                 table.getChildren().add(liaisonRect);
+                Text textNode = new Text(key);
+
+                // Appel de creerBindingParis avec le nouveau TextNode
+                creerBindingParis(rectangle1, textNode);
             }
         });
     }
+
     public void ajouterHoverCasesCarre() {
         DonneesGraphiques.carre.forEach((key, value) -> {
             int index1 = Integer.parseInt(key.split("-")[0]);
@@ -888,12 +892,13 @@ public class CreationTable {
                 circle.setFill(Color.TRANSPARENT);
                 circle.setRadius(4);
 
-                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4),circle);
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4), circle);
 
                 table.getChildren().add(circle);
             }
         });
     }
+
     public void ajouterHoverCasesTransversale() {
         DonneesGraphiques.transversale.forEach((key, value) -> {
             int index1 = Integer.parseInt(key.split("-")[0]);
@@ -928,6 +933,7 @@ public class CreationTable {
         });
 
     }
+
     public void ajouterHoverCasesSixain() {
         DonneesGraphiques.sixain.forEach((key, value) -> {
             int index1 = Integer.parseInt(key.split("-")[0]);
@@ -959,7 +965,6 @@ public class CreationTable {
             }
         });
     }
-
 
 
     public void ajouterHoverCasesComplexes(List<Rectangle> rectangles, Node node) {
@@ -1345,10 +1350,9 @@ public class CreationTable {
 //                    placerJetonZero((Polygon) node);
 //                }
 //            });
-//        }
 
 
-        private void ajouterParis(ArrayList<Integer> paris) {
+    private void ajouterParis(ArrayList<Integer> paris) {
         for (int i : paris) {
             if (!listeParis.contains(i)) {
                 listeParis.add(i);
@@ -1365,10 +1369,9 @@ public class CreationTable {
 
 
     private void changerLabelInstructions(String pari) {
-        if (langueChoisie.intValue()==0){
+        if (langueChoisie.intValue() == 0) {
             labelInstructions.setText("Paris sur " + pari);
-        }
-        else{
+        } else {
             labelInstructions.setText("Bet on " + pari);
         }
     }
@@ -1394,7 +1397,8 @@ public class CreationTable {
 
 
     public void placerJeton(String caseInt) {
-        ImageView imageCase =  new ImageView();
+        ImageView imageCase = new ImageView();
+
         switch (jeu.joueurCourantProperty().get().getMiseActuelle()) {
             case 1:
                 imageCase = new ImageView(new Image("images/token_1_2.png"));
@@ -1417,9 +1421,24 @@ public class CreationTable {
             default:
                 break;
         }
+
         DonneesGraphiques.Coordonnees coordonnees = DonneesGraphiques.cases.get(caseInt).get(0);
         double startX = coordonnees.getxStart();
         double startY = coordonnees.getyStart();
+
+        if (DonneesGraphiques.cheval.containsKey(caseInt)) {
+            int index1 = Integer.parseInt(caseInt.split("-")[0]);
+            int index2 = Integer.parseInt(caseInt.split("-")[1]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+
+            startX = (rectangle1.getX() + rectangle2.getX() + rectangle1.getWidth()) / 2;
+            startY = (rectangle1.getY() + rectangle2.getY() + rectangle1.getHeight()) / 2;
+            imageCase.setLayoutX(startX - 19);
+            imageCase.setLayoutY(startY - 19);
+        }
+
         imageCase.setFitWidth(38);
         imageCase.setFitHeight(38);
         imageCase.setPreserveRatio(false);
@@ -1430,37 +1449,37 @@ public class CreationTable {
 
 
 
-    private void placerJetonZero(Polygon p) {
-        ImagePattern imageCase;
-        switch (jeu.joueurCourantProperty().get().getMiseTotale()) {
-            case 1:
-                imageCase = new ImagePattern(new Image("images/token_1_2.png"));
-                p.setFill(imageCase);
-                break;
-            case 5:
-                imageCase = new ImagePattern(new Image("images/token_5_2.png"));
-                p.setFill(imageCase);
-                break;
-            case 25:
-                imageCase = new ImagePattern(new Image("images/token_25_2.png"));
-                p.setFill(imageCase);
-                break;
-            case 100:
-                imageCase = new ImagePattern(new Image("images/token_100_2.png"));
-                p.setFill(imageCase);
-                break;
-            case 500:
-                imageCase = new ImagePattern(new Image("images/token_500_2.png"));
-                p.setFill(imageCase);
-                break;
-            case 1000:
-                imageCase = new ImagePattern(new Image("images/token_1k_2.png"));
-                p.setFill(imageCase);
-                break;
-            default:
-                break;
-        }
-    }
+//    private void placerJetonZero(Polygon p) {
+//        ImagePattern imageCase;
+//        switch (jeu.joueurCourantProperty().get().getMiseTotale()) {
+//            case 1:
+//                imageCase = new ImagePattern(new Image("images/token_1_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            case 5:
+//                imageCase = new ImagePattern(new Image("images/token_5_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            case 25:
+//                imageCase = new ImagePattern(new Image("images/token_25_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            case 100:
+//                imageCase = new ImagePattern(new Image("images/token_100_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            case 500:
+//                imageCase = new ImagePattern(new Image("images/token_500_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            case 1000:
+//                imageCase = new ImagePattern(new Image("images/token_1k_2.png"));
+//                p.setFill(imageCase);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
 
     private void creerBindingParis(Node n, Text textNode) {
@@ -1470,10 +1489,9 @@ public class CreationTable {
             if (jeu.joueurCourantProperty().get().getMiseActuelle() != 0) {
                 switch (textNode.getText()) {
                     default:
-                        if (langueChoisie.intValue()==0){
+                        if (langueChoisie.intValue() == 0) {
                             labelInstructions.setText("Paris Incorret");
-                        }
-                        else{
+                        } else {
                             labelInstructions.setText("Bet are Incorrect");
                         }
                         break;
@@ -1850,9 +1868,14 @@ public class CreationTable {
                         placerJeton("36");
                         break;
 
+                    case "1-4":
+                        ArrayList<Integer> nombresGagnants14 = new ArrayList<>(Arrays.asList(1,4));
+                        ajouterParis(nombresGagnants14);
+                        multimontant(nombresGagnants14);
+                        changerLabelInstructions("1-4");
+                        placerJeton("1-4");
+                        break;
                 }
-
-
             }
 
             if (textNode.getText().equals("0")) {
@@ -1913,8 +1936,13 @@ public class CreationTable {
                     });
                 }
             }
+
+            jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());
+            jeu.joueurCourantProperty().get().setMiseActuelle(0);
         };
-    };
+        n.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, parisJoueur);
+    }
+
 
 
 
