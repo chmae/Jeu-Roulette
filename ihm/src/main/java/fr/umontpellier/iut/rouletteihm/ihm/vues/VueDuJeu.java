@@ -4,7 +4,9 @@ import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.CreationTable;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.Joueur;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueInscription;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.beans.property.IntegerProperty;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -23,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.StatistiquesRoulette;
 
@@ -38,7 +41,7 @@ public class VueDuJeu extends GridPane {
     private HBox elementsGauche;
     private CreationTable table;
     private Label labelInstructions;
-    private ArrayList<Integer> listeParis;
+    private ArrayList<ArrayList<Integer>> listesParis = new ArrayList<>(new ArrayList<>());
     private static VueDuJeu instance;
     private ArrayList<Integer> multiplicateursGain;
     private ArrayList<Integer> montantsParis;
@@ -50,17 +53,24 @@ public class VueDuJeu extends GridPane {
     private StringProperty valeurGagneeProperty = new SimpleStringProperty("0");
     private IntegerProperty langue;
     private VueInscription vueInscription = new VueInscription();
+    private List<Joueur> joueurs;
+    private int numeroJoueurJouant;
 
-    public VueDuJeu(IJeu jeu) {
+    public VueDuJeu(IJeu jeu, List<Joueur> joueurs) {
         this.jeu = jeu;
         instance = this;
+        this.joueurs = joueurs;
 
         autresJoueurs = new VueAutresJoueurs(jeu);
 
         vueBet = new VueBet(jeu, autresJoueurs.getLangueChoisie());
         labelInstructions = vueBet.getLabelInstruction();
         table = new CreationTable(jeu, labelInstructions, vueBet, autresJoueurs.getLangueChoisie());
-        listeParis = table.getListeParis();
+        listesParis = new ArrayList<>();
+        listesParis.add(table.getListeParis(0));
+        listesParis.add(table.getListeParis(1));
+        listesParis.add(table.getListeParis(2));
+        listesParis.add(table.getListeParis(3));
         plateau = new VuePlateau(jeu);
         vueDroite = new VueDroite(jeu);
         vueGauche = new VueGauche(jeu);
@@ -75,7 +85,7 @@ public class VueDuJeu extends GridPane {
         add(vueBet, 0, 1);
         add(joueurCourantvue, 1, 2);
         add(autresJoueurs, 0, 0);
-        listeParis = table.getListeParis();
+//        listesParis = table.getListeParis();
 
         vueDroite.setTranslateX(1020);
         setHalignment(joueurCourantvue, HPos.RIGHT);
@@ -97,36 +107,45 @@ public class VueDuJeu extends GridPane {
 
         joueurCourantvue.getPasser().setOnMouseClicked(mouseEvent -> {
             labelInstructions.setText("Vous avez décidé de passer !");
-            vueRoue.animation(jeu.getResultatTourActuel().getNombres());
-            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
+            numeroJoueurJouant++;
+            if (numeroJoueurJouant>3) {
+                vueRoue.animation(jeu.getResultatTourActuel().getNombres());
+                PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
 
-            pauseTransition.setOnFinished(event -> {
-                vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
-                vueDroite.afficherStats();
-                vueDroite.setStatistiquesRoulette(statistiquesRoulette);
-            });
-            pauseTransition.play();
-            jeu.tournerTour();
-            statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
-            statistiquesRoulette.afficherStatistique();
+                pauseTransition.setOnFinished(event -> {
+                    vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
+                    vueDroite.afficherStats();
+                    vueDroite.setStatistiquesRoulette(statistiquesRoulette);
+                });
+                pauseTransition.play();
+                jeu.tournerTour();
+                statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
+                statistiquesRoulette.afficherStatistique();
+                numeroJoueurJouant = 0;
+            }
+            jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
 
         });
 
         joueurCourantvue.getPasser1().setOnMouseClicked(mouseEvent -> {
             labelInstructions.setText("Vous avez décidé de passer !");
-            vueRoue.animation(jeu.getResultatTourActuel().getNombres());
-            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
+            numeroJoueurJouant++;
+            if (numeroJoueurJouant>3) {
+                vueRoue.animation(jeu.getResultatTourActuel().getNombres());
+                PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
 
-            pauseTransition.setOnFinished(event -> {
-                vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
-                vueDroite.afficherStats();
-                vueDroite.setStatistiquesRoulette(statistiquesRoulette);
-            });
-            pauseTransition.play();
-            jeu.tournerTour();
-            statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
-            statistiquesRoulette.afficherStatistique();
-
+                pauseTransition.setOnFinished(event -> {
+                    vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
+                    vueDroite.afficherStats();
+                    vueDroite.setStatistiquesRoulette(statistiquesRoulette);
+                });
+                pauseTransition.play();
+                jeu.tournerTour();
+                statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
+                statistiquesRoulette.afficherStatistique();
+                    numeroJoueurJouant = 0;
+            }
+            jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
         });
     }
 
@@ -147,7 +166,7 @@ public class VueDuJeu extends GridPane {
 
         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                System.out.println(listeParis.toString());
+                System.out.println(listesParis.toString());
                 vueRoue.animation(jeu.getResultatTourActuel().getNombres());
                 statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
                 statistiquesRoulette.afficherStatistique();
@@ -158,7 +177,7 @@ public class VueDuJeu extends GridPane {
                     vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
                     vueDroite.afficherStats();
                     vueDroite.setStatistiquesRoulette(statistiquesRoulette);
-                    if (listeParis.contains(jeu.getResultatTourActuel().getValeur())) {
+                    if (listesParis.get(0).contains(jeu.getResultatTourActuel().getValeur())) {
                         whenWin();
                     } else {
                         whenLose();
@@ -265,17 +284,17 @@ public class VueDuJeu extends GridPane {
         return jeu;
     }
 
-    public ArrayList<Integer> getListeParis() {
-        return listeParis;
-    }
+//    public ArrayList<Integer> getListeParis() {
+//        return listesParis;
+//    }
 
     public Label getLabelInstructions() {
         return labelInstructions;
     }
 
-    public VueBet getVueBet() {
-        return vueBet;
-    }
+//    public VueBet getVueBet() {
+//        return vueBet;
+//    }
 
 
 }

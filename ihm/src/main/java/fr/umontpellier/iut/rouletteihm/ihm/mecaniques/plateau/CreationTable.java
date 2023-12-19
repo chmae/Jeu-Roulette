@@ -92,7 +92,7 @@ public class CreationTable {
         return table;
     }
 
-    public ArrayList<Integer> getListeParis() {
+    public ArrayList<Integer> getListeParis(int numeroJoueur) {
         System.out.println(listeParis.toString());
         return listeParis;
     }

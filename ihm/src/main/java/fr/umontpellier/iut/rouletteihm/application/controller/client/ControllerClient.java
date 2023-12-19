@@ -39,6 +39,11 @@ public class ControllerClient {
     private Pane parametrePane;
 
     private RouletteIHM rouletteIHM = RouletteIHM.getInstance();
+
+    public static boolean isUtilisateurConnecte() {
+        return utilisateurConnecte;
+    }
+
     private static boolean utilisateurConnecte = false;
 
     private static int idClientConnecte;
@@ -119,7 +124,9 @@ public class ControllerClient {
                             NouvelClientController nouvelClientController = rouletteIHM.getNouvelClientController();
 
                             if (nouvelClientController != null) {
-                                rouletteIHM.demarrerPartie(prenomClient, soldeClient);
+                                rouletteIHM.ajouterJoueur(prenomClient, soldeClient);
+                                // -----------------------------------------------------------------------------------------------------------------------------------
+                                rouletteIHM.demarrerPartie();
                                 vueAccueil.fermerFenetre();
 
                             } else {
