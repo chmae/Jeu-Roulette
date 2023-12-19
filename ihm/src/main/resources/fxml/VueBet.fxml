@@ -12,111 +12,105 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="vueBet" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0"
-          xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-    <?import javafx.geometry.*?>
-    <?import javafx.scene.control.*?>
-    <?import javafx.scene.image.*?>
-    <?import javafx.scene.layout.*?>
+<GridPane fx:id="vueBet" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+
+
+
+
     <children>
         <Pane fx:id="InstructionBox" prefHeight="61.0" prefWidth="1125.0" GridPane.rowIndex="1">
             <children>
-                <ImageView fx:id="fondCouleur" fitHeight="53.0" fitWidth="937.0" pickOnBounds="true"
-                           preserveRatio="true" translateX="13.0" translateY="-2.0">
+                <ImageView fx:id="fondCouleur" fitHeight="53.0" fitWidth="937.0" pickOnBounds="true" preserveRatio="true" translateX="13.0" translateY="-2.0">
                     <image>
-                        <Image url="@../images/Bottom_Hori_Green.png"/>
+                        <Image url="@../images/Bottom_Hori_Green.png" />
                     </image>
                     <effect>
-                        <DropShadow color="#CC00FF" radius="30"/>
+                        <DropShadow color="#CC00FF" radius="30" />
                     </effect>
                 </ImageView>
-                <ImageView fx:id="fondBois" fitHeight="73.0" fitWidth="1136.0" layoutX="-9.0" layoutY="-3.0"
-                           pickOnBounds="true" preserveRatio="true" translateX="2.0" translateY="-2.0">
+                <ImageView fx:id="fondBois" fitHeight="73.0" fitWidth="1136.0" layoutX="-9.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true" translateX="2.0" translateY="-2.0">
                     <image>
                         <Image url="@../images/BorderDown.png"/>
                     </image>
                 </ImageView>
-                <ImageView fx:id="ImageInstruction" fitHeight="49.0" fitWidth="743.0" layoutX="23.0" layoutY="-55.0"
-                           pickOnBounds="true" preserveRatio="true" translateX="150.0" translateY="10.0">
+                <ImageView fx:id="ImageInstruction" fitHeight="49.0" fitWidth="743.0" layoutX="23.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true" translateX="150.0" translateY="10.0">
                     <image>
-                        <Image url="@../images/instruction.png"/>
+                        <Image url="@../images/instruction.png" />
                     </image>
                     <effect>
-                        <DropShadow color="#CC00FF" radius="30"/>
+                        <DropShadow color="#CC00FF" radius="30" />
                     </effect>
                 </ImageView>
                 <Label fx:id="LabelInstruction" layoutX="127.0" layoutY="5.0" prefHeight="33.0" prefWidth="520.0"
                        text="Instructions" textAlignment="CENTER" textFill="WHITE" translateX="170.0" translateY="-40.0"
                        wrapText="true" alignment="CENTER">
                     <font>
-                        <Font name="Chalkduster" size="24.0"/>
+                        <Font name="Chalkduster" size="24.0" />
                     </font>
                 </Label>
-                <ImageView fitHeight="391.0" fitWidth="1184.0" layoutX="-29.0" layoutY="-315.0" pickOnBounds="true"
-                           preserveRatio="true">
+                <ImageView fitHeight="391.0" fitWidth="1184.0" layoutX="-29.0" layoutY="-315.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../images/decorative-shop-frame2.png"/>
+                        <Image url="@../images/decorative-shop-frame2.png" />
                     </image>
                 </ImageView>
-                <HBox fx:id="Jetons" alignment="TOP_CENTER" layoutX="371.0" layoutY="17.0" maxHeight="-Infinity"
-                      minHeight="-Infinity" prefHeight="49.0" prefWidth="374.0" spacing="15.0" translateX="20.0"
-                      translateY="-16.0">
+                <HBox fx:id="Jetons" alignment="TOP_CENTER" layoutX="356.0" layoutY="19.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="49.0" prefWidth="374.0" spacing="15.0" translateX="20.0" translateY="-16.0">
                     <padding>
-                        <Insets left="10.0"/>
+                        <Insets left="10.0" />
                     </padding>
                     <children>
-                        <ImageView fx:id="Token1" fitHeight="41.0" fitWidth="44.0" pickOnBounds="true"
-                                   preserveRatio="true" translateY="3.0">
+                        <ImageView fx:id="Token1" fitHeight="54.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" translateY="3.0">
                             <image>
-                                <Image url="@../images/token_1_2.png"/>
+                                <Image url="@../images/token_1_2.png" />
+                            </image>
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </ImageView>
+                        <ImageView fx:id="Token5" fitHeight="54.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" translateY="3.0">
+                            <image>
+                                <Image url="@../images/token_5_2.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="Token5" fitHeight="41.0" fitWidth="44.0" pickOnBounds="true"
-                                   preserveRatio="true" translateY="3.0">
+                        <ImageView fx:id="Token25" fitHeight="54.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" translateY="3.0">
                             <image>
-                                <Image url="@../images/token_5_2.png"/>
+                                <Image url="@../images/token_25_2.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="Token25" fitHeight="41.0" fitWidth="44.0" pickOnBounds="true"
-                                   preserveRatio="true" translateY="3.0">
+                        <ImageView fx:id="Token100" fitHeight="54.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" translateY="3.0">
                             <image>
-                                <Image url="@../images/token_25_2.png"/>
+                                <Image url="@../images/token_100_2.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="Token100" fitHeight="41.0" fitWidth="44.0" pickOnBounds="true"
-                                   preserveRatio="true" translateY="3.0">
+                        <ImageView fx:id="Token500" fitHeight="54.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" translateY="3.0">
                             <image>
-                                <Image url="@../images/token_100_2.png"/>
+                                <Image url="@../images/token_500_2.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="Token500" fitHeight="41.0" fitWidth="44.0" pickOnBounds="true"
-                                   preserveRatio="true" translateY="3.0">
+                        <ImageView fx:id="Token1000" fitHeight="54.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" translateY="3.0">
                             <image>
-                                <Image url="@../images/token_500_2.png"/>
-                            </image>
-                        </ImageView>
-                        <ImageView fx:id="Token1000" fitHeight="41.0" fitWidth="44.0" pickOnBounds="true"
-                                   preserveRatio="true" translateY="3.0">
-                            <image>
-                                <Image url="@../images/token_1k_2.png"/>
+                                <Image url="@../images/token_1k_2.png" />
                             </image>
                         </ImageView>
                     </children>
                 </HBox>
-                <ImageView fx:id="valider" fitHeight="72.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true"
-                           translateX="833.0" translateY="-6.0">
+                <ImageView fx:id="valider" fitHeight="72.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true" translateX="833.0" translateY="-6.0">
                     <image>
-                        <Image url="@../images/btn_valider.png"/>
+                        <Image url="@../images/btn_valider.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-21.0" layoutY="-68.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/coin.png" />
                     </image>
                 </ImageView>
             </children>
         </Pane>
     </children>
     <columnConstraints>
-        <ColumnConstraints/>
+        <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints/>
-        <RowConstraints/>
+        <RowConstraints />
+        <RowConstraints />
     </rowConstraints>
 </GridPane>
