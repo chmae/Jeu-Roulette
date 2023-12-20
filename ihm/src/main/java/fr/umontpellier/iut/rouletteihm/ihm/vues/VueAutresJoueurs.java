@@ -1,6 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
 import fr.umontpellier.iut.rouletteihm.RouletteIHM;
+import fr.umontpellier.iut.rouletteihm.application.controller.client.ControllerClient;
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
@@ -44,8 +45,15 @@ public class VueAutresJoueurs extends Pane {
     private ImageView lampe2;
     @FXML
     private Pane vueAutresJoueurs;
+    private static VueAutresJoueurs instance;
+
+    @FXML
+    private ImageView buttonQuit;
+
+    private static boolean boutonQuitterClicked = false;
 
     public VueAutresJoueurs(IJeu jeu) {
+        instance = this;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueAutresJoueurs.fxml"));
             loader.setController(this);
@@ -54,7 +62,7 @@ public class VueAutresJoueurs extends Pane {
             ImageView topBackground = (ImageView) root.lookup("#topBackground");
             ImageView CornerBackground = (ImageView) root.lookup("#CornerBackground");
             ImageView CornerQuit = (ImageView) root.lookup("#CornerQuit");
-            ImageView buttonQuit = (ImageView) root.lookup("#buttonQuit");
+            buttonQuit = (ImageView) root.lookup("#buttonQuit");
             ImageView parametre = (ImageView) root.lookup("#parametre");
             HBox autresJoueur = (HBox) root.lookup("#autresJoueur");
             ImageView lampe1 = (ImageView) root.lookup("#lampe1");
@@ -87,11 +95,13 @@ public class VueAutresJoueurs extends Pane {
             musiqueCasino.lireMusiqueProgressivement(musiqueCasino.getVolume());
 
             buttonQuit.setOnMouseClicked(event -> {
+                boutonQuitterClicked = true;
                 sonsBoutonParametre.lireMusique();
                 sonsBoutonParametre.remettreMusiqueAuDebut();
                 musiqueCasino.arreterMusique();
                 musiqueCasino.remettreMusiqueAuDebut();
                 fermerFenetresEtLireMusiqueAccueil();
+                RouletteIHM.getInstance().fonctionnaliteAccueil();
             });
 
 
@@ -141,17 +151,34 @@ public class VueAutresJoueurs extends Pane {
         t.setDaemon(true);
         t.start();
     }
-    private void fermerFenetresEtLireMusiqueAccueil() {
+    public void fermerVueAccueil() {
         vueAccueil = RouletteIHM.getInstance().getVueAccueil();
+        if (vueAccueil != null) {
+            vueAccueil.fermerFenetre();
+            vueAccueil.getMusique().arreterMusique();
+        } else {
+            System.err.println("Erreur : VueAccueil est null");
+        }
+    }
+    public static boolean isBoutonQuitterClicked() {
+        return boutonQuitterClicked;
+    }
+
+    public void fermerFenetresEtLireMusiqueAccueil() {
         Stage stageP = (Stage) vueAutresJoueurs.getScene().getWindow();
         Stage stage = RouletteIHM.getPrimaryStage();
 
         if (stage.isShowing() && stageP.isShowing()) {
-            System.out.println("Fermeture des fenêtres en cours...");
             stage.close();
             stageP.close();
-            vueAccueil.getMusique().lireMusique();
+
+            fermerVueAccueil();
         }
+    }
+
+
+    public static VueAutresJoueurs getInstance() {
+        return instance;
     }
 
     private void HoverImage(ImageView imageView) {
@@ -202,4 +229,7 @@ public class VueAutresJoueurs extends Pane {
         });
     }
 
+    public GestionMusique getMusiqueCasino() {
+        return musiqueCasino;
+    }
 }
