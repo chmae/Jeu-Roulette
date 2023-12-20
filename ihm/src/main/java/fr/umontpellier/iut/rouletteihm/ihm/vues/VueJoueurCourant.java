@@ -99,6 +99,8 @@ public class VueJoueurCourant extends GridPane {
             SoldePlayer.setText(String.valueOf(joueur.soldeProperty().getValue()));
             soldePlayer2.setText(String.valueOf(joueur.getMiseActuelle()));
             nomJoueur.setText(joueur.getNom());
+            joueur.setMiseTotale(0);
+            joueur.setMiseActuelle(0);
             if (langueChoisie.intValue() == 0) {
                 labelInstructions.setText("Quelle valeur voulez-vous miser ?");
             } else {

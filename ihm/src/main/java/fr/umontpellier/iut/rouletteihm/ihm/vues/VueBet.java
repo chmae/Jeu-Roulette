@@ -198,13 +198,13 @@ public class VueBet extends GridPane {
             sonsBoutonValider.lireMusique();
             sonsBoutonValider.remettreMusiqueAuDebut();
 
-            if (jeu.joueurCourantProperty().get().soldeProperty().getValue() < jeu.joueurCourantProperty().get().getMiseTotale()) {
+            if (jeu.joueurCourantProperty().get().soldeProperty().getValue() < jeu.joueurCourantProperty().get().getMiseActuelle()) {
                 if (this.langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("Vous n'avez pas assez d'argent pour faire ce paris !");
                 } else {
                     LabelInstruction.setText("You don't have enough money to make this bet!");
                 }
-            } else if (jeu.joueurCourantProperty().get().getMiseTotale() == 0 && ok) {
+            } else if (jeu.joueurCourantProperty().get().getMiseTotale() == 0/*&& ok*/) {
                 if (this.langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("Vous n'avez pas encore parié !");
                 } else {
