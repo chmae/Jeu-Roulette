@@ -1,5 +1,6 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
+import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
@@ -41,6 +42,8 @@ public class VueAutresJoueurs extends Pane {
     private ImageView lampe1;
     @FXML
     private ImageView lampe2;
+    @FXML
+    private Pane vueAutresJoueurs;
 
     public VueAutresJoueurs(IJeu jeu) {
         try {
@@ -62,7 +65,8 @@ public class VueAutresJoueurs extends Pane {
             username = (Label) root.lookup("#username");
             username1 = (Label) root.lookup("#username1");
             username2 = (Label) root.lookup("#username2");
-            getChildren().addAll(topBackground, CornerBackground, CornerQuit, buttonQuit, parametre, autresJoueur, lampe1, lampe2);
+            vueAutresJoueurs = (Pane) root.lookup("#VueAutresJoueurs");
+            getChildren().addAll(root);
 
 
             HoverImage(buttonQuit);
@@ -87,14 +91,7 @@ public class VueAutresJoueurs extends Pane {
                 sonsBoutonParametre.remettreMusiqueAuDebut();
                 musiqueCasino.arreterMusique();
                 musiqueCasino.remettreMusiqueAuDebut();
-
-                Stage stage = (Stage) buttonQuit.getScene().getWindow();
-                stage.close();
-                if (vueAccueil.getScene() == null) {
-                    primaryStage.setScene(new Scene(vueAccueil, 599, 390));
-                }
-                primaryStage.setTitle("Accueil");
-                primaryStage.show();
+                fermerFenetresEtLireMusiqueAccueil();
             });
 
 
@@ -143,6 +140,18 @@ public class VueAutresJoueurs extends Pane {
         });
         t.setDaemon(true);
         t.start();
+    }
+    private void fermerFenetresEtLireMusiqueAccueil() {
+        vueAccueil = RouletteIHM.getInstance().getVueAccueil();
+        Stage stageP = (Stage) vueAutresJoueurs.getScene().getWindow();
+        Stage stage = RouletteIHM.getPrimaryStage();
+
+        if (stage.isShowing() && stageP.isShowing()) {
+            System.out.println("Fermeture des fenêtres en cours...");
+            stage.close();
+            stageP.close();
+            vueAccueil.getMusique().lireMusique();
+        }
     }
 
     private void HoverImage(ImageView imageView) {
