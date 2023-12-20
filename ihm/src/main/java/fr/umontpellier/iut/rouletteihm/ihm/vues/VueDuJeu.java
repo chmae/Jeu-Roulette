@@ -172,14 +172,15 @@ public class VueDuJeu extends GridPane {
                     // Uniquement pour le sprint 2 (1 joueur)
                     vueBet.validationProperty().set(false);
                     if (autresJoueurs.getLangueChoisie().getValue() == 0) {
-                        labelInstructions.setText("Le " + jeu.getResultatTourActuel().getValeur() + " " + jeu.getResultatTourActuel().getCouleur() + " est tombé ! Misez pour rejouer");
+                        labelInstructions.setText("Le " + jeu.getResultatTourActuel().getValeur() + " " + jeu.getResultatTourActuel().getCouleur() + " est tombé !");
+
                     } else {
                         if (jeu.getResultatTourActuel().getCouleur().equals("Noir")) {
-                            labelInstructions.setText("The Black " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                            labelInstructions.setText("The Black " + jeu.getResultatTourActuel().getValeur() + " was selected !");
                         } else if (jeu.getResultatTourActuel().getCouleur().equals("Rouge")) {
-                            labelInstructions.setText("The Red " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                            labelInstructions.setText("The Red " + jeu.getResultatTourActuel().getValeur() + " was selected !");
                         } else {
-                            labelInstructions.setText("The Green " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                            labelInstructions.setText("The Green " + jeu.getResultatTourActuel().getValeur() + " was selected !");
                         }
                     }
                     jeu.tournerTour();
@@ -232,7 +233,6 @@ public class VueDuJeu extends GridPane {
         Duration pauseDuration = Duration.seconds(10);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> vueWin.getStage().close()));
         timeline.play();
-
     }
 
    /* private int calculPerteWin() {
