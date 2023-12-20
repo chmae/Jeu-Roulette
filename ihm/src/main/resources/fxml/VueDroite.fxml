@@ -19,51 +19,60 @@
                 <DropShadow color="#CC00FF" radius="10"/>
             </effect>
             <children>
-                <ImageView fx:id="Backgroundcolor" fitHeight="536.0" fitWidth="121.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="Backgroundcolor" fitHeight="536.0" fitWidth="121.0" layoutY="-1.0" pickOnBounds="true"
+                           preserveRatio="true">
                     <image>
                         <Image url="@../images/cards-support-Green.png"/>
                     </image>
                 </ImageView>
                 <Label layoutX="6.0" layoutY="129.0" text="Probabilitées" textFill="#0a0808">
                     <font>
-                        <Font name="Chalkduster" size="12.0" />
+                        <Font name="Chalkduster" size="12.0"/>
                     </font>
                 </Label>
                 <Pane fx:id="pane" layoutX="2.0" layoutY="175.0" prefHeight="157.0" prefWidth="97.0">
                     <children>
-                        <ImageView fitHeight="201.0" fitWidth="91.0" layoutX="9.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="201.0" fitWidth="91.0" layoutX="9.0" layoutY="-5.0" pickOnBounds="true"
+                                   preserveRatio="true">
                             <image>
-                                <Image url="@../images/small-your-turn_vertical.png" />
+                                <Image url="@../images/small-your-turn_vertical.png"/>
                             </image>
                         </ImageView>
-                        <Circle fx:id="rouge" fill="RED" layoutX="52.0" layoutY="105.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" />
-                        <Circle fx:id="noir" layoutX="52.0" layoutY="149.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" />
-                        <Circle fx:id="vert" fill="#0da80b" layoutX="49.0" layoutY="62.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" translateX="3.0" />
-                        <Label fx:id="numero" layoutX="21.0" layoutY="20.0" text="Numéro " textFill="WHITE" translateX="7.0" />
+                        <Circle fx:id="rouge" fill="RED" layoutX="52.0" layoutY="105.0" radius="20.0" stroke="WHITE"
+                                strokeType="INSIDE"/>
+                        <Circle fx:id="noir" layoutX="52.0" layoutY="149.0" radius="20.0" stroke="WHITE"
+                                strokeType="INSIDE"/>
+                        <Circle fx:id="vert" fill="#0da80b" layoutX="49.0" layoutY="62.0" radius="20.0" stroke="WHITE"
+                                strokeType="INSIDE" translateX="3.0"/>
+                        <Label fx:id="numero" layoutX="21.0" layoutY="20.0" text="Numéro " textFill="WHITE"
+                               translateX="7.0"/>
 
-                        <Label fx:id="Rouge" alignment="CENTER" contentDisplay="CENTER" layoutX="44.0" layoutY="98.0" textFill="WHITE" translateX="-5.0">
+                        <Label fx:id="Rouge" alignment="CENTER" contentDisplay="CENTER" layoutX="44.0" layoutY="98.0"
+                               textFill="WHITE" translateX="-5.0">
                             <font>
-                                <Font name="Chalkduster" size="13.0" />
+                                <Font name="Chalkduster" size="13.0"/>
                             </font>
                             <opaqueInsets>
-                                <Insets />
+                                <Insets/>
                             </opaqueInsets>
                         </Label>
-                        <Label fx:id="Vert" alignment="CENTER" layoutX="44.0" layoutY="54.0" textFill="WHITE" translateX="-5.0">
-                        <font>
-                            <Font name="Chalkduster" size="13.0" />
-                        </font>
-                        <opaqueInsets>
-                            <Insets />
-                        </opaqueInsets>
+                        <Label fx:id="Vert" alignment="CENTER" layoutX="44.0" layoutY="54.0" textFill="WHITE"
+                               translateX="-5.0">
+                            <font>
+                                <Font name="Chalkduster" size="13.0"/>
+                            </font>
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
                         </Label>
-                        <Label fx:id="Noir" alignment="CENTER" layoutX="44.0" layoutY="142.0" textFill="WHITE" translateX="-5.0">
-                        <font>
-                            <Font name="Chalkduster" size="13.0" />
-                        </font>
-                        <opaqueInsets>
-                            <Insets />
-                        </opaqueInsets>
+                        <Label fx:id="Noir" alignment="CENTER" layoutX="44.0" layoutY="142.0" textFill="WHITE"
+                               translateX="-5.0">
+                            <font>
+                                <Font name="Chalkduster" size="13.0"/>
+                            </font>
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
                         </Label>
                     </children>
                 </Pane>

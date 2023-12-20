@@ -190,12 +190,12 @@ public class VueDuJeu extends GridPane {
                             imageView.setVisible(false);
                         }
                     }
-                    if (autresJoueurs.getLangueChoisie().getValue()==0) {
+                    if (autresJoueurs.getLangueChoisie().getValue() == 0) {
                         labelInstructions.setText("Le " + jeu.getResultatTourActuel().getValeur() + " " + jeu.getResultatTourActuel().getCouleur() + " est tombé ! Misez pour rejouer");
                     } else {
                         if (jeu.getResultatTourActuel().getCouleur().equals("Noir")) {
                             labelInstructions.setText("The Black " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
-                        } else if(jeu.getResultatTourActuel().getCouleur().equals("Rouge")) {
+                        } else if (jeu.getResultatTourActuel().getCouleur().equals("Rouge")) {
                             labelInstructions.setText("The Red " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
                         } else {
                             labelInstructions.setText("The Green " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
@@ -229,7 +229,7 @@ public class VueDuJeu extends GridPane {
         });
 
         autresJoueurs.getLangueChoisie().addListener((observable, oldValue, newValue) -> {
-            if (newValue.intValue()==0) {
+            if (newValue.intValue() == 0) {
                 labelInstructions.setText("La langue a bien été changée !");
             } else {
                 labelInstructions.setText("Language has been change successfully !");

@@ -72,8 +72,13 @@ public class NouvelClientController {
                 vueAccueil.afficherConnexionPopup();
                 rouletteIHM.ajouterJoueur(prenoom, soldeChoisi);
                 //--------------------------------------------------------------------------------------------------------------------------------------
-                rouletteIHM.demarrerPartie();
-                vueAccueil.fermerFenetre();
+                if (vueAccueil.getMultiplayer().isSelected()) {
+                    vueAccueil.getVueChoixJoueurs().utilisateurConnecte();
+                    vueAccueil.afficherChoixJoueur();
+                } else {
+                    rouletteIHM.demarrerPartie();
+                    vueAccueil.fermerFenetre();
+                }
             } else {
                 System.err.println("Erreur : VueAccueil est null");
             }

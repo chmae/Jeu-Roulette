@@ -77,10 +77,6 @@ public class VueChoixJoueurs extends Pane {
 
             nom1 = (TextField) root.lookup("#nom1");
             solde1 = (TextField) root.lookup("#solde1");
-            if(ControllerClient.isUtilisateurConnecte()) {
-                nom1.setEditable(false);
-                solde1.setEditable(false);
-            }
 
             nom2 = (TextField) root.lookup("#nom2");
             solde2 = (TextField) root.lookup("#solde2");
@@ -104,6 +100,13 @@ public class VueChoixJoueurs extends Pane {
         }
         validationChoixJoueurs = new SimpleBooleanProperty(false);
         creerBinding();
+    }
+
+    public void utilisateurConnecte() {
+        nom1.setEditable(false);
+        solde1.setEditable(false);
+        nom1.setText(ControllerClient.getPrenomClient());
+        solde1.setText(String.valueOf(ControllerClient.getSoldeClient()));
     }
 
     public void multiplayerIsntSelected() {

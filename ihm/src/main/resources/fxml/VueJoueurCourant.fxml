@@ -54,7 +54,8 @@
                                 <Font name="Chalkduster" size="13.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="labelMise" layoutX="-98.0" layoutY="18.0" prefHeight="18.0" prefWidth="48.0" text="Mise:">
+                        <Label fx:id="labelMise" layoutX="-98.0" layoutY="18.0" prefHeight="18.0" prefWidth="48.0"
+                               text="Mise:">
                             <font>
                                 <Font name="Chalkduster" size="13.0"/>
                             </font>

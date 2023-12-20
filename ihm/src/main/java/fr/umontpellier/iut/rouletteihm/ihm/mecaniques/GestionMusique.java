@@ -1,4 +1,5 @@
 package fr.umontpellier.iut.rouletteihm.ihm.mecaniques;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -52,8 +53,8 @@ public class GestionMusique {
         }
     }
 
-    public boolean getStatus(){
-        return(mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING);
+    public boolean getStatus() {
+        return (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING);
     }
 
     public void lireMusique() {
@@ -93,9 +94,6 @@ public class GestionMusique {
     }
 
 
-
-
-
     public void mettreLaMusiqueEnBoucle(boolean activer) {
         if (mediaPlayer != null) {
             mediaPlayer.setCycleCount(activer ? MediaPlayer.INDEFINITE : 1);
@@ -108,7 +106,7 @@ public class GestionMusique {
         }
     }
 
-    public double getVolume(){
+    public double getVolume() {
         return mediaPlayer.getVolume();
     }
 

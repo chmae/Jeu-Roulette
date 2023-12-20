@@ -253,21 +253,24 @@ public class VueAutresJoueurs extends Pane {
     }
 
     private void afficherVueParametre() {
-        vueParametre = VueParametre.getInstance((Stage) new Scene(new Parent() {}).getWindow(), musiqueCasino);
+        vueParametre = VueParametre.getInstance((Stage) new Scene(new Parent() {
+        }).getWindow(), musiqueCasino);
         vueParametre.show();
     }
 
     public IntegerProperty getLangueChoisie() {
         if (getScene() == null) {
-            return VueParametre.getInstance((Stage) new Scene(new Parent() {}).getWindow(), musiqueCasino).getLangueChoisie();
+            return VueParametre.getInstance((Stage) new Scene(new Parent() {
+            }).getWindow(), musiqueCasino).getLangueChoisie();
         }
         return VueParametre.getInstance((Stage) getScene().getWindow(), musiqueCasino).getLangueChoisie();
     }
 
     public void creerBindings() {
-        VueParametre.getInstance((Stage) new Scene(new Parent() {}).getWindow(), musiqueCasino).getLangueChoisie().addListener((observable, oldValue, newValue) -> {
+        VueParametre.getInstance((Stage) new Scene(new Parent() {
+        }).getWindow(), musiqueCasino).getLangueChoisie().addListener((observable, oldValue, newValue) -> {
             String texte = "";
-            if(newValue.intValue()==0) {
+            if (newValue.intValue() == 0) {
                 texte = "Solde :";
             } else {
                 texte = "Balance :";

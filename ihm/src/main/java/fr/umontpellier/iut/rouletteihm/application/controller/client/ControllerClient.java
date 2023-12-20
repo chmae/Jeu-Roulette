@@ -37,6 +37,10 @@ public class ControllerClient {
     private Pane pane;
     @FXML
     private Pane parametrePane;
+    @FXML
+    private static TextField nom;
+    @FXML
+    private static TextField solde;
 
     private RouletteIHM rouletteIHM = RouletteIHM.getInstance();
 
@@ -50,10 +54,14 @@ public class ControllerClient {
 
     private static String prenomClient;
     private static ControllerClient instance;
-    @FXML
-    private TextField nom;
-    @FXML
-    private TextField solde;
+
+    public static int getSoldeClient() {
+        return soldeClient;
+    }
+
+    public static String getPrenomClient() {
+        return prenomClient;
+    }
 
     public static int getIdClientConnecte() {
         return idClientConnecte;
@@ -126,9 +134,13 @@ public class ControllerClient {
                             if (nouvelClientController != null) {
                                 rouletteIHM.ajouterJoueur(prenomClient, soldeClient);
                                 // -----------------------------------------------------------------------------------------------------------------------------------
-                                rouletteIHM.demarrerPartie();
-                                vueAccueil.fermerFenetre();
-
+                              if (vueAccueil.getMultiplayer().isSelected()) {
+                                  vueAccueil.getVueChoixJoueurs().utilisateurConnecte();
+                                  vueAccueil.afficherChoixJoueur();
+                              } else {
+                                  rouletteIHM.demarrerPartie();
+                                  vueAccueil.fermerFenetre();
+                              }
                             } else {
                                 System.err.println("Erreur : nouvelClientController est null");
                             }
