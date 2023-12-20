@@ -17,10 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
@@ -805,12 +802,9 @@ public class CreationTable {
                 ajouterEffetHover(r);
                 creerBindingParis(r, new Text(String.valueOf(i)));
 
+
                 table.getChildren().addAll(r, textNode);
                 rectangleMap.put(i, r);
-
-                if (i > 1) {
-                    survolerEspaceEntreCases(i - 1, i);
-                }
 
                 // Lignes horizontales
                 Line ligneHaut = new Line(x, y, x + LARGEUR, y);
@@ -829,46 +823,176 @@ public class CreationTable {
                 ligneDroite.setStroke(Color.WHITE);
                 ligneDroite.setStrokeWidth(3);
 
-                // Ajout des lignes au groupe parent
+
                 table.getChildren().addAll(ligneHaut, ligneBas, ligneGauche, ligneDroite);
+                ajouteHoverCasesCheval();
+                ajouterHoverCasesCarre();
+                ajouterHoverCasesSixain();
+                ajouterHoverCasesTransversale();
+
             }
         }
     }
 
+    public void ajouteHoverCasesCheval() {
+        DonneesGraphiques.cheval.forEach((key, value) -> {
+            int index1 = Integer.parseInt(key.split("-")[0]);
+            int index2 = Integer.parseInt(key.split("-")[1]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+
+            if (rectangle1 != null && rectangle2 != null) {
+                double rectX = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2) / 2;
+                double rectY = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() / 2) / 2;
+
+                double largeurRect = 3;
+                double hauteurRect = 30;
+
+                Rectangle liaisonRect;
+
+                if (rectangle1.getY() == rectangle2.getY()) {
+                    liaisonRect = new Rectangle(rectX - largeurRect / 2, rectY - hauteurRect / 2, largeurRect, hauteurRect);
+                    liaisonRect.setFill(Color.TRANSPARENT);
+                } else if (rectangle1.getX() == rectangle2.getX()) {
+                    liaisonRect = new Rectangle(rectX - hauteurRect / 2, rectY - largeurRect / 2, hauteurRect, largeurRect);
+                    liaisonRect.setFill(Color.TRANSPARENT);
+                } else {
+                    liaisonRect = new Rectangle();
+                }
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2), liaisonRect);
+                table.getChildren().add(liaisonRect);
+                Text textNode = new Text(key);
+
+                // Appel de creerBindingParis avec le nouveau TextNode
+                creerBindingParis(rectangle1, textNode);
+            }
+        });
+    }
+
+    public void ajouterHoverCasesCarre() {
+        DonneesGraphiques.carre.forEach((key, value) -> {
+            int index1 = Integer.parseInt(key.split("-")[0]);
+            int index2 = Integer.parseInt(key.split("-")[1]);
+            int index3 = Integer.parseInt(key.split("-")[2]);
+            int index4 = Integer.parseInt(key.split("-")[3]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+            Rectangle rectangle4 = rectangleMap.get(index4);
+
+            if (rectangle1 != null && rectangle2 != null && rectangle3 != null && rectangle4 != null) {
+
+                double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX()) / 4 + 20;
+                double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY()) / 4 + 32;
+                double circleRadius = Math.min(rectangle1.getWidth(), rectangle1.getHeight()) / 4;
+
+                Circle circle = new Circle(centerX, centerY, circleRadius);
+                circle.setFill(Color.TRANSPARENT);
+                circle.setRadius(4);
+
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4), circle);
+
+                table.getChildren().add(circle);
+            }
+        });
+    }
+
+    public void ajouterHoverCasesTransversale() {
+        DonneesGraphiques.transversale.forEach((key, value) -> {
+            int index1 = Integer.parseInt(key.split("-")[0]);
+            int index2 = Integer.parseInt(key.split("-")[1]);
+            int index3 = Integer.parseInt(key.split("-")[2]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+
+            if (rectangle1 != null && rectangle2 != null && rectangle3 != null) {
+                double largeurRect = 28;
+                double hauteurRect = 12;
+
+                double rectX = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2 + rectangle3.getX() + rectangle3.getWidth()) / 3 - largeurRect / 2;
+                double rectY = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() + rectangle3.getY() + rectangle3.getHeight() / 2) / 3 + 87 - hauteurRect / 2;
+
+                Rectangle rectTransversale1 = new Rectangle(rectX, rectY, largeurRect, hauteurRect);
+                rectTransversale1.setFill(Color.TRANSPARENT);
+
+                double rectX2 = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2 + rectangle3.getX() + rectangle3.getWidth()) / 3 - 10 - largeurRect / 2;
+                double rectY2 = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() + rectangle3.getY() + rectangle3.getHeight() / 2) / 3 - 108 + 2 - hauteurRect / 2;
+
+                Rectangle rectTransversale2 = new Rectangle(rectX2, rectY2, largeurRect, hauteurRect);
+                rectTransversale2.setFill(Color.TRANSPARENT);
+
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3), rectTransversale1);
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3), rectTransversale2);
+
+                table.getChildren().addAll(rectTransversale1, rectTransversale2);
+            }
+        });
+
+    }
+
+    public void ajouterHoverCasesSixain() {
+        DonneesGraphiques.sixain.forEach((key, value) -> {
+            int index1 = Integer.parseInt(key.split("-")[0]);
+            int index2 = Integer.parseInt(key.split("-")[1]);
+            int index3 = Integer.parseInt(key.split("-")[2]);
+            int index4 = Integer.parseInt(key.split("-")[3]);
+            int index5 = Integer.parseInt(key.split("-")[4]);
+            int index6 = Integer.parseInt(key.split("-")[5]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+            Rectangle rectangle4 = rectangleMap.get(index4);
+            Rectangle rectangle5 = rectangleMap.get(index5);
+            Rectangle rectangle6 = rectangleMap.get(index6);
+
+            if (rectangle1 != null && rectangle2 != null && rectangle3 != null && rectangle4 != null && rectangle5 != null && rectangle6 != null) {
+                double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX() + rectangle5.getX() + rectangle6.getX()) / 6 + 20;
+                double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY() + rectangle5.getY() + rectangle6.getY()) / 6 - 61.5;
+                double circleRadius = Math.min(rectangle1.getWidth(), rectangle1.getHeight()) / 6;
+
+                Circle circle = new Circle(centerX, centerY, circleRadius);
+                circle.setFill(Color.TRANSPARENT);
+                circle.setRadius(4);
+
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4, rectangle5, rectangle6), circle);
+
+                table.getChildren().add(circle);
+            }
+        });
+    }
 
 
-    private void survolerEspaceEntreCases(int numeroCase1, int numeroCase2) {
-        Rectangle case1 = rectangleMap.get(numeroCase1);
-        Rectangle case2 = rectangleMap.get(numeroCase2);
+    public void ajouterHoverCasesComplexes(List<Rectangle> rectangles, Node node) {
+        if (!node.getProperties().containsKey("hoverAdded")) {
+            Map<Rectangle, Color> couleursOriginales = new HashMap<>();
 
-        if (case1 != null && case2 != null) {
-            double x = case1.getX() + LARGEUR;
-            double y = Math.min(case1.getY(), case2.getY());
-            double width = case2.getX() - case1.getX() - LARGEUR;
-            double height = Math.max(case1.getHeight(), case2.getHeight());
-
-            Rectangle espaceEntreCases = new Rectangle(x, y, width, height);
-            espaceEntreCases.setFill(Color.TRANSPARENT);
-
-            ajouterEffetHover(espaceEntreCases);
-
-            espaceEntreCases.setOnMouseEntered(event -> {
-                case1.setFill(Color.GREY);
-                case2.setFill(Color.GREY);
+            rectangles.forEach(rectangle -> {
+                couleursOriginales.put(rectangle, (Color) rectangle.getFill());
             });
 
-            espaceEntreCases.setOnMouseExited(event -> {
-                case1.setFill(getCouleurPourNumero(numeroCase1));
-                case2.setFill(getCouleurPourNumero(numeroCase2));
+            node.setOnMouseEntered(event -> {
+                rectangles.forEach(rect -> {
+                    rect.setFill(Color.GREY);
+                    rect.setOpacity(0.7);
+                });
             });
 
-            espacesEntreCases.add(espaceEntreCases);
-            table.getChildren().add(espaceEntreCases);
+            node.setOnMouseExited(event -> {
+                rectangles.forEach(rect -> {
+                    rect.setFill(couleursOriginales.get(rect));
+                    rect.setOpacity(1.0);
+                });
+            });
 
-            ajouterEffetHover(case1);
-            ajouterEffetHover(case2);
+            node.getProperties().put("hoverAdded", true);
         }
     }
+
 
     private void creerTopLine() {
         double x = START_X;
@@ -1161,7 +1285,7 @@ public class CreationTable {
         x = START_X + LARGEUR + 20;
     }
 
-    private boolean caseCliquee = false;
+
     private Map<Node, Boolean> casesJetonPlace = new HashMap<>();
 
     private void ajouterEffetHover(Node node) {
@@ -1212,6 +1336,7 @@ public class CreationTable {
                 }
             }
         });
+    }
 
 //            node.setOnMouseClicked(event -> {
 //                scaleTransition.stop();
@@ -1225,7 +1350,6 @@ public class CreationTable {
 //                    placerJetonZero((Polygon) node);
 //                }
 //            });
-    }
 
 
     private void ajouterParis(ArrayList<Integer> paris) {
@@ -1243,11 +1367,11 @@ public class CreationTable {
         }
     }
 
+
     private void changerLabelInstructions(String pari) {
-        if (langueChoisie.intValue()==0){
+        if (langueChoisie.intValue() == 0) {
             labelInstructions.setText("Paris sur " + pari);
-        }
-        else{
+        } else {
             labelInstructions.setText("Bet on " + pari);
         }
     }
@@ -1273,7 +1397,8 @@ public class CreationTable {
 
 
     public void placerJeton(String caseInt) {
-        ImageView imageCase =  new ImageView();
+        ImageView imageCase = new ImageView();
+
         switch (jeu.joueurCourantProperty().get().getMiseActuelle()) {
             case 1:
                 imageCase = new ImageView(new Image("images/token_1_2.png"));
@@ -1296,9 +1421,24 @@ public class CreationTable {
             default:
                 break;
         }
+
         DonneesGraphiques.Coordonnees coordonnees = DonneesGraphiques.cases.get(caseInt).get(0);
         double startX = coordonnees.getxStart();
         double startY = coordonnees.getyStart();
+
+        if (DonneesGraphiques.cheval.containsKey(caseInt)) {
+            int index1 = Integer.parseInt(caseInt.split("-")[0]);
+            int index2 = Integer.parseInt(caseInt.split("-")[1]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+
+            startX = (rectangle1.getX() + rectangle2.getX() + rectangle1.getWidth()) / 2;
+            startY = (rectangle1.getY() + rectangle2.getY() + rectangle1.getHeight()) / 2;
+            imageCase.setLayoutX(startX - 19);
+            imageCase.setLayoutY(startY - 19);
+        }
+
         imageCase.setFitWidth(38);
         imageCase.setFitHeight(38);
         imageCase.setPreserveRatio(false);
@@ -1306,6 +1446,7 @@ public class CreationTable {
         imageCase.setLayoutY(startY - 19);
         table.getChildren().add(imageCase);
     }
+
 
 
 //    private void placerJetonZero(Polygon p) {
@@ -1348,10 +1489,9 @@ public class CreationTable {
             if (jeu.joueurCourantProperty().get().getMiseActuelle() != 0) {
                 switch (textNode.getText()) {
                     default:
-                        if (langueChoisie.intValue()==0){
+                        if (langueChoisie.intValue() == 0) {
                             labelInstructions.setText("Paris Incorret");
-                        }
-                        else{
+                        } else {
                             labelInstructions.setText("Bet are Incorrect");
                         }
                         break;
@@ -1728,6 +1868,13 @@ public class CreationTable {
                         placerJeton("36");
                         break;
 
+                    case "1-4":
+                        ArrayList<Integer> nombresGagnants14 = new ArrayList<>(Arrays.asList(1,4));
+                        ajouterParis(nombresGagnants14);
+                        multimontant(nombresGagnants14);
+                        changerLabelInstructions("1-4");
+                        placerJeton("1-4");
+                        break;
                 }
             }
 
@@ -1795,6 +1942,9 @@ public class CreationTable {
         };
         n.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, parisJoueur);
     }
+
+
+
 
 
     private Color getCouleurPourNumero(int numero) {
