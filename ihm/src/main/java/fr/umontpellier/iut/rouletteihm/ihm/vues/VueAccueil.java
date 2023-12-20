@@ -35,7 +35,7 @@ public class VueAccueil extends Pane {
     private ImageView info;
 
     private GestionMusique musique = new GestionMusique();
-    private  VueRules vueRules;
+    private VueRules vueRules;
 
 
     public VueAccueil() {
@@ -102,7 +102,7 @@ public class VueAccueil extends Pane {
     }
 
     public void afficherRulesPopUp() {
-            vueRules = new VueRules();
+        vueRules = new VueRules();
 
         Stage popupStage = new Stage();
         popupStage.setResizable(false);
@@ -117,7 +117,7 @@ public class VueAccueil extends Pane {
     }
 
 
-        public void afficherInscriptionPopup() {
+    public void afficherInscriptionPopup() {
         if (vueInscription == null) {
             vueInscription = new VueInscription();
         }

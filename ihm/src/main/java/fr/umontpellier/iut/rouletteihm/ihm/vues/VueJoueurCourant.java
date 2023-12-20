@@ -99,11 +99,12 @@ public class VueJoueurCourant extends GridPane {
             SoldePlayer.setText(String.valueOf(joueur.soldeProperty().getValue()));
             soldePlayer2.setText(String.valueOf(joueur.getMiseActuelle()));
             jeu.tournerTour();
-            if (langueChoisie.intValue()==0) {
+            if (langueChoisie.intValue() == 0) {
                 labelInstructions.setText("Quelle valeur voulez-vous miser ?");
             } else {
                 labelInstructions.setText("Which value do you want to bet?");
-            }        });
+            }
+        });
 
         jeu.joueurCourantProperty().get().getMiseTotaleProperty().addListener((observableValue, number, t1) -> mise.setText(String.valueOf(t1)));
 
@@ -200,7 +201,7 @@ public class VueJoueurCourant extends GridPane {
 
     public void creerBindingsMisesInfo() {
         langueChoisie.addListener((observable, oldValue, newValue) -> {
-            if(newValue.intValue()==0) {
+            if (newValue.intValue() == 0) {
                 labelMise.setText("Mise:");
                 labelMiseTotale.setText("MiseT:");
             } else {

@@ -98,7 +98,7 @@ public class VueBet extends GridPane {
         this.jeu = jeu;
         this.langueChoisie = langueChoisie;
         setId("vueBet");
-        if (langueChoisie.getValue() == 0){
+        if (langueChoisie.getValue() == 0) {
             LabelInstruction.setText("Combien voulez-vous miser ?");
         } else {
             LabelInstruction.setText("How much do you want to bet ?");
@@ -134,16 +134,14 @@ public class VueBet extends GridPane {
             if (jeu.joueurCourantProperty().get().soldeProperty().getValue() - jeu.joueurCourantProperty().get().getMiseTotale() < valeurJeton) {
                 if (langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("Vous n'avez pas assez d'argent pour miser cette somme !");
-                }
-                else if (langueChoisie.getValue() == 1){
+                } else if (langueChoisie.getValue() == 1) {
                     LabelInstruction.setText("You don't have enough money make this bet !");
                 }
             } else {
                 jeu.joueurCourantProperty().get().setMiseActuelle(valeurJeton);
                 if (langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("La valeur de la mise à été changée à : " + valeurJeton);
-                }
-                else if (langueChoisie.getValue() == 1){
+                } else if (langueChoisie.getValue() == 1) {
                     LabelInstruction.setText("The bet value has been changed to : " + valeurJeton);
                 }
             }
@@ -193,7 +191,7 @@ public class VueBet extends GridPane {
         EventHandler<javafx.scene.input.MouseEvent> validationJoueur = mouseEvent -> {
 
             // sons bouton valider //
-            GestionMusique sonsBoutonValider= new GestionMusique();
+            GestionMusique sonsBoutonValider = new GestionMusique();
             String cheminAudioBouton = "ihm/src/main/resources/musique/sonsValider.mp3";
             sonsBoutonValider.setMusique(cheminAudioBouton);
             sonsBoutonValider.setVolume(0.2);
@@ -201,19 +199,19 @@ public class VueBet extends GridPane {
             sonsBoutonValider.remettreMusiqueAuDebut();
 
             if (jeu.joueurCourantProperty().get().soldeProperty().getValue() < jeu.joueurCourantProperty().get().getMiseTotale()) {
-                if (this.langueChoisie.getValue()==0) {
+                if (this.langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("Vous n'avez pas assez d'argent pour faire ce paris !");
                 } else {
                     LabelInstruction.setText("You don't have enough money to make this bet!");
                 }
             } else if (jeu.joueurCourantProperty().get().getMiseTotale() == 0 && ok) {
-                if (this.langueChoisie.getValue()==0) {
+                if (this.langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("Vous n'avez pas encore parié !");
                 } else {
                     LabelInstruction.setText("You haven't bet yet !");
                 }
             } else {
-                if (this.langueChoisie.getValue()==0) {
+                if (this.langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("Paris confirmé(s), roulette lancée ! ");
                 } else {
                     LabelInstruction.setText("Bets confirmed, roulette launched !");
