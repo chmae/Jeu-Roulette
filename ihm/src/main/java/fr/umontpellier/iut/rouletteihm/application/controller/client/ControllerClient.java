@@ -5,6 +5,7 @@ import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.application.service.ClientService;
 import fr.umontpellier.iut.rouletteihm.application.service.exception.ServiceException;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueAccueil;
+import fr.umontpellier.iut.rouletteihm.ihm.vues.VueAutresJoueurs;
 import fr.umontpellier.iut.rouletteihm.metier.entite.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -121,6 +122,7 @@ public class ControllerClient {
                             if (nouvelClientController != null) {
                                 rouletteIHM.demarrerPartie(prenomClient, soldeClient);
                                 vueAccueil.fermerFenetre();
+                                VueAutresJoueurs.getInstance().fermerVueAccueil();
 
                             } else {
                                 System.err.println("Erreur : nouvelClientController est null");
@@ -201,11 +203,13 @@ public class ControllerClient {
                 if (vueAccueil != null) {
                     Stage stageP = (Stage) parametrePane.getScene().getWindow();
                     Stage stage = RouletteIHM.getPrimaryStage();
+                    VueAutresJoueurs.getInstance().getMusiqueCasino().arreterMusique();
                     if (stage.isShowing() && stageP.isShowing()) {
                         System.out.println("Fermeture des fenêtres en cours...");
                         utilisateurConnecte = false;
                         stage.close();
                         stageP.close();
+
 
                         System.out.println("Ouverture de la nouvelle fenêtre...");
 
