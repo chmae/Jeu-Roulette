@@ -1,5 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
+import fr.umontpellier.iut.rouletteihm.RouletteIHM;
+import fr.umontpellier.iut.rouletteihm.application.controller.client.ControllerClient;
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.application.Platform;
@@ -98,11 +100,18 @@ public class VueAccueil extends Pane {
         popupStage.setResizable(false);
         popupStage.initOwner(getScene().getWindow());
         popupStage.initModality(Modality.APPLICATION_MODAL);
+
         Scene scene = new Scene(vueConnexion, getScene().getWidth(), getScene().getHeight());
+
         popupStage.setScene(scene);
         popupStage.setTitle("Connexion");
         popupStage.showAndWait();
+
+        if (VueAutresJoueurs.isBoutonQuitterClicked()) {
+            VueAutresJoueurs.getInstance().fermerVueAccueil();
+        }
     }
+
 
     public void afficherRulesPopUp() {
         vueRules = new VueRules();
