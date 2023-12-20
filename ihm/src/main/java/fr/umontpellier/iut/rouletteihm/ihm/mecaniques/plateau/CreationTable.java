@@ -862,11 +862,10 @@ public class CreationTable {
                 }
                 ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2), liaisonRect);
                 table.getChildren().add(liaisonRect);
+
                 Text textNode = new Text(key);
 
-                // Appel de creerBindingParis avec le nouveau TextNode
-                creerBindingParis(rectangle1, textNode);
-            }
+                creerBindingParis(liaisonRect, textNode);            }
         });
     }
 
@@ -895,6 +894,10 @@ public class CreationTable {
                 ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4), circle);
 
                 table.getChildren().add(circle);
+
+                Text textNode = new Text(key);
+
+                creerBindingParis(circle, textNode);
             }
         });
     }
@@ -929,6 +932,12 @@ public class CreationTable {
                 ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3), rectTransversale2);
 
                 table.getChildren().addAll(rectTransversale1, rectTransversale2);
+
+                Text textNode = new Text(key);
+
+                creerBindingParis(rectTransversale1,textNode);
+                creerBindingParis(rectTransversale2, textNode);
+
             }
         });
 
@@ -962,9 +971,15 @@ public class CreationTable {
                 ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4, rectangle5, rectangle6), circle);
 
                 table.getChildren().add(circle);
+
+                Text textNode = new Text(key);
+
+                creerBindingParis(circle,textNode);
             }
         });
     }
+
+
 
 
     public void ajouterHoverCasesComplexes(List<Rectangle> rectangles, Node node) {
@@ -1338,20 +1353,6 @@ public class CreationTable {
         });
     }
 
-//            node.setOnMouseClicked(event -> {
-//                scaleTransition.stop();
-//                fadeTransition.stop();
-//
-//                casesJetonPlace.put(node, true);
-//
-//                if (node instanceof Rectangle) {
-//                    placerJeton((Rectangle) node);
-//                } else if (node instanceof Polygon) {
-//                    placerJetonZero((Polygon) node);
-//                }
-//            });
-
-
     private void ajouterParis(ArrayList<Integer> paris) {
         for (int i : paris) {
             if (!listeParis.contains(i)) {
@@ -1422,10 +1423,6 @@ public class CreationTable {
                 break;
         }
 
-        DonneesGraphiques.Coordonnees coordonnees = DonneesGraphiques.cases.get(caseInt).get(0);
-        double startX = coordonnees.getxStart();
-        double startY = coordonnees.getyStart();
-
         if (DonneesGraphiques.cheval.containsKey(caseInt)) {
             int index1 = Integer.parseInt(caseInt.split("-")[0]);
             int index2 = Integer.parseInt(caseInt.split("-")[1]);
@@ -1433,53 +1430,107 @@ public class CreationTable {
             Rectangle rectangle1 = rectangleMap.get(index1);
             Rectangle rectangle2 = rectangleMap.get(index2);
 
-            startX = (rectangle1.getX() + rectangle2.getX() + rectangle1.getWidth()) / 2;
-            startY = (rectangle1.getY() + rectangle2.getY() + rectangle1.getHeight()) / 2;
+            double startX = (rectangle1.getX() + rectangle2.getX() + rectangle1.getWidth()) / 2;
+            double startY = (rectangle1.getY() + rectangle2.getY() + rectangle1.getHeight()) / 2;
+
+            imageCase.setFitWidth(38);
+            imageCase.setFitHeight(38);
+            imageCase.setPreserveRatio(false);
+            imageCase.setLayoutX(startX - 19);
+            imageCase.setLayoutY(startY - 19);
+
+        } else if (DonneesGraphiques.carre.containsKey(caseInt)){
+            int index1 = Integer.parseInt(caseInt.split("-")[0]);
+            int index2 = Integer.parseInt(caseInt.split("-")[1]);
+            int index3 = Integer.parseInt(caseInt.split("-")[2]);
+            int index4 = Integer.parseInt(caseInt.split("-")[3]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+            Rectangle rectangle4 = rectangleMap.get(index4);
+
+            double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX()) / 4 + 20;
+            double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY()) / 4 + 32;
+
+
+            imageCase.setFitWidth(38);
+            imageCase.setFitHeight(38);
+            imageCase.setPreserveRatio(false);
+            imageCase.setLayoutX(centerX - 19);
+            imageCase.setLayoutY(centerY - 19);
+
+        }else if (DonneesGraphiques.transversale.containsKey(caseInt)){
+            int index1 = Integer.parseInt(caseInt.split("-")[0]);
+            int index2 = Integer.parseInt(caseInt.split("-")[1]);
+            int index3 = Integer.parseInt(caseInt.split("-")[2]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+
+            double largeurRect = 28;
+            double hauteurRect = 12;
+
+
+            double rectX = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2 + rectangle3.getX() + rectangle3.getWidth()) / 3 - largeurRect / 2;
+            double rectY = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() + rectangle3.getY() + rectangle3.getHeight() / 2) / 3 + 87 - hauteurRect / 2;
+
+            double rectX2 = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2 + rectangle3.getX() + rectangle3.getWidth()) / 3 - 10 - largeurRect / 2;
+            double rectY2 = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() + rectangle3.getY() + rectangle3.getHeight() / 2) / 3 - 108 + 2 - hauteurRect / 2;
+
+
+            imageCase.setFitWidth(38);
+            imageCase.setFitHeight(38);
+            imageCase.setPreserveRatio(false);
+
+            imageCase.setLayoutX(rectX - 19);
+            imageCase.setLayoutY(rectY - 19);
+
+            imageCase.setLayoutX(rectX2);
+            imageCase.setLayoutY(rectY2);
+
+        }
+        else if (DonneesGraphiques.sixain.containsKey(caseInt)){
+            int index1 = Integer.parseInt(caseInt.split("-")[0]);
+            int index2 = Integer.parseInt(caseInt.split("-")[1]);
+            int index3 = Integer.parseInt(caseInt.split("-")[2]);
+            int index4 = Integer.parseInt(caseInt.split("-")[3]);
+            int index5 = Integer.parseInt(caseInt.split("-")[4]);
+            int index6 = Integer.parseInt(caseInt.split("-")[5]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+            Rectangle rectangle4 = rectangleMap.get(index4);
+            Rectangle rectangle5 = rectangleMap.get(index5);
+            Rectangle rectangle6 = rectangleMap.get(index6);
+
+
+            double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX() + rectangle5.getX() + rectangle6.getX()) / 6 + 20;
+            double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY() + rectangle5.getY() + rectangle6.getY()) / 6 - 61.5;
+
+
+            imageCase.setFitWidth(38);
+            imageCase.setFitHeight(38);
+            imageCase.setPreserveRatio(false);
+            imageCase.setLayoutX(centerX - 16);
+            imageCase.setLayoutY(centerY - 14);
+
+        }
+        else {
+            DonneesGraphiques.Coordonnees coordonnees = DonneesGraphiques.cases.get(caseInt).get(0);
+            double startX = coordonnees.getxStart();
+            double startY = coordonnees.getyStart();
+            imageCase.setFitWidth(38);
+            imageCase.setFitHeight(38);
+            imageCase.setPreserveRatio(false);
             imageCase.setLayoutX(startX - 19);
             imageCase.setLayoutY(startY - 19);
         }
 
-        imageCase.setFitWidth(38);
-        imageCase.setFitHeight(38);
-        imageCase.setPreserveRatio(false);
-        imageCase.setLayoutX(startX - 19);
-        imageCase.setLayoutY(startY - 19);
         table.getChildren().add(imageCase);
     }
-
-
-
-//    private void placerJetonZero(Polygon p) {
-//        ImagePattern imageCase;
-//        switch (jeu.joueurCourantProperty().get().getMiseTotale()) {
-//            case 1:
-//                imageCase = new ImagePattern(new Image("images/token_1_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            case 5:
-//                imageCase = new ImagePattern(new Image("images/token_5_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            case 25:
-//                imageCase = new ImagePattern(new Image("images/token_25_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            case 100:
-//                imageCase = new ImagePattern(new Image("images/token_100_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            case 500:
-//                imageCase = new ImagePattern(new Image("images/token_500_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            case 1000:
-//                imageCase = new ImagePattern(new Image("images/token_1k_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            default:
-//                break;
-//        }
-//    }
 
 
     private void creerBindingParis(Node n, Text textNode) {
@@ -1487,394 +1538,405 @@ public class CreationTable {
             System.out.println(jeu.getResultatTourActuel().getCouleur());
             System.out.println(jeu.getResultatTourActuel().getValeur());
             if (jeu.joueurCourantProperty().get().getMiseActuelle() != 0) {
-                switch (textNode.getText()) {
-                    default:
-                        if (langueChoisie.intValue() == 0) {
-                            labelInstructions.setText("Paris Incorret");
-                        } else {
-                            labelInstructions.setText("Bet are Incorrect");
-                        }
-                        break;
-
-                    case "2 pour 1-1":
-                        ArrayList<Integer> nombresGagnants2pour11 = new ArrayList<>(Arrays.asList(1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34));
-                        ajouterParis(nombresGagnants2pour11);
-                        multimontant(nombresGagnants2pour11);
-                        changerLabelInstructions("2 pour 1-1");
-                        placerJeton("2pour1-1");
-                        break;
-
-                    case "2 pour 1-2":
-                        ArrayList<Integer> nombresGagnants2pour12 = new ArrayList<>(Arrays.asList(2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35));
-                        ajouterParis(nombresGagnants2pour12);
-                        multimontant(nombresGagnants2pour12);
-                        changerLabelInstructions("2 pour 1-2");
-                        placerJeton("2pour1-2");
-                        break;
-
-                    case "2 pour 1-3":
-                        ArrayList<Integer> nombresGagnants2pour13 = new ArrayList<>(Arrays.asList(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36));
-                        ajouterParis(nombresGagnants2pour13);
-                        multimontant(nombresGagnants2pour13);
-                        changerLabelInstructions("2 pour 1-3");
-                        placerJeton("2pour1-3");
-                        break;
-
-                    case "1 à 18":
-                        ArrayList<Integer> nombresGagnants1a18 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18));
-                        ajouterParis(nombresGagnants1a18);
-                        bimontant(nombresGagnants1a18);
-                        changerLabelInstructions("1 à 18");
-                        placerJeton("1 à 18");
-                        break;
-
-                    case "19 à 36":
-                        ArrayList<Integer> nombresGagnants19a36 = new ArrayList<>(Arrays.asList(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36));
-                        ajouterParis(nombresGagnants19a36);
-                        bimontant(nombresGagnants19a36);
-                        changerLabelInstructions("19 à 36");
-                        placerJeton("19 à 36");
-                        break;
-
-                    case "1-12":
-                        ArrayList<Integer> nombresGagnants1a12 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
-                        ajouterParis(nombresGagnants1a12);
-                        changerLabelInstructions("1-12");
-                        multimontant(nombresGagnants1a12);
-                        placerJeton("1-12");
-                        break;
-
-                    case "13-24":
-                        ArrayList<Integer> nombresGagnants13a24 = new ArrayList<>(Arrays.asList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24));
-                        ajouterParis(nombresGagnants13a24);
-                        multimontant(nombresGagnants13a24);
-                        changerLabelInstructions("13-24");
-                        placerJeton("13-24");
-                        break;
-
-                    case "25-36":
-                        ArrayList<Integer> nombresGagnants25a36 = new ArrayList<>(Arrays.asList(25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36));
-                        ajouterParis(nombresGagnants25a36);
-                        multimontant(nombresGagnants25a36);
-                        changerLabelInstructions("25-36");
-                        placerJeton("25-36");
-                        break;
-
-                    case "IMPAIR":
-                        ArrayList<Integer> impaire = new ArrayList<>();
-                        for (int i = 1; i < 37; i += 2) {
-                            impaire.add(i);
-                        }
-                        ajouterParis(impaire);
-                        bimontant(impaire);
-                        changerLabelInstructions("IMPAIR");
-                        placerJeton("impair");
-                        break;
-
-                    case "PAIR":
-                        ArrayList<Integer> paire = new ArrayList<>();
-                        for (int i = 0; i < 37; i += 2) {
-                            paire.add(i);
-                        }
-                        ajouterParis(paire);
-                        bimontant(paire);
-                        changerLabelInstructions("PAIR");
-                        placerJeton("pair");
-                        break;
-
-                    case "rouge":
-                        ArrayList<Integer> rouge = new ArrayList<>();
-                        for (int i = 1; i < 37; i++) {
-                            if (getCouleurPourNumero(i).equals(Color.RED)) {
-                                rouge.add(i);
+                String caseInt = textNode.getText();
+                if (DonneesGraphiques.cheval.containsKey(caseInt)) {
+                    placerJeton(caseInt);
+                    changerLabelInstructions(caseInt);
+                } else if (DonneesGraphiques.carre.containsKey(caseInt)) {
+                    placerJeton(caseInt);
+                    changerLabelInstructions(caseInt);
+                }
+                else if (DonneesGraphiques.transversale.containsKey(caseInt)) {
+                    placerJeton(caseInt);
+                    changerLabelInstructions(caseInt);
+                }
+                else if (DonneesGraphiques.sixain.containsKey(caseInt)) {
+                    placerJeton(caseInt);
+                    changerLabelInstructions(caseInt);
+                }
+                else {
+                    switch (textNode.getText()) {
+                        default:
+                            if (langueChoisie.intValue() == 0) {
+                                labelInstructions.setText("Paris Incorret");
+                            } else {
+                                labelInstructions.setText("Bet are Incorrect");
                             }
-                        }
-                        ajouterParis(rouge);
-                        bimontant(rouge);
-                        changerLabelInstructions("rouge");
-                        placerJeton("rouge");
-                        break;
+                            break;
 
-                    case "noir":
-                        ArrayList<Integer> noir = new ArrayList<>();
-                        for (int i = 1; i < 37; i++) {
-                            if (getCouleurPourNumero(i).equals(Color.BLACK)) {
-                                noir.add(i);
+                        case "2 pour 1-1":
+                            ArrayList<Integer> nombresGagnants2pour11 = new ArrayList<>(Arrays.asList(1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34));
+                            ajouterParis(nombresGagnants2pour11);
+                            multimontant(nombresGagnants2pour11);
+                            changerLabelInstructions("2 pour 1-1");
+                            placerJeton("2pour1-1");
+                            break;
+
+                        case "2 pour 1-2":
+                            ArrayList<Integer> nombresGagnants2pour12 = new ArrayList<>(Arrays.asList(2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35));
+                            ajouterParis(nombresGagnants2pour12);
+                            multimontant(nombresGagnants2pour12);
+                            changerLabelInstructions("2 pour 1-2");
+                            placerJeton("2pour1-2");
+                            break;
+
+                        case "2 pour 1-3":
+                            ArrayList<Integer> nombresGagnants2pour13 = new ArrayList<>(Arrays.asList(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36));
+                            ajouterParis(nombresGagnants2pour13);
+                            multimontant(nombresGagnants2pour13);
+                            changerLabelInstructions("2 pour 1-3");
+                            placerJeton("2pour1-3");
+                            break;
+
+                        case "1 à 18":
+                            ArrayList<Integer> nombresGagnants1a18 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18));
+                            ajouterParis(nombresGagnants1a18);
+                            bimontant(nombresGagnants1a18);
+                            changerLabelInstructions("1 à 18");
+                            placerJeton("1 à 18");
+                            break;
+
+                        case "19 à 36":
+                            ArrayList<Integer> nombresGagnants19a36 = new ArrayList<>(Arrays.asList(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36));
+                            ajouterParis(nombresGagnants19a36);
+                            bimontant(nombresGagnants19a36);
+                            changerLabelInstructions("19 à 36");
+                            placerJeton("19 à 36");
+                            break;
+
+                        case "1-12":
+                            ArrayList<Integer> nombresGagnants1a12 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
+                            ajouterParis(nombresGagnants1a12);
+                            changerLabelInstructions("1-12");
+                            multimontant(nombresGagnants1a12);
+                            placerJeton("1-12");
+                            break;
+
+                        case "13-24":
+                            ArrayList<Integer> nombresGagnants13a24 = new ArrayList<>(Arrays.asList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24));
+                            ajouterParis(nombresGagnants13a24);
+                            multimontant(nombresGagnants13a24);
+                            changerLabelInstructions("13-24");
+                            placerJeton("13-24");
+                            break;
+
+                        case "25-36":
+                            ArrayList<Integer> nombresGagnants25a36 = new ArrayList<>(Arrays.asList(25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36));
+                            ajouterParis(nombresGagnants25a36);
+                            multimontant(nombresGagnants25a36);
+                            changerLabelInstructions("25-36");
+                            placerJeton("25-36");
+                            break;
+
+                        case "IMPAIR":
+                            ArrayList<Integer> impaire = new ArrayList<>();
+                            for (int i = 1; i < 37; i += 2) {
+                                impaire.add(i);
                             }
-                        }
-                        ajouterParis(noir);
-                        bimontant(noir);
-                        changerLabelInstructions("noir");
-                        placerJeton("noir");
-                        break;
+                            ajouterParis(impaire);
+                            bimontant(impaire);
+                            changerLabelInstructions("IMPAIR");
+                            placerJeton("impair");
+                            break;
+
+                        case "PAIR":
+                            ArrayList<Integer> paire = new ArrayList<>();
+                            for (int i = 0; i < 37; i += 2) {
+                                paire.add(i);
+                            }
+                            ajouterParis(paire);
+                            bimontant(paire);
+                            changerLabelInstructions("PAIR");
+                            placerJeton("pair");
+                            break;
+
+                        case "rouge":
+                            ArrayList<Integer> rouge = new ArrayList<>();
+                            for (int i = 1; i < 37; i++) {
+                                if (getCouleurPourNumero(i).equals(Color.RED)) {
+                                    rouge.add(i);
+                                }
+                            }
+                            ajouterParis(rouge);
+                            bimontant(rouge);
+                            changerLabelInstructions("rouge");
+                            placerJeton("rouge");
+                            break;
+
+                        case "noir":
+                            ArrayList<Integer> noir = new ArrayList<>();
+                            for (int i = 1; i < 37; i++) {
+                                if (getCouleurPourNumero(i).equals(Color.BLACK)) {
+                                    noir.add(i);
+                                }
+                            }
+                            ajouterParis(noir);
+                            bimontant(noir);
+                            changerLabelInstructions("noir");
+                            placerJeton("noir");
+                            break;
 
 
-                    case "0":
-                        ajouterNombreParis(0);
-                        unimontant(0);
-                        changerLabelInstructions("0");
-                        placerJeton("0");
-                        break;
+                        case "0":
+                            ajouterNombreParis(0);
+                            unimontant(0);
+                            changerLabelInstructions("0");
+                            placerJeton("0");
+                            break;
 
-                    case "1":
-                        ajouterNombreParis(1);
-                        unimontant(1);
-                        changerLabelInstructions("1");
-                        placerJeton("1");
-                        break;
+                        case "1":
+                            ajouterNombreParis(1);
+                            unimontant(1);
+                            changerLabelInstructions("1");
+                            placerJeton("1");
+                            break;
 
-                    case "2":
-                        ajouterNombreParis(2);
-                        unimontant(2);
-                        changerLabelInstructions("2");
-                        placerJeton("2");
-                        break;
+                        case "2":
+                            ajouterNombreParis(2);
+                            unimontant(2);
+                            changerLabelInstructions("2");
+                            placerJeton("2");
+                            break;
 
-                    case "3":
-                        ajouterNombreParis(3);
-                        unimontant(3);
-                        changerLabelInstructions("3");
-                        placerJeton("3");
-                        break;
+                        case "3":
+                            ajouterNombreParis(3);
+                            unimontant(3);
+                            changerLabelInstructions("3");
+                            placerJeton("3");
+                            break;
 
-                    case "4":
-                        ajouterNombreParis(4);
-                        unimontant(4);
-                        changerLabelInstructions("4");
-                        placerJeton("4");
-                        break;
+                        case "4":
+                            ajouterNombreParis(4);
+                            unimontant(4);
+                            changerLabelInstructions("4");
+                            placerJeton("4");
+                            break;
 
-                    case "5":
-                        ajouterNombreParis(5);
-                        unimontant(5);
-                        changerLabelInstructions("5");
-                        placerJeton("5");
-                        break;
+                        case "5":
+                            ajouterNombreParis(5);
+                            unimontant(5);
+                            changerLabelInstructions("5");
+                            placerJeton("5");
+                            break;
 
-                    case "6":
-                        ajouterNombreParis(6);
-                        unimontant(6);
-                        changerLabelInstructions("6");
-                        placerJeton("6");
-                        break;
+                        case "6":
+                            ajouterNombreParis(6);
+                            unimontant(6);
+                            changerLabelInstructions("6");
+                            placerJeton("6");
+                            break;
 
-                    case "7":
-                        ajouterNombreParis(7);
-                        unimontant(7);
-                        changerLabelInstructions("7");
-                        placerJeton("7");
-                        break;
+                        case "7":
+                            ajouterNombreParis(7);
+                            unimontant(7);
+                            changerLabelInstructions("7");
+                            placerJeton("7");
+                            break;
 
-                    case "8":
-                        ajouterNombreParis(8);
-                        unimontant(8);
-                        changerLabelInstructions("8");
-                        placerJeton("8");
-                        break;
+                        case "8":
+                            ajouterNombreParis(8);
+                            unimontant(8);
+                            changerLabelInstructions("8");
+                            placerJeton("8");
+                            break;
 
-                    case "9":
-                        ajouterNombreParis(9);
-                        unimontant(9);
-                        changerLabelInstructions("9");
-                        placerJeton("9");
-                        break;
+                        case "9":
+                            ajouterNombreParis(9);
+                            unimontant(9);
+                            changerLabelInstructions("9");
+                            placerJeton("9");
+                            break;
 
-                    case "10":
-                        ajouterNombreParis(10);
-                        unimontant(10);
-                        changerLabelInstructions("10");
-                        placerJeton("10");
-                        break;
+                        case "10":
+                            ajouterNombreParis(10);
+                            unimontant(10);
+                            changerLabelInstructions("10");
+                            placerJeton("10");
+                            break;
 
-                    case "11":
-                        ajouterNombreParis(11);
-                        unimontant(11);
-                        changerLabelInstructions("11");
-                        placerJeton("11");
-                        break;
+                        case "11":
+                            ajouterNombreParis(11);
+                            unimontant(11);
+                            changerLabelInstructions("11");
+                            placerJeton("11");
+                            break;
 
-                    case "12":
-                        ajouterNombreParis(12);
-                        unimontant(12);
-                        changerLabelInstructions("12");
-                        placerJeton("12");
-                        break;
+                        case "12":
+                            ajouterNombreParis(12);
+                            unimontant(12);
+                            changerLabelInstructions("12");
+                            placerJeton("12");
+                            break;
 
-                    case "13":
-                        ajouterNombreParis(13);
-                        unimontant(13);
-                        changerLabelInstructions("13");
-                        placerJeton("13");
-                        break;
+                        case "13":
+                            ajouterNombreParis(13);
+                            unimontant(13);
+                            changerLabelInstructions("13");
+                            placerJeton("13");
+                            break;
 
-                    case "14":
-                        ajouterNombreParis(14);
-                        unimontant(14);
-                        changerLabelInstructions("14");
-                        placerJeton("14");
-                        break;
+                        case "14":
+                            ajouterNombreParis(14);
+                            unimontant(14);
+                            changerLabelInstructions("14");
+                            placerJeton("14");
+                            break;
 
-                    case "15":
-                        ajouterNombreParis(15);
-                        unimontant(15);
-                        changerLabelInstructions("15");
-                        placerJeton("15");
-                        break;
+                        case "15":
+                            ajouterNombreParis(15);
+                            unimontant(15);
+                            changerLabelInstructions("15");
+                            placerJeton("15");
+                            break;
 
-                    case "16":
-                        ajouterNombreParis(16);
-                        unimontant(16);
-                        changerLabelInstructions("16");
-                        placerJeton("16");
-                        break;
+                        case "16":
+                            ajouterNombreParis(16);
+                            unimontant(16);
+                            changerLabelInstructions("16");
+                            placerJeton("16");
+                            break;
 
-                    case "17":
-                        ajouterNombreParis(17);
-                        unimontant(17);
-                        changerLabelInstructions("17");
-                        placerJeton("17");
-                        break;
+                        case "17":
+                            ajouterNombreParis(17);
+                            unimontant(17);
+                            changerLabelInstructions("17");
+                            placerJeton("17");
+                            break;
 
-                    case "18":
-                        ajouterNombreParis(18);
-                        unimontant(18);
-                        changerLabelInstructions("18");
-                        placerJeton("18");
-                        break;
+                        case "18":
+                            ajouterNombreParis(18);
+                            unimontant(18);
+                            changerLabelInstructions("18");
+                            placerJeton("18");
+                            break;
 
-                    case "19":
-                        ajouterNombreParis(19);
-                        unimontant(19);
-                        changerLabelInstructions("19");
-                        placerJeton("19");
-                        break;
+                        case "19":
+                            ajouterNombreParis(19);
+                            unimontant(19);
+                            changerLabelInstructions("19");
+                            placerJeton("19");
+                            break;
 
-                    case "20":
-                        ajouterNombreParis(20);
-                        unimontant(20);
-                        changerLabelInstructions("20");
-                        placerJeton("20");
-                        break;
+                        case "20":
+                            ajouterNombreParis(20);
+                            unimontant(20);
+                            changerLabelInstructions("20");
+                            placerJeton("20");
+                            break;
 
-                    case "21":
-                        ajouterNombreParis(21);
-                        unimontant(21);
-                        changerLabelInstructions("21");
-                        placerJeton("21");
-                        break;
+                        case "21":
+                            ajouterNombreParis(21);
+                            unimontant(21);
+                            changerLabelInstructions("21");
+                            placerJeton("21");
+                            break;
 
-                    case "22":
-                        ajouterNombreParis(22);
-                        unimontant(22);
-                        changerLabelInstructions("22");
-                        placerJeton("22");
-                        break;
+                        case "22":
+                            ajouterNombreParis(22);
+                            unimontant(22);
+                            changerLabelInstructions("22");
+                            placerJeton("22");
+                            break;
 
-                    case "23":
-                        ajouterNombreParis(23);
-                        unimontant(23);
-                        changerLabelInstructions("23");
-                        placerJeton("23");
-                        break;
+                        case "23":
+                            ajouterNombreParis(23);
+                            unimontant(23);
+                            changerLabelInstructions("23");
+                            placerJeton("23");
+                            break;
 
-                    case "24":
-                        ajouterNombreParis(24);
-                        unimontant(24);
-                        changerLabelInstructions("24");
-                        placerJeton("24");
-                        break;
+                        case "24":
+                            ajouterNombreParis(24);
+                            unimontant(24);
+                            changerLabelInstructions("24");
+                            placerJeton("24");
+                            break;
 
-                    case "25":
-                        ajouterNombreParis(25);
-                        unimontant(25);
-                        changerLabelInstructions("25");
-                        placerJeton("25");
-                        break;
+                        case "25":
+                            ajouterNombreParis(25);
+                            unimontant(25);
+                            changerLabelInstructions("25");
+                            placerJeton("25");
+                            break;
 
-                    case "26":
-                        ajouterNombreParis(26);
-                        unimontant(26);
-                        changerLabelInstructions("26");
-                        placerJeton("26");
-                        break;
+                        case "26":
+                            ajouterNombreParis(26);
+                            unimontant(26);
+                            changerLabelInstructions("26");
+                            placerJeton("26");
+                            break;
 
-                    case "27":
-                        ajouterNombreParis(27);
-                        unimontant(27);
-                        changerLabelInstructions("27");
-                        placerJeton("27");
-                        break;
+                        case "27":
+                            ajouterNombreParis(27);
+                            unimontant(27);
+                            changerLabelInstructions("27");
+                            placerJeton("27");
+                            break;
 
-                    case "28":
-                        ajouterNombreParis(28);
-                        unimontant(28);
-                        changerLabelInstructions("28");
-                        placerJeton("28");
-                        break;
+                        case "28":
+                            ajouterNombreParis(28);
+                            unimontant(28);
+                            changerLabelInstructions("28");
+                            placerJeton("28");
+                            break;
 
-                    case "29":
-                        ajouterNombreParis(29);
-                        unimontant(29);
-                        changerLabelInstructions("29");
-                        placerJeton("29");
-                        break;
+                        case "29":
+                            ajouterNombreParis(29);
+                            unimontant(29);
+                            changerLabelInstructions("29");
+                            placerJeton("29");
+                            break;
 
-                    case "30":
-                        ajouterNombreParis(30);
-                        unimontant(30);
-                        changerLabelInstructions("30");
-                        placerJeton("30");
-                        break;
+                        case "30":
+                            ajouterNombreParis(30);
+                            unimontant(30);
+                            changerLabelInstructions("30");
+                            placerJeton("30");
+                            break;
 
-                    case "31":
-                        ajouterNombreParis(31);
-                        unimontant(31);
-                        changerLabelInstructions("31");
-                        placerJeton("31");
-                        break;
+                        case "31":
+                            ajouterNombreParis(31);
+                            unimontant(31);
+                            changerLabelInstructions("31");
+                            placerJeton("31");
+                            break;
 
-                    case "32":
-                        ajouterNombreParis(32);
-                        unimontant(32);
-                        changerLabelInstructions("32");
-                        placerJeton("32");
-                        break;
+                        case "32":
+                            ajouterNombreParis(32);
+                            unimontant(32);
+                            changerLabelInstructions("32");
+                            placerJeton("32");
+                            break;
 
-                    case "33":
-                        ajouterNombreParis(33);
-                        unimontant(33);
-                        changerLabelInstructions("33");
-                        placerJeton("33");
-                        break;
+                        case "33":
+                            ajouterNombreParis(33);
+                            unimontant(33);
+                            changerLabelInstructions("33");
+                            placerJeton("33");
+                            break;
 
-                    case "34":
-                        ajouterNombreParis(34);
-                        unimontant(34);
-                        changerLabelInstructions("34");
-                        placerJeton("34");
-                        break;
+                        case "34":
+                            ajouterNombreParis(34);
+                            unimontant(34);
+                            changerLabelInstructions("34");
+                            placerJeton("34");
+                            break;
 
-                    case "35":
-                        ajouterNombreParis(35);
-                        unimontant(35);
-                        changerLabelInstructions("35");
-                        placerJeton("35");
-                        break;
+                        case "35":
+                            ajouterNombreParis(35);
+                            unimontant(35);
+                            changerLabelInstructions("35");
+                            placerJeton("35");
+                            break;
 
-                    case "36":
-                        ajouterNombreParis(36);
-                        unimontant(36);
-                        changerLabelInstructions("36");
-                        placerJeton("36");
-                        break;
+                        case "36":
+                            ajouterNombreParis(36);
+                            unimontant(36);
+                            changerLabelInstructions("36");
+                            placerJeton("36");
+                            break;
 
-                    case "1-4":
-                        ArrayList<Integer> nombresGagnants14 = new ArrayList<>(Arrays.asList(1,4));
-                        ajouterParis(nombresGagnants14);
-                        multimontant(nombresGagnants14);
-                        changerLabelInstructions("1-4");
-                        placerJeton("1-4");
-                        break;
+                    }
                 }
             }
 
@@ -1902,7 +1964,7 @@ public class CreationTable {
                         } else {
                             rectangle.setFill(Color.BLACK);
                         }
-                        rectangle.setOpacity(0.7);
+                        rectangle.setOpacity(1.0);
                     });
                 } else if (textNode.getText().equals("noir") || textNode.getText().equals("rouge")) {
                     double x = START_X + (LARGEUR * 12);
@@ -1930,9 +1992,17 @@ public class CreationTable {
                     }
                 } else {
                     vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-                        Rectangle rectangle = (Rectangle) n;
-                        rectangle.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
-                        rectangle.setOpacity(0.7);
+                        if (n instanceof Circle) {
+                            Circle c = (Circle) n;
+                            c.setFill(Color.TRANSPARENT);
+                            c.setOpacity(1.0);
+
+                        } else if (n instanceof Rectangle) {
+                            Rectangle rectangle = (Rectangle) n;
+                            rectangle.setFill(Color.TRANSPARENT);
+                            rectangle.setOpacity(1.0);
+                        }
+
                     });
                 }
             }

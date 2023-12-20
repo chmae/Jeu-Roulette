@@ -8,12 +8,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class VueRules extends Pane{
+public class VueRules extends Pane {
     @FXML
     private ImageView quit;
 
-  @FXML
-  private Pane pane;
+    @FXML
+    private Pane pane;
 
 
     public VueRules() {
@@ -43,8 +43,8 @@ public class VueRules extends Pane{
         }
 
 
+    }
 
-}
     public void fermerFenetre() {
         if (pane.getScene() != null) {
             Stage stage = (Stage) pane.getScene().getWindow();

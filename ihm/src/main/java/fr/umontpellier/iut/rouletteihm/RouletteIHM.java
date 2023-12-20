@@ -51,10 +51,13 @@ public class RouletteIHM extends Application {
             vueInscription = new VueInscription();
             stage = new Stage();
             stage.setResizable(false);
+
             vueAccueil.getMusique().lireMusiqueProgressivement(0.2);
+
             vueAccueil.getBoutonJouer().setOnMouseClicked(mouseEvent -> {
                 vueAccueil.getMusique().arreterMusique();
                 demarrerPartie("Chollet", 9999);
+                vueAccueil.fermerFenetre();
             });
 
             vueAccueil.getBoutonQuitter().setOnMouseClicked(mouseEvent -> {

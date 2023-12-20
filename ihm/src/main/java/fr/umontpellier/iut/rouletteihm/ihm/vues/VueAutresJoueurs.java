@@ -1,5 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
+import fr.umontpellier.iut.rouletteihm.RouletteIHM;
+import fr.umontpellier.iut.rouletteihm.application.controller.client.ControllerClient;
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
@@ -41,8 +43,17 @@ public class VueAutresJoueurs extends Pane {
     private ImageView lampe1;
     @FXML
     private ImageView lampe2;
+    @FXML
+    private Pane vueAutresJoueurs;
+    private static VueAutresJoueurs instance;
+
+    @FXML
+    private ImageView buttonQuit;
+
+    private static boolean boutonQuitterClicked = false;
 
     public VueAutresJoueurs(IJeu jeu) {
+        instance = this;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueAutresJoueurs.fxml"));
             loader.setController(this);
@@ -51,7 +62,7 @@ public class VueAutresJoueurs extends Pane {
             ImageView topBackground = (ImageView) root.lookup("#topBackground");
             ImageView CornerBackground = (ImageView) root.lookup("#CornerBackground");
             ImageView CornerQuit = (ImageView) root.lookup("#CornerQuit");
-            ImageView buttonQuit = (ImageView) root.lookup("#buttonQuit");
+            buttonQuit = (ImageView) root.lookup("#buttonQuit");
             ImageView parametre = (ImageView) root.lookup("#parametre");
             HBox autresJoueur = (HBox) root.lookup("#autresJoueur");
             ImageView lampe1 = (ImageView) root.lookup("#lampe1");
@@ -62,7 +73,8 @@ public class VueAutresJoueurs extends Pane {
             username = (Label) root.lookup("#username");
             username1 = (Label) root.lookup("#username1");
             username2 = (Label) root.lookup("#username2");
-            getChildren().addAll(topBackground, CornerBackground, CornerQuit, buttonQuit, parametre, autresJoueur, lampe1, lampe2);
+            vueAutresJoueurs = (Pane) root.lookup("#VueAutresJoueurs");
+            getChildren().addAll(root);
 
 
             HoverImage(buttonQuit);
@@ -83,18 +95,13 @@ public class VueAutresJoueurs extends Pane {
             musiqueCasino.lireMusiqueProgressivement(musiqueCasino.getVolume());
 
             buttonQuit.setOnMouseClicked(event -> {
+                boutonQuitterClicked = true;
                 sonsBoutonParametre.lireMusique();
                 sonsBoutonParametre.remettreMusiqueAuDebut();
                 musiqueCasino.arreterMusique();
                 musiqueCasino.remettreMusiqueAuDebut();
-
-                Stage stage = (Stage) buttonQuit.getScene().getWindow();
-                stage.close();
-                if (vueAccueil.getScene() == null) {
-                    primaryStage.setScene(new Scene(vueAccueil, 599, 390));
-                }
-                primaryStage.setTitle("Accueil");
-                primaryStage.show();
+                fermerFenetresEtLireMusiqueAccueil();
+                RouletteIHM.getInstance().fonctionnaliteAccueil();
             });
 
 
@@ -144,6 +151,35 @@ public class VueAutresJoueurs extends Pane {
         t.setDaemon(true);
         t.start();
     }
+    public void fermerVueAccueil() {
+        vueAccueil = RouletteIHM.getInstance().getVueAccueil();
+        if (vueAccueil != null) {
+            vueAccueil.fermerFenetre();
+            vueAccueil.getMusique().arreterMusique();
+        } else {
+            System.err.println("Erreur : VueAccueil est null");
+        }
+    }
+    public static boolean isBoutonQuitterClicked() {
+        return boutonQuitterClicked;
+    }
+
+    public void fermerFenetresEtLireMusiqueAccueil() {
+        Stage stageP = (Stage) vueAutresJoueurs.getScene().getWindow();
+        Stage stage = RouletteIHM.getPrimaryStage();
+
+        if (stage.isShowing() && stageP.isShowing()) {
+            stage.close();
+            stageP.close();
+
+            fermerVueAccueil();
+        }
+    }
+
+
+    public static VueAutresJoueurs getInstance() {
+        return instance;
+    }
 
     private void HoverImage(ImageView imageView) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), imageView);
@@ -165,21 +201,24 @@ public class VueAutresJoueurs extends Pane {
     }
 
     private void afficherVueParametre() {
-        vueParametre = VueParametre.getInstance((Stage) new Scene(new Parent() {}).getWindow(), musiqueCasino);
+        vueParametre = VueParametre.getInstance((Stage) new Scene(new Parent() {
+        }).getWindow(), musiqueCasino);
         vueParametre.show();
     }
 
     public IntegerProperty getLangueChoisie() {
         if (getScene() == null) {
-            return VueParametre.getInstance((Stage) new Scene(new Parent() {}).getWindow(), musiqueCasino).getLangueChoisie();
+            return VueParametre.getInstance((Stage) new Scene(new Parent() {
+            }).getWindow(), musiqueCasino).getLangueChoisie();
         }
         return VueParametre.getInstance((Stage) getScene().getWindow(), musiqueCasino).getLangueChoisie();
     }
 
     public void creerBindings() {
-        VueParametre.getInstance((Stage) new Scene(new Parent() {}).getWindow(), musiqueCasino).getLangueChoisie().addListener((observable, oldValue, newValue) -> {
+        VueParametre.getInstance((Stage) new Scene(new Parent() {
+        }).getWindow(), musiqueCasino).getLangueChoisie().addListener((observable, oldValue, newValue) -> {
             String texte = "";
-            if(newValue.intValue()==0) {
+            if (newValue.intValue() == 0) {
                 texte = "Solde :";
             } else {
                 texte = "Balance :";
@@ -190,4 +229,7 @@ public class VueAutresJoueurs extends Pane {
         });
     }
 
+    public GestionMusique getMusiqueCasino() {
+        return musiqueCasino;
+    }
 }

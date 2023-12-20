@@ -61,8 +61,7 @@ public class VueParametre {
     @FXML
     private ImageView valideSolde;
     @FXML
-    private ImageView music ;
-
+    private ImageView music;
 
 
     private VueParametre(Stage p, GestionMusique gestionmusique) {
@@ -183,6 +182,7 @@ public class VueParametre {
         scaleTransition.setToY(scaleFactor);
         scaleTransition.play();
     }
+
     private void addShadowEffect(ImageView button) {
         button.setEffect(new DropShadow());
     }
@@ -224,7 +224,7 @@ public class VueParametre {
     private void creerBindingsLangue(ImageView imageView, int langue) {
         EventHandler<MouseEvent> langueChange = mouseEvent -> {
             this.langue.set(langue);
-            if(langue==0) {
+            if (langue == 0) {
                 this.languesLabel.setText("Langues :");
                 this.disconnectLabel.setText("Se déconnecter");
                 this.modificationProfilLabel.setText("Modification profil :");

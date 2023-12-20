@@ -1,5 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
+import fr.umontpellier.iut.rouletteihm.RouletteIHM;
+import fr.umontpellier.iut.rouletteihm.application.controller.client.ControllerClient;
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.application.Platform;
@@ -35,7 +37,7 @@ public class VueAccueil extends Pane {
     private ImageView info;
 
     private GestionMusique musique = new GestionMusique();
-    private  VueRules vueRules;
+    private VueRules vueRules;
 
 
     public VueAccueil() {
@@ -53,9 +55,7 @@ public class VueAccueil extends Pane {
             getChildren().add(root);
 
             // --Code de sauvegarde de la musique d'aceuil-- //
-            String cheminAudioGolde = "ihm/src/main/resources/musique/sonsVueAccueil.mp3";
-            musique.setMusique(cheminAudioGolde);
-            musique.setVolume(0.05);
+            configurerMusiqueAccueil();
 
             info.setOnMouseEntered(event -> info.setOpacity(0.7));
             info.setOnMouseExited(event -> info.setOpacity(1.0));
@@ -79,6 +79,11 @@ public class VueAccueil extends Pane {
 
     }
 
+    public void configurerMusiqueAccueil() {
+        String cheminAudioGolde = "ihm/src/main/resources/musique/sonsVueAccueil.mp3";
+        musique.setMusique(cheminAudioGolde);
+        musique.setVolume(0.05);
+    }
     public Label getConnexion() {
         return connexion;
     }
@@ -95,14 +100,21 @@ public class VueAccueil extends Pane {
         popupStage.setResizable(false);
         popupStage.initOwner(getScene().getWindow());
         popupStage.initModality(Modality.APPLICATION_MODAL);
+
         Scene scene = new Scene(vueConnexion, getScene().getWidth(), getScene().getHeight());
+
         popupStage.setScene(scene);
         popupStage.setTitle("Connexion");
         popupStage.showAndWait();
+
+        if (VueAutresJoueurs.isBoutonQuitterClicked()) {
+            VueAutresJoueurs.getInstance().fermerVueAccueil();
+        }
     }
 
+
     public void afficherRulesPopUp() {
-            vueRules = new VueRules();
+        vueRules = new VueRules();
 
         Stage popupStage = new Stage();
         popupStage.setResizable(false);
@@ -117,7 +129,7 @@ public class VueAccueil extends Pane {
     }
 
 
-        public void afficherInscriptionPopup() {
+    public void afficherInscriptionPopup() {
         if (vueInscription == null) {
             vueInscription = new VueInscription();
         }
