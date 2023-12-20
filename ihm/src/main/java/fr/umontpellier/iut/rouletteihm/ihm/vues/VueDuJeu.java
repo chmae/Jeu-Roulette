@@ -54,14 +54,14 @@ public class VueDuJeu extends GridPane {
     private IntegerProperty langue;
     private VueInscription vueInscription = new VueInscription();
     private List<Joueur> joueurs;
-    private int numeroJoueurJouant;
+    private int numeroJoueurJouant = 0;
 
     public VueDuJeu(IJeu jeu, List<Joueur> joueurs) {
         this.jeu = jeu;
         instance = this;
         this.joueurs = joueurs;
 
-        autresJoueurs = new VueAutresJoueurs(jeu);
+        autresJoueurs = new VueAutresJoueurs(jeu, joueurs);
 
         vueBet = new VueBet(jeu, autresJoueurs.getLangueChoisie());
         labelInstructions = vueBet.getLabelInstruction();
@@ -108,7 +108,7 @@ public class VueDuJeu extends GridPane {
         joueurCourantvue.getPasser().setOnMouseClicked(mouseEvent -> {
             labelInstructions.setText("Vous avez décidé de passer !");
             numeroJoueurJouant++;
-            if (numeroJoueurJouant>3) {
+            if (numeroJoueurJouant>joueurs.size()-1) {
                 vueRoue.animation(jeu.getResultatTourActuel().getNombres());
                 PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
 
@@ -130,7 +130,7 @@ public class VueDuJeu extends GridPane {
         joueurCourantvue.getPasser1().setOnMouseClicked(mouseEvent -> {
             labelInstructions.setText("Vous avez décidé de passer !");
             numeroJoueurJouant++;
-            if (numeroJoueurJouant>3) {
+            if (numeroJoueurJouant>joueurs.size()-1) {
                 vueRoue.animation(jeu.getResultatTourActuel().getNombres());
                 PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
 
@@ -165,11 +165,13 @@ public class VueDuJeu extends GridPane {
         vueDroite.prefHeightProperty().bind(heightProperty());
 
         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
+            if (newValue && numeroJoueurJouant==joueurs.size()-1) {
                 System.out.println(listesParis.toString());
                 vueRoue.animation(jeu.getResultatTourActuel().getNombres());
                 statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
                 statistiquesRoulette.afficherStatistique();
+                jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
+                numeroJoueurJouant=0;
                 // Ajouter un délai de 5 secondes avant d'afficher whenWin / whenLose
                 PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
 
@@ -188,8 +190,6 @@ public class VueDuJeu extends GridPane {
                             imageView.setVisible(false);
                         }
                     }
-                    // Uniquement pour le sprint 2 (1 joueur)
-                    vueBet.validationProperty().set(false);
                     if (autresJoueurs.getLangueChoisie().getValue()==0) {
                         labelInstructions.setText("Le " + jeu.getResultatTourActuel().getValeur() + " " + jeu.getResultatTourActuel().getCouleur() + " est tombé ! Misez pour rejouer");
                     } else {
@@ -206,6 +206,8 @@ public class VueDuJeu extends GridPane {
                     table.viderMontantsParis();
                     table.viderMultiplicateursParis();
                     jeu.joueurCourantProperty().get().setMiseTotale(0);
+                    jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
+                    numeroJoueurJouant=0;
 
                     try {
                         Thread.sleep(1000);
@@ -215,6 +217,10 @@ public class VueDuJeu extends GridPane {
                 });
 
                 pauseTransition.play();
+            } else if(newValue){
+                numeroJoueurJouant++;
+                vueBet.validationProperty().set(false);
+                jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
             }
         });
 
