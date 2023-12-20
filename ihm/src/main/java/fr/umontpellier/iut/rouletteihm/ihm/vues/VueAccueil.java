@@ -53,9 +53,7 @@ public class VueAccueil extends Pane {
             getChildren().add(root);
 
             // --Code de sauvegarde de la musique d'aceuil-- //
-            String cheminAudioGolde = "ihm/src/main/resources/musique/sonsVueAccueil.mp3";
-            musique.setMusique(cheminAudioGolde);
-            musique.setVolume(0.05);
+            configurerMusiqueAccueil();
 
             info.setOnMouseEntered(event -> info.setOpacity(0.7));
             info.setOnMouseExited(event -> info.setOpacity(1.0));
@@ -79,6 +77,11 @@ public class VueAccueil extends Pane {
 
     }
 
+    public void configurerMusiqueAccueil() {
+        String cheminAudioGolde = "ihm/src/main/resources/musique/sonsVueAccueil.mp3";
+        musique.setMusique(cheminAudioGolde);
+        musique.setVolume(0.05);
+    }
     public Label getConnexion() {
         return connexion;
     }
