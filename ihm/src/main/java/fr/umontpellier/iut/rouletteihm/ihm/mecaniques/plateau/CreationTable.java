@@ -865,7 +865,8 @@ public class CreationTable {
 
                 Text textNode = new Text(key);
 
-                creerBindingParis(liaisonRect, textNode);            }
+                creerBindingParis(liaisonRect, textNode);
+            }
         });
     }
 
@@ -935,7 +936,7 @@ public class CreationTable {
 
                 Text textNode = new Text(key);
 
-                creerBindingParis(rectTransversale1,textNode);
+                creerBindingParis(rectTransversale1, textNode);
                 creerBindingParis(rectTransversale2, textNode);
 
             }
@@ -974,12 +975,10 @@ public class CreationTable {
 
                 Text textNode = new Text(key);
 
-                creerBindingParis(circle,textNode);
+                creerBindingParis(circle, textNode);
             }
         });
     }
-
-
 
 
     public void ajouterHoverCasesComplexes(List<Rectangle> rectangles, Node node) {
@@ -1439,7 +1438,7 @@ public class CreationTable {
             imageCase.setLayoutX(startX - 19);
             imageCase.setLayoutY(startY - 19);
 
-        } else if (DonneesGraphiques.carre.containsKey(caseInt)){
+        } else if (DonneesGraphiques.carre.containsKey(caseInt)) {
             int index1 = Integer.parseInt(caseInt.split("-")[0]);
             int index2 = Integer.parseInt(caseInt.split("-")[1]);
             int index3 = Integer.parseInt(caseInt.split("-")[2]);
@@ -1460,7 +1459,7 @@ public class CreationTable {
             imageCase.setLayoutX(centerX - 19);
             imageCase.setLayoutY(centerY - 19);
 
-        }else if (DonneesGraphiques.transversale.containsKey(caseInt)){
+        } else if (DonneesGraphiques.transversale.containsKey(caseInt)) {
             int index1 = Integer.parseInt(caseInt.split("-")[0]);
             int index2 = Integer.parseInt(caseInt.split("-")[1]);
             int index3 = Integer.parseInt(caseInt.split("-")[2]);
@@ -1490,8 +1489,7 @@ public class CreationTable {
             imageCase.setLayoutX(rectX2);
             imageCase.setLayoutY(rectY2);
 
-        }
-        else if (DonneesGraphiques.sixain.containsKey(caseInt)){
+        } else if (DonneesGraphiques.sixain.containsKey(caseInt)) {
             int index1 = Integer.parseInt(caseInt.split("-")[0]);
             int index2 = Integer.parseInt(caseInt.split("-")[1]);
             int index3 = Integer.parseInt(caseInt.split("-")[2]);
@@ -1517,8 +1515,7 @@ public class CreationTable {
             imageCase.setLayoutX(centerX - 16);
             imageCase.setLayoutY(centerY - 14);
 
-        }
-        else {
+        } else {
             DonneesGraphiques.Coordonnees coordonnees = DonneesGraphiques.cases.get(caseInt).get(0);
             double startX = coordonnees.getxStart();
             double startY = coordonnees.getyStart();
@@ -1545,16 +1542,13 @@ public class CreationTable {
                 } else if (DonneesGraphiques.carre.containsKey(caseInt)) {
                     placerJeton(caseInt);
                     changerLabelInstructions(caseInt);
-                }
-                else if (DonneesGraphiques.transversale.containsKey(caseInt)) {
+                } else if (DonneesGraphiques.transversale.containsKey(caseInt)) {
                     placerJeton(caseInt);
                     changerLabelInstructions(caseInt);
-                }
-                else if (DonneesGraphiques.sixain.containsKey(caseInt)) {
+                } else if (DonneesGraphiques.sixain.containsKey(caseInt)) {
                     placerJeton(caseInt);
                     changerLabelInstructions(caseInt);
-                }
-                else {
+                } else {
                     switch (textNode.getText()) {
                         default:
                             if (langueChoisie.intValue() == 0) {
@@ -2012,9 +2006,6 @@ public class CreationTable {
         };
         n.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, parisJoueur);
     }
-
-
-
 
 
     private Color getCouleurPourNumero(int numero) {
