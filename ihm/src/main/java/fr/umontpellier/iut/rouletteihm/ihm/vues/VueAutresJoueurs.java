@@ -101,7 +101,7 @@ public class VueAutresJoueurs extends Pane {
                 musiqueCasino.arreterMusique();
                 musiqueCasino.remettreMusiqueAuDebut();
                 fermerFenetresEtLireMusiqueAccueil();
-                RouletteIHM.getInstance().fonctionnaliteAccueil();
+                vueAccueil.ouvrirFenetre();
             });
 
 
@@ -151,6 +151,7 @@ public class VueAutresJoueurs extends Pane {
         t.setDaemon(true);
         t.start();
     }
+
     public void fermerVueAccueil() {
         vueAccueil = RouletteIHM.getInstance().getVueAccueil();
         if (vueAccueil != null) {
@@ -160,6 +161,7 @@ public class VueAutresJoueurs extends Pane {
             System.err.println("Erreur : VueAccueil est null");
         }
     }
+
     public static boolean isBoutonQuitterClicked() {
         return boutonQuitterClicked;
     }
@@ -171,7 +173,7 @@ public class VueAutresJoueurs extends Pane {
         if (stage.isShowing() && stageP.isShowing()) {
             stage.close();
             stageP.close();
-
+            getMusiqueCasino().arreterMusique();
             fermerVueAccueil();
         }
     }
@@ -201,9 +203,9 @@ public class VueAutresJoueurs extends Pane {
     }
 
     private void afficherVueParametre() {
-        vueParametre = VueParametre.getInstance((Stage) new Scene(new Parent() {
-        }).getWindow(), musiqueCasino);
-        vueParametre.show();
+        vueParametre = VueParametre.getInstance((Stage) getScene().getWindow(), musiqueCasino);
+        vueParametre.reset();
+        vueParametre.configurerMusique(getMusiqueCasino());
     }
 
     public IntegerProperty getLangueChoisie() {

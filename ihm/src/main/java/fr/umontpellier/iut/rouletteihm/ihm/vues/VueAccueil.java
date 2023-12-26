@@ -84,6 +84,7 @@ public class VueAccueil extends Pane {
         musique.setMusique(cheminAudioGolde);
         musique.setVolume(0.05);
     }
+
     public Label getConnexion() {
         return connexion;
     }
@@ -169,6 +170,9 @@ public class VueAccueil extends Pane {
         } else {
             System.err.println("Erreur : la scène est nulle, impossible de fermer la fenêtre.");
         }
+    }
+    public void ouvrirFenetre() {
+        RouletteIHM.getInstance().fonctionnaliteAccueil();
     }
 
     public ImageView getInfo() {
