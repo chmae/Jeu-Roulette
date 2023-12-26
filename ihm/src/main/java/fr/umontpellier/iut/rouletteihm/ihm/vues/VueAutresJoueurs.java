@@ -94,14 +94,20 @@ public class VueAutresJoueurs extends Pane {
             musiqueCasino.mettreLaMusiqueEnBoucle(true);
             musiqueCasino.lireMusiqueProgressivement(musiqueCasino.getVolume());
 
+            if (ControllerClient.isUtilisateurConnecte()) {
+                buttonQuit.setDisable(true);
+            }
+
             buttonQuit.setOnMouseClicked(event -> {
-                boutonQuitterClicked = true;
-                sonsBoutonParametre.lireMusique();
-                sonsBoutonParametre.remettreMusiqueAuDebut();
-                musiqueCasino.arreterMusique();
-                musiqueCasino.remettreMusiqueAuDebut();
-                fermerFenetresEtLireMusiqueAccueil();
-                vueAccueil.ouvrirFenetre();
+                if (!ControllerClient.isUtilisateurConnecte()) {
+                    boutonQuitterClicked = true;
+                    sonsBoutonParametre.lireMusique();
+                    sonsBoutonParametre.remettreMusiqueAuDebut();
+                    musiqueCasino.arreterMusique();
+                    musiqueCasino.remettreMusiqueAuDebut();
+                    fermerFenetresEtLireMusiqueAccueil();
+                    vueAccueil.ouvrirFenetre();
+                }
             });
 
 

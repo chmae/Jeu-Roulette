@@ -67,6 +67,10 @@ public class ControllerClient {
         ControllerClient.soldeClient = soldeClient;
     }
 
+    public static boolean isUtilisateurConnecte() {
+        return utilisateurConnecte;
+    }
+
     public static ControllerClient getInstance() {
         if (instance == null) {
             instance = new ControllerClient();
