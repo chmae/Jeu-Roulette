@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.id.IncrementGenerator;
 
+
+/**
+ * Classe représentant un client.
+ */
 @Entity
 @Table(name = "ClientsIHM")
 public class Client {
@@ -26,6 +30,15 @@ public class Client {
     @Column
     private int solde;
 
+    /**
+     * Constructeur.
+     * @param nom
+     * @param prenom
+     * @param email
+     * @param pwd
+     * @param pswConfirmn
+     * @param s
+     */
     public Client(String nom, String prenom, String email, String pwd, String pswConfirmn, int s) {
         this.nom = nom;
         this.prenom = prenom;
@@ -40,6 +53,7 @@ public class Client {
 
     }
 
+    //--------------------GETTER SETTER--------------------
 
     public int getIdClient() {
         return idClient;
