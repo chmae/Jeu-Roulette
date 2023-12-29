@@ -61,7 +61,9 @@ public class VueJoueurCourant extends GridPane {
     @FXML
     private ImageView passer1;
 
-    public VueJoueurCourant(IJeu jeu, Label labelInstructions, VueInscription vueInscription, IntegerProperty langueChoisie) {
+    private static VueJoueurCourant instance;
+    public VueJoueurCourant(IJeu jeu, Label labelInstructions, IntegerProperty langueChoisie) {
+        instance = this;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueJoueurCourant.fxml"));
             loader.setController(this);
@@ -209,6 +211,18 @@ public class VueJoueurCourant extends GridPane {
                 labelMiseTotale.setText("TBet:");
             }
         });
+    }
+
+    public static VueJoueurCourant getInstance() {
+        return instance;
+    }
+
+    public Label getNomJoueur() {
+        return nomJoueur;
+    }
+
+    public Label getSoldePlayer() {
+        return SoldePlayer;
     }
 }
 
