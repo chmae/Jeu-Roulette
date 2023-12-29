@@ -6,8 +6,15 @@ import fr.umontpellier.iut.rouletteihm.application.service.ClientService;
 import fr.umontpellier.iut.rouletteihm.application.service.exception.ServiceException;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueAccueil;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueAutresJoueurs;
+import fr.umontpellier.iut.rouletteihm.ihm.vues.VueJoueurCourant;
 import fr.umontpellier.iut.rouletteihm.metier.entite.Client;
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -15,6 +22,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -50,6 +58,8 @@ public class ControllerClient {
     private TextField nom;
     @FXML
     private TextField solde;
+    private final StringProperty prenomProperty = new SimpleStringProperty();
+    private final IntegerProperty soldeProperty = new SimpleIntegerProperty();
 
     public static int getIdClientConnecte() {
         return idClientConnecte;
@@ -78,13 +88,17 @@ public class ControllerClient {
         return instance;
     }
 
+    /**
+     * Méthode appelée lors de la tentative de connexion.
+     * Vérifie les informations d'identification et connecte l'utilisateur le cas échéant.
+     *
+     * @throws ServiceException Si une erreur survient lors de la connexion.
+     */
     @FXML
     public void actionConnexion() throws ServiceException {
         try {
             String email = this.email.getText();
             String password = this.password.getText();
-
-            System.out.println("Tentative de connexion pour l'email : " + email);
 
             Session session = DBUtils.getSession();
             Transaction transaction = session.beginTransaction();
@@ -143,9 +157,9 @@ public class ControllerClient {
             }
 
             if (clients.isEmpty() || !connexionReussie) {
-                throw new ServiceException("Échec de la connexion : Informations d'identification incorrectes.");
+                afficherAlerteErreur();
+                return;
             }
-
             transaction.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -154,7 +168,26 @@ public class ControllerClient {
         }
     }
 
+    /**
+     * Affiche une alerte en cas d'échec de connexion.
+     */
+    private void afficherAlerteErreur() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur de connexion");
+            alert.setHeaderText(null);
+            alert.setContentText("Échec de la connexion : Informations d'identification incorrectes.");
+            alert.showAndWait();
+        });
+    }
 
+    /**
+     * Vérifie si le mot de passe fourni correspond au mot de passe hashé du client.
+     *
+     * @param plainPassword  Le mot de passe en clair.
+     * @param hashedPassword Le mot de passe hashé.
+     * @return true si les mots de passe correspondent, sinon false.
+     */
     private boolean checkPassword(String plainPassword, String hashedPassword) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -168,6 +201,12 @@ public class ControllerClient {
         }
     }
 
+    /**
+     * Méthode appelée lors de la validation du formulaire avec la touche ENTER.
+     *
+     * @param keyEvent L'événement de la touche clavier.
+     * @throws ServiceException Si une erreur survient lors de la connexion.
+     */
     @FXML
     public void validerFormulaire(KeyEvent keyEvent) throws ServiceException {
         if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -175,6 +214,10 @@ public class ControllerClient {
         }
     }
 
+    /**
+     * Méthode appelée lors de la déconnexion de l'utilisateur.
+     * Effectue la déconnexion, met à jour le solde et affiche la nouvelle fenêtre d'accueil.
+     */
     @FXML
     public void deconnexion() {
         System.out.println("Tentative de déconnexion...");
@@ -213,8 +256,6 @@ public class ControllerClient {
                         utilisateurConnecte = false;
                         stage.close();
                         stageP.close();
-
-
                         System.out.println("Ouverture de la nouvelle fenêtre...");
 
                         RouletteIHM.getInstance().fonctionnaliteAccueil();
@@ -233,6 +274,10 @@ public class ControllerClient {
     }
 
 
+    /**
+     * Méthode appelée lors de la mise à jour du prénom du client.
+     * Met à jour le prénom dans la base de données et rafraîchit l'interface graphique.
+     */
     @FXML
     public void updatePrenom() {
         try (Session session = DBUtils.getSession()) {
@@ -243,9 +288,16 @@ public class ControllerClient {
 
                 String nouveauPrenom = nom.getText();
                 clientService.updatePrenom(idClientConnecte, nouveauPrenom);
-                setPrenomClient(nouveauPrenom);
+                Platform.runLater(() -> {
+                    setPrenomClient(nouveauPrenom);
+                    prenomProperty.set(nouveauPrenom);
 
-                System.out.println("Prénom mis à jour avec succès : " + nouveauPrenom);
+                    VueJoueurCourant.getInstance().getNomJoueur().textProperty().bind(prenomProperty);
+
+                    System.out.println("Nom joueur mis à jour avec succès : " + nouveauPrenom);
+                    nom.setText("");
+                });
+
 
                 transaction.commit();
             } catch (ServiceException e) {
@@ -259,31 +311,35 @@ public class ControllerClient {
         }
     }
 
-
+    /**
+     * Méthode appelée lors de la mise à jour du solde du client.
+     * Met à jour le solde dans la base de données et rafraîchit l'interface graphique.
+     */
     @FXML
     public void updateSolde() {
-        try (Session session = DBUtils.getSession()) {
-            Transaction transaction = session.beginTransaction();
+        try {
+            ClientService clientService = ClientService.getInstance();
 
-            try {
-                ClientService clientService = ClientService.getInstance();
+            int idClientConnecte = getIdClientConnecte();
+            int soldeActuel = clientService.getSolde(idClientConnecte);
+            int nouveauSolde = Integer.parseInt(solde.getText());
 
-                int nouveauSolde = Integer.parseInt(solde.getText());
-                clientService.mettreAJourSolde(getIdClientConnecte(), nouveauSolde);
-                setSoldeClient(nouveauSolde);
+            if (nouveauSolde != soldeActuel) {
+                clientService.mettreAJourSolde(idClientConnecte, nouveauSolde);
 
-                solde.setText(String.valueOf(nouveauSolde));
+                Platform.runLater(() -> {
+                    setSoldeClient(nouveauSolde);
+                    soldeProperty.set(nouveauSolde);
+                    solde.textProperty().bindBidirectional(soldeProperty, new NumberStringConverter());
 
-                System.out.println("Solde mis à jour avec succès : " + nouveauSolde);
-
-                transaction.commit();
-            } catch (ServiceException e) {
-                if (transaction != null) {
-                    transaction.rollback();
-                }
-                e.printStackTrace();
+                    System.out.println("Solde mis à jour avec succès : " + nouveauSolde);
+                    solde.setText("");
+                });
+                rouletteIHM.demarrerPartie(prenomClient, nouveauSolde);
+            } else {
+                System.out.println("Aucune mise à jour du solde n'est nécessaire.");
             }
-        } catch (HibernateException e) {
+        } catch (ServiceException | NumberFormatException e) {
             e.printStackTrace();
         }
     }

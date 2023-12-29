@@ -42,14 +42,9 @@ public class VueDuJeu extends GridPane {
     private static VueDuJeu instance;
     private ArrayList<Integer> multiplicateursGain;
     private ArrayList<Integer> montantsParis;
-    private Boule boule = new Boule();
     private VueRoue vueRoue = new VueRoue();
     private StatistiquesRoulette statistiquesRoulette = new StatistiquesRoulette();
-
-    private RouletteIHM rouletteIHM;
     private StringProperty valeurGagneeProperty = new SimpleStringProperty("0");
-    private IntegerProperty langue;
-    private VueInscription vueInscription = new VueInscription();
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
@@ -65,7 +60,7 @@ public class VueDuJeu extends GridPane {
         vueDroite = new VueDroite(jeu);
         vueGauche = new VueGauche(jeu);
         vuePlayerInfo = new VuePlayerInfo(jeu);
-        joueurCourantvue = new VueJoueurCourant(jeu, labelInstructions, vueInscription, autresJoueurs.getLangueChoisie());
+        joueurCourantvue = new VueJoueurCourant(jeu, labelInstructions, autresJoueurs.getLangueChoisie());
         elementsGauche = new HBox(10, vueGauche, autresJoueurs);
 
         add(vueRoue.getRoue(), 1, 1);
