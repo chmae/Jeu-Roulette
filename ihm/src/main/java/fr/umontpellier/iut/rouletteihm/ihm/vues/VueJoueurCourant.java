@@ -221,8 +221,5 @@ public class VueJoueurCourant extends GridPane {
         return nomJoueur;
     }
 
-    public Label getSoldePlayer() {
-        return SoldePlayer;
-    }
 }
 
