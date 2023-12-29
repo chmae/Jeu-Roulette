@@ -26,6 +26,11 @@ import java.util.ArrayList;
 
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.StatistiquesRoulette;
 
+/**
+ * Classe VueDuJeu qui permet de créer la vue du jeu avec toutes les autres vues (VuePlateau, VueBet, VueJoueurCourant, VueAutresJoueurs, VueDroite, VueGauche, VuePlayerInfo)
+ * Elle permet aussi de créer les bindings entre les différentes vues
+ * Elle permet aussi de créer les actions des boutons
+ */
 public class VueDuJeu extends GridPane {
     private IJeu jeu;
     private VuePlateau plateau;
@@ -130,10 +135,12 @@ public class VueDuJeu extends GridPane {
         });
     }
 
+    // Méthode qui permet de retourner la vue du plateau
     public CreationTable getTable() {
         return table;
     }
 
+    // Méthode qui permet de créer les bindings entre les différentes vues
     public void creerBindings() {
         plateau.prefWidthProperty().bind(widthProperty());
         plateau.prefHeightProperty().bind(heightProperty());
@@ -216,6 +223,7 @@ public class VueDuJeu extends GridPane {
 
     Stage primaryStage = RouletteIHM.getPrimaryStage();
 
+    //Méthode qui permet d'afficher la popup de victoire
     public void whenWin() {
         System.out.println(montantsParis.toString());
         System.out.println(multiplicateursGain.toString());
@@ -240,6 +248,7 @@ public class VueDuJeu extends GridPane {
     }*/
 
 
+    //Méthode qui permet d'afficher la popup de défaite
     private void whenLose() {
         jeu.joueurCourantProperty().get().miseAJourBanque(-jeu.joueurCourantProperty().get().getMiseTotale());
         labelInstructions.setText("Perdu !");
@@ -252,6 +261,7 @@ public class VueDuJeu extends GridPane {
         timeline.play();
     }
 
+    // Méthode qui permet de retourner l'instance de la classe
     public static VueDuJeu getInstance() {
         return instance;
     }
@@ -259,7 +269,6 @@ public class VueDuJeu extends GridPane {
     public void resetPartie() {
         jeu.tournerTour();
     }
-
 
     public IJeu getJeu() {
         return jeu;

@@ -17,7 +17,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
+/**
+ * Classe VueAccueil qui permet d'afficher la vue d'accueil
+ * Cette classe est un Pane qui contient un Pane, un Label, deux ImageView et un Button qui permettent de naviguer entre les différentes vues
+ * Cette classe permet aussi de lancer la musique d'accueil
+ */
 public class VueAccueil extends Pane {
     private IJoueur joueur;
     @FXML
@@ -40,6 +44,12 @@ public class VueAccueil extends Pane {
     private VueRules vueRules;
 
 
+    /**
+     * Constructeur de la classe VueAccueil
+     * Ce constructeur permet de charger le fichier FXML de la vue d'accueil
+     * Ce constructeur permet aussi de configurer les boutons de la vue d'accueil
+     * Ce constructeur permet aussi de lancer la musique d'accueil
+     */
     public VueAccueil() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueAccueil.fxml"));
@@ -146,6 +156,8 @@ public class VueAccueil extends Pane {
         popupStage.show();
     }
 
+
+    // --Getters-- //
     public GestionMusique getMusique() {
         return musique;
     }

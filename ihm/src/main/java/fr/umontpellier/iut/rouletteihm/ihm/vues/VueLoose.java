@@ -15,6 +15,9 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
+/**
+ * Vue associée à la fenêtre de fin de partie.
+ */
 public class VueLoose {
     private Stage stage;
     private Stage primaryStage;
@@ -24,6 +27,12 @@ public class VueLoose {
 
     private GestionMusique sonsTrompette;
 
+
+    /**
+     * Constructeur
+     *
+     * @param p Stage de la fenêtre principale
+     */
     public VueLoose(Stage p) {
         primaryStage = p;
 

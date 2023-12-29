@@ -15,7 +15,9 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
-
+/**
+ * Vue associée à la fenêtre de fin de partie.
+ */
 public class VueWin {
 
     private Stage stage;
@@ -27,6 +29,11 @@ public class VueWin {
     private Label gainJeton;
     private GestionMusique gestionMusique;
 
+    /**
+     * Constructeur
+     *
+     * @param p Stage de la fenêtre principale
+     */
     public VueWin(Stage p) {
         primaryStage = p;
 

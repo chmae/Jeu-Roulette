@@ -7,7 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
+/**
+ * Classe VueRules
+ * Cette classe permet d'afficher la fenêtre des règles du jeu
+ */
 public class VueRules extends Pane {
     @FXML
     private ImageView quit;
@@ -15,7 +18,9 @@ public class VueRules extends Pane {
     @FXML
     private Pane pane;
 
-
+    /**
+     * Constructeur de la classe VueRules
+     */
     public VueRules() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueRules.fxml"));
@@ -45,6 +50,9 @@ public class VueRules extends Pane {
 
     }
 
+    /**
+     * Méthode qui permet de fermer la fenêtre
+     */
     public void fermerFenetre() {
         if (pane.getScene() != null) {
             Stage stage = (Stage) pane.getScene().getWindow();
