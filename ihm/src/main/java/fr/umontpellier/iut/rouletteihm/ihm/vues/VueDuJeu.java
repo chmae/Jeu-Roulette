@@ -77,7 +77,7 @@ public class VueDuJeu extends GridPane {
         setValignment(joueurCourantvue, VPos.BOTTOM);
         joueurCourantvue.translateXProperty().bind(plateau.translateXProperty().add(plateau.getWidth() / 2).add(875));
         joueurCourantvue.translateYProperty().bind(plateau.translateYProperty().add(plateau.getHeight() / 2).add(-45));
-        vueRoue.getRoue().translateXProperty().bind(plateau.translateXProperty().add(plateau.getWidth() / 2).add(30));
+        vueRoue.getRoue().translateXProperty().bind(plateau.translateXProperty().add(plateau.getWidth() / 2).add(60));
         vueRoue.getRoue().translateYProperty().bind(plateau.translateYProperty().add(plateau.getHeight() / 2).add(0));
         vueBet.setTranslateY(-15);
 
@@ -274,3 +274,4 @@ public class VueDuJeu extends GridPane {
 
 
 }
+

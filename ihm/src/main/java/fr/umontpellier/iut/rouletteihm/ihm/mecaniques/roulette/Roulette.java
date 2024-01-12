@@ -145,6 +145,7 @@ public class Roulette implements IJeu {
         private final String couleur;
         private final int valeur;
 
+
         public resultatTour(int valeur, String couleur) {
             this.valeur = valeur;
             this.couleur = couleur;
