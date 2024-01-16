@@ -61,7 +61,7 @@ public class VueRoue {
 
         Circle wire = new Circle(110, 110, 80);
         boule.getShape().setCenterX(110);
-        boule.getShape().setCenterY(29);
+        boule.getShape().setCenterY(30);
         wire.setFill(Color.TRANSPARENT);
         wire.setStroke(Color.GOLD);
         rotateBouleSegment.getChildren().addAll(wire, boule.getShape());
@@ -184,19 +184,17 @@ public class VueRoue {
         musique.setVolume(0.2);
         musique.lireMusique();
 
-        Circle path = new Circle(110, -130, 80);
-
         double numberAngle = numberSet.getAngle(gagnant.getNumber());
         int finalAngleRotation = (int) (360 * 2.5 + numberAngle);
 
-        RotateTransition rotateTransitionBoule = new RotateTransition(Duration.seconds(1.5), rotateBouleSegment);
-        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1.5), Roue);
+        RotateTransition rotateTransitionBoule = new RotateTransition(Duration.seconds(4), rotateBouleSegment);
+        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(4), Roue);
         ParallelTransition parallelTransition = new ParallelTransition();
 
         rotateTransitionBoule.setFromAngle(angleRotation);
         rotateTransitionBoule.setToAngle(finalAngleRotation);
         rotateTransition.setFromAngle(angleRotation);
-        rotateTransition.setToAngle(finalAngleRotation);
+        rotateTransition.setToAngle(-finalAngleRotation);
         parallelTransition.getChildren().addAll(rotateTransitionBoule, rotateTransition);
         parallelTransition.play();
 
