@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -54,6 +55,7 @@ public class VueAccueil extends Pane {
             vueRules = new VueRules();
             getChildren().add(root);
 
+
             // --Code de sauvegarde de la musique d'aceuil-- //
             configurerMusiqueAccueil();
 
@@ -84,6 +86,7 @@ public class VueAccueil extends Pane {
         musique.setMusique(cheminAudioGolde);
         musique.setVolume(0.05);
     }
+
     public Label getConnexion() {
         return connexion;
     }
@@ -120,11 +123,20 @@ public class VueAccueil extends Pane {
         popupStage.setResizable(false);
         popupStage.initOwner(getScene().getWindow());
         popupStage.initModality(Modality.APPLICATION_MODAL);
-        Scene scene = new Scene(vueRules, getScene().getWidth(), getScene().getHeight());
+
+        Image backgroundImage = new Image("/images/background-rules.jpg");
+        ImageView backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitWidth(getScene().getWidth());
+        backgroundImageView.setFitHeight(getScene().getHeight());
+
+        Pane popupContent = new Pane(backgroundImageView, vueRules);
+
+        Scene scene = new Scene(popupContent, getScene().getWidth(), getScene().getHeight());
         popupStage.setScene(scene);
-        popupStage.setWidth(250);
-        popupStage.setHeight(465);
+        popupStage.setWidth(600);
+        popupStage.setHeight(350);
         popupStage.setTitle("Règles du jeu");
+
         popupStage.show();
     }
 
@@ -169,6 +181,9 @@ public class VueAccueil extends Pane {
         } else {
             System.err.println("Erreur : la scène est nulle, impossible de fermer la fenêtre.");
         }
+    }
+    public void ouvrirFenetre() {
+        RouletteIHM.getInstance().fonctionnaliteAccueil();
     }
 
     public ImageView getInfo() {

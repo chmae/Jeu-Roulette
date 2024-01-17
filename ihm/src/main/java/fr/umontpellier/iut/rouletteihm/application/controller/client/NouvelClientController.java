@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 import java.util.Optional;
 
 public class NouvelClientController {
-    // Déclaration des champs et variables de classe
     @FXML
     public ImageView inscription;
     @FXML
@@ -37,18 +36,20 @@ public class NouvelClientController {
     private RouletteIHM rouletteIHM = RouletteIHM.getInstance();
     private String prenoom;
 
-    // Méthode pour créer un nouveau client
+    /**
+     * Méthode appelée lors de la création d'un nouveau client.
+     * Effectue des vérifications sur les champs du formulaire, puis crée le client et le connecte.
+     *
+     * @throws ServiceException Si une erreur survient lors de la création du client.
+     */
     @FXML
     public void creerClient() throws ServiceException {
-        // Récupération des données du formulaire de création de client depuis l'IHM
         String nom = this.nom.getText();
         prenoom = this.prenom.getText();
         String email = this.email.getText();
         String password = this.password.getText();
         String passwordConfirm = this.paswwordConfirm.getText();
-        // Vérification si des champs obligatoires sont vides
         if (nom.isEmpty() || prenoom.isEmpty() || email.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()) {
-            // Affichage d'une alerte en cas de champs manquants
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("Champs manquants");
@@ -56,7 +57,20 @@ public class NouvelClientController {
             alert.showAndWait();
             return;
         }
-        // Création d'une fenêtre de dialogue pour choisir le solde initial du nouveau client
+        if (!nom.matches("[a-zA-Z]+") || !prenoom.matches("[a-zA-Z]+")) {
+            AfficherErreur("Erreur de format", "Le nom ou le prénom contient des caractères non autorisés.");
+            return;
+        }
+
+        if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
+            AfficherErreur("Format d'email incorrect", "Veuillez saisir une adresse email valide.");
+            return;
+        }
+
+        if (password.length() < 6 || passwordConfirm.length() < 6) {
+            AfficherErreur("Mot de passe trop court", "Le mot de passe doit contenir au moins 6 caractères.");
+            return;
+        }
         ChoixSoldeDialog dialog = new ChoixSoldeDialog();
         dialog.initOwner(pane.getScene().getWindow());
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -64,21 +78,16 @@ public class NouvelClientController {
         Optional<Integer> result = dialog.showAndWait();
 
         if (result.isPresent()) {
-            // Récupération du solde choisi depuis la fenêtre de dialogue
             int soldeChoisi = result.get();
 
-            // Appel du service client pour créer un nouveau client avec les informations fournies
             ClientService clientService = ClientService.getInstance();
             int idClientCree = clientService.createClient(nom, prenoom, email, password, passwordConfirm, soldeChoisi);
 
-            // Mise à jour de l'ID du client connecté dans le ControllerClient
             ControllerClient controllerClient = ControllerClient.getInstance();
             controllerClient.setIdClientConnecte(idClientCree);
 
-            // Actions après la création du client
             VueAccueil vueAccueil = rouletteIHM.getVueAccueil();
             if (vueAccueil != null) {
-                // Affichage de la fenêtre de connexion et démarrage du jeu avec le nouveau client
                 vueAccueil.afficherConnexionPopup();
                 rouletteIHM.demarrerPartie(prenoom, soldeChoisi);
                 vueAccueil.fermerFenetre();
@@ -86,15 +95,33 @@ public class NouvelClientController {
                 System.err.println("Erreur : VueAccueil est null");
             }
 
-            // Fermeture de la fenêtre actuelle
             Stage stage = (Stage) pane.getScene().getWindow();
             stage.close();
         } else {
             System.out.println("Annulation de la création du compte.");
         }
     }
+    /**
+     * Affiche une boîte de dialogue d'erreur avec le titre et le message spécifiés.
+     *
+     * @param titre   Le titre de la boîte de dialogue.
+     * @param message Le message de la boîte de dialogue.
+     */
+    private void AfficherErreur(String titre, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(titre);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
-    // Méthode déclenchée lors de l'appui sur la touche Entrée dans le formulaire de création de client
+    /**
+     * Méthode appelée lors de la validation du formulaire avec la touche ENTER.
+     * Appelle la méthode `creerClient` pour effectuer la création du client.
+     *
+     * @param keyEvent L'événement de la touche clavier.
+     * @throws ServiceException Si une erreur survient lors de la création du client.
+     */
     @FXML
     public void validerFormulaire(KeyEvent keyEvent) throws ServiceException {
         if (keyEvent.getCode() == KeyCode.ENTER) {
