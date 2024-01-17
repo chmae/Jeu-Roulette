@@ -224,7 +224,7 @@ public class VueDuJeu extends GridPane {
         vueWin.afficher();
 
 
-        Duration pauseDuration = Duration.seconds(10);
+        Duration pauseDuration = Duration.seconds(5);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> vueWin.getStage().close()));
         timeline.play();
 
@@ -242,7 +242,7 @@ public class VueDuJeu extends GridPane {
         VueLoose vueLoose = new VueLoose(primaryStage);
         vueLoose.afficher();
 
-        Duration pauseDuration = Duration.seconds(10);
+        Duration pauseDuration = Duration.seconds(3);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> vueLoose.getStage().close()));
         timeline.play();
     }
