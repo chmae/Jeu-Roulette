@@ -45,6 +45,7 @@ public class VueDuJeu extends GridPane {
     private VueRoue vueRoue = new VueRoue();
     private StatistiquesRoulette statistiquesRoulette = new StatistiquesRoulette();
     private StringProperty valeurGagneeProperty = new SimpleStringProperty("0");
+    private Stage primaryStage = RouletteIHM.getPrimaryStage();
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
@@ -92,40 +93,32 @@ public class VueDuJeu extends GridPane {
 
         joueurCourantvue.getPasser().setOnMouseClicked(mouseEvent -> {
             labelInstructions.setText("Vous avez décidé de passer !");
-            vueRoue.animation(jeu.getResultatTourActuel().getNombres());
-            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
-
-            pauseTransition.setOnFinished(event -> {
-                vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
-                vueDroite.afficherStats();
-                vueDroite.setStatistiquesRoulette(statistiquesRoulette);
-            });
-            pauseTransition.play();
-            jeu.tournerTour();
-            statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
-            statistiquesRoulette.afficherStatistique();
-
+            gererAnimation();
         });
 
         joueurCourantvue.getPasser1().setOnMouseClicked(mouseEvent -> {
             labelInstructions.setText("Vous avez décidé de passer !");
-            vueRoue.animation(jeu.getResultatTourActuel().getNombres());
-            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
-
-            pauseTransition.setOnFinished(event -> {
-                vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
-                vueDroite.afficherStats();
-                vueDroite.setStatistiquesRoulette(statistiquesRoulette);
-            });
-            pauseTransition.play();
-            jeu.tournerTour();
-            statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
-            statistiquesRoulette.afficherStatistique();
-
+            gererAnimation();
         });
     }
+    private void gererAnimation() {
+        vueRoue.animation(jeu.getResultatTourActuel().getNombres());
 
-    public CreationTable getTable() {
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
+
+        statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
+        statistiquesRoulette.afficherStatistique();
+
+        pauseTransition.setOnFinished(event -> {
+            vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
+            vueDroite.afficherStats();
+            vueDroite.setStatistiquesRoulette(statistiquesRoulette);
+            jeu.tournerTour();
+        });
+        pauseTransition.play();
+    }
+
+        public CreationTable getTable() {
         return table;
     }
 
@@ -139,6 +132,8 @@ public class VueDuJeu extends GridPane {
         elementsGauche.prefWidthProperty().bind(widthProperty());
         elementsGauche.prefHeightProperty().bind(heightProperty());
         vueDroite.prefHeightProperty().bind(heightProperty());
+
+
 
         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -208,8 +203,6 @@ public class VueDuJeu extends GridPane {
     }
 
 
-    Stage primaryStage = RouletteIHM.getPrimaryStage();
-
     public void whenWin() {
         System.out.println(montantsParis.toString());
         System.out.println(multiplicateursGain.toString());
@@ -224,7 +217,7 @@ public class VueDuJeu extends GridPane {
         vueWin.afficher();
 
 
-        Duration pauseDuration = Duration.seconds(10);
+        Duration pauseDuration = Duration.seconds(6);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> vueWin.getStage().close()));
         timeline.play();
 
@@ -242,7 +235,7 @@ public class VueDuJeu extends GridPane {
         VueLoose vueLoose = new VueLoose(primaryStage);
         vueLoose.afficher();
 
-        Duration pauseDuration = Duration.seconds(10);
+        Duration pauseDuration = Duration.seconds(6);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> vueLoose.getStage().close()));
         timeline.play();
     }
