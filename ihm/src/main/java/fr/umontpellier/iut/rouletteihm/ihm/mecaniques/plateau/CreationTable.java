@@ -17,10 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
@@ -46,7 +43,7 @@ public class CreationTable {
     private List<Pair<Rectangle, Paint>> originalColors = new ArrayList<>();
     private Label labelInstructions;
     private IntegerProperty langueChoisie;
-//    private ArrayList<Integer> listeParis;
+    //    private ArrayList<Integer> listeParis;
 //    private ArrayList<Integer> multiplicateursParis;
 //    private ArrayList<Integer> montantParis;
     private VueBet vueBet;
@@ -831,10 +828,186 @@ public class CreationTable {
 
                 // Ajout des lignes au groupe parent
                 table.getChildren().addAll(ligneHaut, ligneBas, ligneGauche, ligneDroite);
+                ajouteHoverCasesCheval();
+                ajouterHoverCasesCarre();
+                ajouterHoverCasesSixain();
+                ajouterHoverCasesTransversale();
             }
         }
     }
 
+    public void ajouteHoverCasesCheval() {
+        DonneesGraphiques.cheval.forEach((key, value) -> {
+            int index1 = Integer.parseInt(key.split("-")[0]);
+            int index2 = Integer.parseInt(key.split("-")[1]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+
+            if (rectangle1 != null && rectangle2 != null) {
+                double rectX = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2) / 2;
+                double rectY = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() / 2) / 2;
+
+                double largeurRect = 3;
+                double hauteurRect = 30;
+
+                Rectangle liaisonRect;
+
+                if (rectangle1.getY() == rectangle2.getY()) {
+                    liaisonRect = new Rectangle(rectX - largeurRect / 2, rectY - hauteurRect / 2, largeurRect, hauteurRect);
+                    liaisonRect.setFill(Color.TRANSPARENT);
+                } else if (rectangle1.getX() == rectangle2.getX()) {
+                    liaisonRect = new Rectangle(rectX - hauteurRect / 2, rectY - largeurRect / 2, hauteurRect, largeurRect);
+                    liaisonRect.setFill(Color.TRANSPARENT);
+                } else {
+                    liaisonRect = new Rectangle();
+                }
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2), liaisonRect);
+                table.getChildren().add(liaisonRect);
+
+                Text textNode = new Text(key);
+
+                creerBindingParis(liaisonRect, textNode);
+            }
+        });
+    }
+
+    public void ajouterHoverCasesCarre() {
+        DonneesGraphiques.carre.forEach((key, value) -> {
+            int index1 = Integer.parseInt(key.split("-")[0]);
+            int index2 = Integer.parseInt(key.split("-")[1]);
+            int index3 = Integer.parseInt(key.split("-")[2]);
+            int index4 = Integer.parseInt(key.split("-")[3]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+            Rectangle rectangle4 = rectangleMap.get(index4);
+
+            if (rectangle1 != null && rectangle2 != null && rectangle3 != null && rectangle4 != null) {
+
+                double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX()) / 4 + 20;
+                double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY()) / 4 + 32;
+                double circleRadius = Math.min(rectangle1.getWidth(), rectangle1.getHeight()) / 4;
+
+                Circle circle = new Circle(centerX, centerY, circleRadius);
+                circle.setFill(Color.TRANSPARENT);
+                circle.setRadius(4);
+
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4), circle);
+
+                table.getChildren().add(circle);
+
+                Text textNode = new Text(key);
+
+                creerBindingParis(circle, textNode);
+            }
+        });
+    }
+
+    public void ajouterHoverCasesTransversale() {
+        DonneesGraphiques.transversale.forEach((key, value) -> {
+            int index1 = Integer.parseInt(key.split("-")[0]);
+            int index2 = Integer.parseInt(key.split("-")[1]);
+            int index3 = Integer.parseInt(key.split("-")[2]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+
+            if (rectangle1 != null && rectangle2 != null && rectangle3 != null) {
+                double largeurRect = 28;
+                double hauteurRect = 12;
+
+                double rectX = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2 + rectangle3.getX() + rectangle3.getWidth()) / 3 - largeurRect / 2;
+                double rectY = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() + rectangle3.getY() + rectangle3.getHeight() / 2) / 3 + 87 - hauteurRect / 2;
+
+                Rectangle rectTransversale1 = new Rectangle(rectX, rectY, largeurRect, hauteurRect);
+                rectTransversale1.setFill(Color.TRANSPARENT);
+
+                double rectX2 = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2 + rectangle3.getX() + rectangle3.getWidth()) / 3 - 10 - largeurRect / 2;
+                double rectY2 = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() + rectangle3.getY() + rectangle3.getHeight() / 2) / 3 - 108 + 2 - hauteurRect / 2;
+
+                Rectangle rectTransversale2 = new Rectangle(rectX2, rectY2, largeurRect, hauteurRect);
+                rectTransversale2.setFill(Color.TRANSPARENT);
+
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3), rectTransversale1);
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3), rectTransversale2);
+
+                table.getChildren().addAll(rectTransversale1, rectTransversale2);
+
+                Text textNode = new Text(key);
+
+                creerBindingParis(rectTransversale1, textNode);
+                creerBindingParis(rectTransversale2, textNode);
+
+            }
+        });
+
+    }
+
+    public void ajouterHoverCasesSixain() {
+        DonneesGraphiques.sixain.forEach((key, value) -> {
+            int index1 = Integer.parseInt(key.split("-")[0]);
+            int index2 = Integer.parseInt(key.split("-")[1]);
+            int index3 = Integer.parseInt(key.split("-")[2]);
+            int index4 = Integer.parseInt(key.split("-")[3]);
+            int index5 = Integer.parseInt(key.split("-")[4]);
+            int index6 = Integer.parseInt(key.split("-")[5]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+            Rectangle rectangle4 = rectangleMap.get(index4);
+            Rectangle rectangle5 = rectangleMap.get(index5);
+            Rectangle rectangle6 = rectangleMap.get(index6);
+
+            if (rectangle1 != null && rectangle2 != null && rectangle3 != null && rectangle4 != null && rectangle5 != null && rectangle6 != null) {
+                double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX() + rectangle5.getX() + rectangle6.getX()) / 6 + 20;
+                double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY() + rectangle5.getY() + rectangle6.getY()) / 6 - 61.5;
+                double circleRadius = Math.min(rectangle1.getWidth(), rectangle1.getHeight()) / 6;
+
+                Circle circle = new Circle(centerX, centerY, circleRadius);
+                circle.setFill(Color.TRANSPARENT);
+                circle.setRadius(4);
+
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4, rectangle5, rectangle6), circle);
+
+                table.getChildren().add(circle);
+
+                Text textNode = new Text(key);
+
+                creerBindingParis(circle, textNode);
+            }
+        });
+    }
+
+
+    public void ajouterHoverCasesComplexes(List<Rectangle> rectangles, Node node) {
+        if (!node.getProperties().containsKey("hoverAdded")) {
+            Map<Rectangle, Color> couleursOriginales = new HashMap<>();
+
+            rectangles.forEach(rectangle -> {
+                couleursOriginales.put(rectangle, (Color) rectangle.getFill());
+            });
+
+            node.setOnMouseEntered(event -> {
+                rectangles.forEach(rect -> {
+                    rect.setFill(Color.GREY);
+                    rect.setOpacity(0.7);
+                });
+            });
+
+            node.setOnMouseExited(event -> {
+                rectangles.forEach(rect -> {
+                    rect.setFill(couleursOriginales.get(rect));
+                    rect.setOpacity(1.0);
+                });
+            });
+
+            node.getProperties().put("hoverAdded", true);
+        }
+    }
 
 
     private void survolerEspaceEntreCases(int numeroCase1, int numeroCase2) {
@@ -1244,10 +1417,9 @@ public class CreationTable {
 //    }
 
     private void changerLabelInstructions(String pari) {
-        if (langueChoisie.intValue()==0){
+        if (langueChoisie.intValue() == 0) {
             labelInstructions.setText("Paris sur " + pari);
-        }
-        else{
+        } else {
             labelInstructions.setText("Bet on " + pari);
         }
     }
@@ -1273,7 +1445,7 @@ public class CreationTable {
 
 
     public void placerJeton(String caseInt) {
-        ImageView imageCase =  new ImageView();
+        ImageView imageCase = new ImageView();
         switch (jeu.joueurCourantProperty().get().getMiseActuelle()) {
             case 1:
                 imageCase = new ImageView(new Image("images/token_1_2.png"));
@@ -1296,49 +1468,133 @@ public class CreationTable {
             default:
                 break;
         }
-        DonneesGraphiques.Coordonnees coordonnees = DonneesGraphiques.cases.get(caseInt).get(0);
-        double startX = coordonnees.getxStart();
-        double startY = coordonnees.getyStart();
-        imageCase.setFitWidth(38);
-        imageCase.setFitHeight(38);
-        imageCase.setPreserveRatio(false);
-        imageCase.setLayoutX(startX - 19);
-        imageCase.setLayoutY(startY - 19);
+
+        if (DonneesGraphiques.cheval.containsKey(caseInt)) {
+            int index1 = Integer.parseInt(caseInt.split("-")[0]);
+            int index2 = Integer.parseInt(caseInt.split("-")[1]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+
+            double startX = (rectangle1.getX() + rectangle2.getX() + rectangle1.getWidth()) / 2;
+            double startY = (rectangle1.getY() + rectangle2.getY() + rectangle1.getHeight()) / 2;
+
+            imageCase.setFitWidth(38);
+            imageCase.setFitHeight(38);
+            imageCase.setPreserveRatio(false);
+            imageCase.setLayoutX(startX - 19);
+            imageCase.setLayoutY(startY - 19);
+
+        } else if (DonneesGraphiques.carre.containsKey(caseInt)) {
+            int index1 = Integer.parseInt(caseInt.split("-")[0]);
+            int index2 = Integer.parseInt(caseInt.split("-")[1]);
+            int index3 = Integer.parseInt(caseInt.split("-")[2]);
+            int index4 = Integer.parseInt(caseInt.split("-")[3]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+            Rectangle rectangle4 = rectangleMap.get(index4);
+
+            double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX()) / 4 + 20;
+            double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY()) / 4 + 32;
+
+
+            imageCase.setFitWidth(38);
+            imageCase.setFitHeight(38);
+            imageCase.setPreserveRatio(false);
+            imageCase.setLayoutX(centerX - 19);
+            imageCase.setLayoutY(centerY - 19);
+
+        } else if (DonneesGraphiques.transversale.containsKey(caseInt)) {
+            int index1 = Integer.parseInt(caseInt.split("-")[0]);
+            int index2 = Integer.parseInt(caseInt.split("-")[1]);
+            int index3 = Integer.parseInt(caseInt.split("-")[2]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+
+            double largeurRect = 28;
+            double hauteurRect = 12;
+
+
+            double rectX = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2 + rectangle3.getX() + rectangle3.getWidth()) / 3 - largeurRect / 2;
+            double rectY = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() + rectangle3.getY() + rectangle3.getHeight() / 2) / 3 + 87 - hauteurRect / 2;
+
+            double rectX2 = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2 + rectangle3.getX() + rectangle3.getWidth()) / 3 - 10 - largeurRect / 2;
+            double rectY2 = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() + rectangle3.getY() + rectangle3.getHeight() / 2) / 3 - 108 + 2 - hauteurRect / 2;
+
+
+            imageCase.setFitWidth(38);
+            imageCase.setFitHeight(38);
+            imageCase.setPreserveRatio(false);
+
+            imageCase.setLayoutX(rectX - 19);
+            imageCase.setLayoutY(rectY - 19);
+
+            imageCase.setLayoutX(rectX2);
+            imageCase.setLayoutY(rectY2);
+
+        } else if (DonneesGraphiques.sixain.containsKey(caseInt)) {
+            int index1 = Integer.parseInt(caseInt.split("-")[0]);
+            int index2 = Integer.parseInt(caseInt.split("-")[1]);
+            int index3 = Integer.parseInt(caseInt.split("-")[2]);
+            int index4 = Integer.parseInt(caseInt.split("-")[3]);
+            int index5 = Integer.parseInt(caseInt.split("-")[4]);
+            int index6 = Integer.parseInt(caseInt.split("-")[5]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+            Rectangle rectangle4 = rectangleMap.get(index4);
+            Rectangle rectangle5 = rectangleMap.get(index5);
+            Rectangle rectangle6 = rectangleMap.get(index6);
+
+
+            double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX() + rectangle5.getX() + rectangle6.getX()) / 6 + 20;
+            double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY() + rectangle5.getY() + rectangle6.getY()) / 6 - 61.5;
+
+
+            imageCase.setFitWidth(38);
+            imageCase.setFitHeight(38);
+            imageCase.setPreserveRatio(false);
+            imageCase.setLayoutX(centerX - 16);
+            imageCase.setLayoutY(centerY - 14);
+
+        } else {
+            DonneesGraphiques.Coordonnees coordonnees = DonneesGraphiques.cases.get(caseInt).get(0);
+            double startX = coordonnees.getxStart();
+            double startY = coordonnees.getyStart();
+            imageCase.setFitWidth(38);
+            imageCase.setFitHeight(38);
+            imageCase.setPreserveRatio(false);
+            imageCase.setLayoutX(startX - 19);
+            imageCase.setLayoutY(startY - 19);
+        }
+
         table.getChildren().add(imageCase);
     }
 
-
-//    private void placerJetonZero(Polygon p) {
-//        ImagePattern imageCase;
-//        switch (jeu.joueurCourantProperty().get().getMiseTotale()) {
-//            case 1:
-//                imageCase = new ImagePattern(new Image("images/token_1_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            case 5:
-//                imageCase = new ImagePattern(new Image("images/token_5_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            case 25:
-//                imageCase = new ImagePattern(new Image("images/token_25_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            case 100:
-//                imageCase = new ImagePattern(new Image("images/token_100_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            case 500:
-//                imageCase = new ImagePattern(new Image("images/token_500_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            case 1000:
-//                imageCase = new ImagePattern(new Image("images/token_1k_2.png"));
-//                p.setFill(imageCase);
-//                break;
-//            default:
-//                break;
-//        }
-//    }
+    private ArrayList<Integer> creerAPartirDeCaseInt(String caseInt, int nbCases) {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for(int i=0; i<nbCases; i++) {
+            System.out.println(caseInt);
+            if (caseInt.length()>2 && caseInt.charAt(1) == '-') {
+                arrayList.add(Integer.parseInt(String.valueOf(caseInt.charAt(0))));
+                caseInt = caseInt.substring(2);
+            } else {
+                if (caseInt.length()<=2) {
+                        arrayList.add(Integer.parseInt(caseInt));
+                } else {
+                    arrayList.add(Integer.parseInt(caseInt.substring(0, 2)));
+                    caseInt = caseInt.substring(3);
+                }
+            }
+            System.out.println(arrayList);
+        }
+        return arrayList;
+    }
 
 
     private void creerBindingParis(Node n, Text textNode) {
@@ -1347,452 +1603,553 @@ public class CreationTable {
             System.out.println(jeu.getResultatTourActuel().getValeur());
             if (jeu.joueurCourantProperty().get().getMiseActuelle() != 0) {
                 int miseActuelle = jeu.joueurCourantProperty().get().getMiseActuelle();
-                switch (textNode.getText()) {
-                    default:
-                        if (langueChoisie.intValue()==0){
-                            labelInstructions.setText("Paris Incorret");
-                        }
-                        else{
-                            labelInstructions.setText("Bet are Incorrect");
-                        }
-                        break;
-
-                    case "2 pour 1-1":
-                        ArrayList<Integer> nombresGagnants2pour11 = new ArrayList<>(Arrays.asList(1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34));
-                        jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants2pour11, miseActuelle, "2 pour 1-1");
-//                        multimontant(nombresGagnants2pour11);
-                        changerLabelInstructions("2 pour 1-1");
-                        placerJeton("2pour1-1");
-                        break;
-
-                    case "2 pour 1-2":
-                        ArrayList<Integer> nombresGagnants2pour12 = new ArrayList<>(Arrays.asList(2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35));
-                        jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants2pour12, miseActuelle, "2 pour 1-2");
-//                        multimontant(nombresGagnants2pour12);
-                        changerLabelInstructions("2 pour 1-2");
-                        placerJeton("2pour1-2");
-                        break;
-
-                    case "2 pour 1-3":
-                        ArrayList<Integer> nombresGagnants2pour13 = new ArrayList<>(Arrays.asList(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36));
-                        jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants2pour13, miseActuelle, "2 pour 1-3");
-//                        multimontant(nombresGagnants2pour13);
-                        changerLabelInstructions("2 pour 1-3");
-                        placerJeton("2pour1-3");
-                        break;
-
-                    case "1 à 18":
-                        ArrayList<Integer> nombresGagnants1a18 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18));
-                        jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants1a18, miseActuelle, "1 à 18");
-//                        bimontant(nombresGagnants1a18);
-                        changerLabelInstructions("1 à 18");
-                        placerJeton("1 à 18");
-                        break;
-
-                    case "19 à 36":
-                        ArrayList<Integer> nombresGagnants19a36 = new ArrayList<>(Arrays.asList(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36));
-                        jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants19a36, miseActuelle, "19 à 36");
-//                        bimontant(nombresGagnants19a36);
-                        changerLabelInstructions("19 à 36");
-                        placerJeton("19 à 36");
-                        break;
-
-                    case "1-12":
-                        ArrayList<Integer> nombresGagnants1a12 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
-                        jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants1a12, miseActuelle, "1-12");
-                        changerLabelInstructions("1-12");
-//                        multimontant(nombresGagnants1a12);
-                        placerJeton("1-12");
-                        break;
-
-                    case "13-24":
-                        ArrayList<Integer> nombresGagnants13a24 = new ArrayList<>(Arrays.asList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24));
-                        jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants13a24, miseActuelle, "13-24");
-//                        multimontant(nombresGagnants13a24);
-                        changerLabelInstructions("13-24");
-                        placerJeton("13-24");
-                        break;
-
-                    case "25-36":
-                        ArrayList<Integer> nombresGagnants25a36 = new ArrayList<>(Arrays.asList(25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36));
-                        jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants25a36, miseActuelle, "25-36");
-//                        multimontant(nombresGagnants25a36);
-                        changerLabelInstructions("25-36");
-                        placerJeton("25-36");
-                        break;
-
-                    case "IMPAIR":
-                        ArrayList<Integer> impaire = new ArrayList<>();
-                        for (int i = 1; i < 37; i += 2) {
-                            impaire.add(i);
-                        }
-                        jeu.joueurCourantProperty().get().ajouterParis(impaire, miseActuelle, "impair");
-//                        bimontant(impaire);
-                        changerLabelInstructions("IMPAIR");
-                        placerJeton("impair");
-                        break;
-
-                    case "PAIR":
-                        ArrayList<Integer> paire = new ArrayList<>();
-                        for (int i = 0; i < 37; i += 2) {
-                            paire.add(i);
-                        }
-                        jeu.joueurCourantProperty().get().ajouterParis(paire, miseActuelle, "pair");
-//                        bimontant(paire);
-                        changerLabelInstructions("PAIR");
-                        placerJeton("pair");
-                        break;
-
-                    case "rouge":
-                        ArrayList<Integer> rouge = new ArrayList<>();
-                        for (int i = 1; i < 37; i++) {
-                            if (getCouleurPourNumero(i).equals(Color.RED)) {
-                                rouge.add(i);
-                            }
-                        }
-                        jeu.joueurCourantProperty().get().ajouterParis(rouge, miseActuelle, "rouge");
-//                        bimontant(rouge);
-                        changerLabelInstructions("rouge");
-                        placerJeton("rouge");
-                        break;
-
-                    case "noir":
-                        ArrayList<Integer> noir = new ArrayList<>();
-                        for (int i = 1; i < 37; i++) {
-                            if (getCouleurPourNumero(i).equals(Color.BLACK)) {
-                                noir.add(i);
-                            }
-                        }
-                        jeu.joueurCourantProperty().get().ajouterParis(noir, miseActuelle, "noir");
-//                        bimontant(noir);
-                        changerLabelInstructions("noir");
-                        placerJeton("noir");
-                        break;
-
-
-                    case "0":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(0);}}, miseActuelle, "0");
-//                        unimontant(0);
-                        changerLabelInstructions("0");
-                        placerJeton("0");
-                        break;
-
-                    case "1":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(1);}}, miseActuelle, "1");
-//                        unimontant(1);
-                        changerLabelInstructions("1");
-                        placerJeton("1");
-                        break;
-
-                    case "2":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(2);}}, miseActuelle, "2");
-//                        unimontant(2);
-                        changerLabelInstructions("2");
-                        placerJeton("2");
-                        break;
-
-                    case "3":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(3);}}, miseActuelle, "3");
-//                        unimontant(3);
-                        changerLabelInstructions("3");
-                        placerJeton("3");
-                        break;
-
-                    case "4":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(4);}}, miseActuelle, "4");
-//                        unimontant(4);
-                        changerLabelInstructions("4");
-                        placerJeton("4");
-                        break;
-
-                    case "5":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(5);}}, miseActuelle, "5");
-//                        unimontant(5);
-                        changerLabelInstructions("5");
-                        placerJeton("5");
-                        break;
-
-                    case "6":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(6);}}, miseActuelle, "6");
-//                        unimontant(6);
-                        changerLabelInstructions("6");
-                        placerJeton("6");
-                        break;
-
-                    case "7":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(7);}}, miseActuelle, "7");
-//                        unimontant(7);
-                        changerLabelInstructions("7");
-                        placerJeton("7");
-                        break;
-
-                    case "8":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(8);}}, miseActuelle, "8");
-//                        unimontant(8);
-                        changerLabelInstructions("8");
-                        placerJeton("8");
-                        break;
-
-                    case "9":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(9);}}, miseActuelle, "9");
-//                        unimontant(9);
-                        changerLabelInstructions("9");
-                        placerJeton("9");
-                        break;
-
-                    case "10":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(10);}}, miseActuelle, "10");
-//                        unimontant(10);
-                        changerLabelInstructions("10");
-                        placerJeton("10");
-                        break;
-
-                    case "11":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(11);}}, miseActuelle, "11");
-//                        unimontant(11);
-                        changerLabelInstructions("11");
-                        placerJeton("11");
-                        break;
-
-                    case "12":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(12);}}, miseActuelle, "12");
-//                        unimontant(12);
-                        changerLabelInstructions("12");
-                        placerJeton("12");
-                        break;
-
-                    case "13":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(13);}}, miseActuelle, "13");
-//                        unimontant(13);
-                        changerLabelInstructions("13");
-                        placerJeton("13");
-                        break;
-
-                    case "14":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(14);}}, miseActuelle, "14");
-//                        unimontant(14);
-                        changerLabelInstructions("14");
-                        placerJeton("14");
-                        break;
-
-                    case "15":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(15);}}, miseActuelle, "15");
-//                        unimontant(15);
-                        changerLabelInstructions("15");
-                        placerJeton("15");
-                        break;
-
-                    case "16":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(16);}}, miseActuelle, "16");
-//                        unimontant(16);
-                        changerLabelInstructions("16");
-                        placerJeton("16");
-                        break;
-
-                    case "17":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(17);}}, miseActuelle, "17");
-//                        unimontant(17);
-                        changerLabelInstructions("17");
-                        placerJeton("17");
-                        break;
-
-                    case "18":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(18);}}, miseActuelle, "18");
-//                        unimontant(18);
-                        changerLabelInstructions("18");
-                        placerJeton("18");
-                        break;
-
-                    case "19":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(19);}}, miseActuelle, "19");
-//                        unimontant(19);
-                        changerLabelInstructions("19");
-                        placerJeton("19");
-                        break;
-
-                    case "20":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(20);}}, miseActuelle, "20");
-//                        unimontant(20);
-                        changerLabelInstructions("20");
-                        placerJeton("20");
-                        break;
-
-                    case "21":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(21);}}, miseActuelle, "21");
-//                        unimontant(21);
-                        changerLabelInstructions("21");
-                        placerJeton("21");
-                        break;
-
-                    case "22":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(22);}}, miseActuelle, "22");
-//                        unimontant(22);
-                        changerLabelInstructions("22");
-                        placerJeton("22");
-                        break;
-
-                    case "23":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(23);}}, miseActuelle, "23");
-//                        unimontant(23);
-                        changerLabelInstructions("23");
-                        placerJeton("23");
-                        break;
-
-                    case "24":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(24);}}, miseActuelle, "24");
-//                        unimontant(24);
-                        changerLabelInstructions("24");
-                        placerJeton("24");
-                        break;
-
-                    case "25":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(25);}}, miseActuelle, "25");
-//                        unimontant(25);
-                        changerLabelInstructions("25");
-                        placerJeton("25");
-                        break;
-
-                    case "26":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(26);}}, miseActuelle, "26");
-//                        unimontant(26);
-                        changerLabelInstructions("26");
-                        placerJeton("26");
-                        break;
-
-                    case "27":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(27);}}, miseActuelle, "27");
-//                        unimontant(27);
-                        changerLabelInstructions("27");
-                        placerJeton("27");
-                        break;
-
-                    case "28":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(28);}}, miseActuelle, "28");
-//                        unimontant(28);
-                        changerLabelInstructions("28");
-                        placerJeton("28");
-                        break;
-
-                    case "29":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(29);}}, miseActuelle, "29");
-//                        unimontant(29);
-                        changerLabelInstructions("29");
-                        placerJeton("29");
-                        break;
-
-                    case "30":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(30);}}, miseActuelle, "30");
-//                        unimontant(30);
-                        changerLabelInstructions("30");
-                        placerJeton("30");
-                        break;
-
-                    case "31":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(31);}}, miseActuelle, "31");
-//                        unimontant(31);
-                        changerLabelInstructions("31");
-                        placerJeton("31");
-                        break;
-
-                    case "32":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(32);}}, miseActuelle, "32");
-//                        unimontant(32);
-                        changerLabelInstructions("32");
-                        placerJeton("32");
-                        break;
-
-                    case "33":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(33);}}, miseActuelle, "33");
-//                        unimontant(33);
-                        changerLabelInstructions("33");
-                        placerJeton("33");
-                        break;
-
-                    case "34":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(34);}}, miseActuelle, "34");
-//                        unimontant(34);
-                        changerLabelInstructions("34");
-                        placerJeton("34");
-                        break;
-
-                    case "35":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(35);}}, miseActuelle, "35");
-//                        unimontant(35);
-                        changerLabelInstructions("35");
-                        placerJeton("35");
-                        break;
-
-                    case "36":
-                        jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{add(36);}}, miseActuelle, "36");
-//                        unimontant(36);
-                        changerLabelInstructions("36");
-                        placerJeton("36");
-                        break;
-
-                }
-            }
-
-            if (textNode.getText().equals("0")) {
-                vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-                    Polygon polygon = (Polygon) n;
-                    polygon.setFill(Color.GREEN);
-                    polygon.setOpacity(0.7);
-                });
-
-            } else {
-                boolean nombre = false;
-                for (int i = 1; i < 37; i++) {
-                    if (textNode.getText().equals(String.valueOf(i))) {
-                        nombre = true;
-                        break;
-                    }
-                }
-
-                if (nombre) {
-                    vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-                        Rectangle rectangle = (Rectangle) n;
-                        if (getCouleurPourNumero(Integer.parseInt(textNode.getText())).equals(Color.RED)) {
-                            rectangle.setFill(Color.RED);
-                        } else {
-                            rectangle.setFill(Color.BLACK);
-                        }
-                        rectangle.setOpacity(0.7);
-                    });
-                } else if (textNode.getText().equals("noir") || textNode.getText().equals("rouge")) {
-                    double x = START_X + (LARGEUR * 12);
-                    double y = START_Y;
-                    if (textNode.getText().equals("rouge")) {
-                        vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-                            Rectangle rouge = (Rectangle) n;
-                            Rectangle losangeRouge = new Rectangle(x + 10, y + 10, 10, 10);
-                            losangeRouge.getTransforms().add(new Rotate(45, x + 10, y + 15));
-                            losangeRouge.setFill(Color.RED);
-                            losangeRouge.xProperty().bind(rouge.xProperty().add(9.7));
-                            losangeRouge.yProperty().bind(rouge.yProperty().add(1));
-                            losangeRouge.scaleXProperty().bind(rouge.widthProperty().divide(16));
-                            losangeRouge.scaleYProperty().bind(rouge.heightProperty().divide(16));
-                        });
-                    } else {
-                        Rectangle noir = (Rectangle) n;
-                        Rectangle losangeNoir = new Rectangle(x + 10, y + 10, 10, 10);
-                        losangeNoir.getTransforms().add(new Rotate(45, x + 10, y + 15));
-                        losangeNoir.setFill(Color.BLACK);
-                        losangeNoir.xProperty().bind(noir.xProperty().add(9.7));
-                        losangeNoir.yProperty().bind(noir.yProperty().add(1));
-                        losangeNoir.scaleXProperty().bind(noir.widthProperty().divide(16));
-                        losangeNoir.scaleYProperty().bind(noir.heightProperty().divide(16));
-                    }
+                String caseInt = textNode.getText();
+                if (DonneesGraphiques.cheval.containsKey(caseInt)) {
+                    jeu.joueurCourantProperty().get().ajouterParis(creerAPartirDeCaseInt(caseInt, 2), miseActuelle, "cheval "+caseInt);
+                    placerJeton(caseInt);
+                    changerLabelInstructions(caseInt);
+                    System.out.println(caseInt);
+                } else if (DonneesGraphiques.carre.containsKey(caseInt)) {
+                    jeu.joueurCourantProperty().get().ajouterParis(creerAPartirDeCaseInt(caseInt, 4), miseActuelle, "carre "+caseInt);
+                    placerJeton(caseInt);
+                    changerLabelInstructions(caseInt);
+                    System.out.println(caseInt);
+                } else if (DonneesGraphiques.transversale.containsKey(caseInt)) {
+                    jeu.joueurCourantProperty().get().ajouterParis(creerAPartirDeCaseInt(caseInt, 3), miseActuelle, "transversale "+caseInt);
+                    placerJeton(caseInt);
+                    changerLabelInstructions(caseInt);
+                    System.out.println(caseInt);
+                } else if (DonneesGraphiques.sixain.containsKey(caseInt)) {
+                    jeu.joueurCourantProperty().get().ajouterParis(creerAPartirDeCaseInt(caseInt, 6), miseActuelle, "sixain "+caseInt);
+                    placerJeton(caseInt);
+                    changerLabelInstructions(caseInt);
+                    System.out.println(caseInt);
                 } else {
-                    vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-                        Rectangle rectangle = (Rectangle) n;
-                        rectangle.setFill(Color.color(0.12156862745098039, 0.12156862745098039, 0.11764705882352941, 0.4));
-                        rectangle.setOpacity(0.7);
-                    });
-                }
-            }
+                    switch (textNode.getText()) {
+                        default:
+                            if (langueChoisie.intValue() == 0) {
+                                labelInstructions.setText("Paris Incorrect");
+                            } else {
+                                labelInstructions.setText("Bet are Incorrect");
+                            }
+                            break;
 
-            jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());
-            jeu.joueurCourantProperty().get().setMiseActuelle(0);
+                        case "2 pour 1-1":
+                            ArrayList<Integer> nombresGagnants2pour11 = new ArrayList<>(Arrays.asList(1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34));
+                            jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants2pour11, miseActuelle, "2 pour 1-1");
+//                        multimontant(nombresGagnants2pour11);
+                            changerLabelInstructions("2 pour 1-1");
+                            placerJeton("2pour1-1");
+                            break;
+
+                        case "2 pour 1-2":
+                            ArrayList<Integer> nombresGagnants2pour12 = new ArrayList<>(Arrays.asList(2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35));
+                            jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants2pour12, miseActuelle, "2 pour 1-2");
+//                        multimontant(nombresGagnants2pour12);
+                            changerLabelInstructions("2 pour 1-2");
+                            placerJeton("2pour1-2");
+                            break;
+
+                        case "2 pour 1-3":
+                            ArrayList<Integer> nombresGagnants2pour13 = new ArrayList<>(Arrays.asList(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36));
+                            jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants2pour13, miseActuelle, "2 pour 1-3");
+//                        multimontant(nombresGagnants2pour13);
+                            changerLabelInstructions("2 pour 1-3");
+                            placerJeton("2pour1-3");
+                            break;
+
+                        case "1 à 18":
+                            ArrayList<Integer> nombresGagnants1a18 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18));
+                            jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants1a18, miseActuelle, "1 à 18");
+//                        bimontant(nombresGagnants1a18);
+                            changerLabelInstructions("1 à 18");
+                            placerJeton("1 à 18");
+                            break;
+
+                        case "19 à 36":
+                            ArrayList<Integer> nombresGagnants19a36 = new ArrayList<>(Arrays.asList(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36));
+                            jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants19a36, miseActuelle, "19 à 36");
+//                        bimontant(nombresGagnants19a36);
+                            changerLabelInstructions("19 à 36");
+                            placerJeton("19 à 36");
+                            break;
+
+                        case "1-12":
+                            ArrayList<Integer> nombresGagnants1a12 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
+                            jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants1a12, miseActuelle, "1-12");
+                            changerLabelInstructions("1-12");
+//                        multimontant(nombresGagnants1a12);
+                            placerJeton("1-12");
+                            break;
+
+                        case "13-24":
+                            ArrayList<Integer> nombresGagnants13a24 = new ArrayList<>(Arrays.asList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24));
+                            jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants13a24, miseActuelle, "13-24");
+//                        multimontant(nombresGagnants13a24);
+                            changerLabelInstructions("13-24");
+                            placerJeton("13-24");
+                            break;
+
+                        case "25-36":
+                            ArrayList<Integer> nombresGagnants25a36 = new ArrayList<>(Arrays.asList(25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36));
+                            jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants25a36, miseActuelle, "25-36");
+//                        multimontant(nombresGagnants25a36);
+                            changerLabelInstructions("25-36");
+                            placerJeton("25-36");
+                            break;
+
+                        case "IMPAIR":
+                            ArrayList<Integer> impaire = new ArrayList<>();
+                            for (int i = 1; i < 37; i += 2) {
+                                impaire.add(i);
+                            }
+                            jeu.joueurCourantProperty().get().ajouterParis(impaire, miseActuelle, "impair");
+//                        bimontant(impaire);
+                            changerLabelInstructions("IMPAIR");
+                            placerJeton("impair");
+                            break;
+
+                        case "PAIR":
+                            ArrayList<Integer> paire = new ArrayList<>();
+                            for (int i = 0; i < 37; i += 2) {
+                                paire.add(i);
+                            }
+                            jeu.joueurCourantProperty().get().ajouterParis(paire, miseActuelle, "pair");
+//                        bimontant(paire);
+                            changerLabelInstructions("PAIR");
+                            placerJeton("pair");
+                            break;
+
+                        case "rouge":
+                            ArrayList<Integer> rouge = new ArrayList<>();
+                            for (int i = 1; i < 37; i++) {
+                                if (getCouleurPourNumero(i).equals(Color.RED)) {
+                                    rouge.add(i);
+                                }
+                            }
+                            jeu.joueurCourantProperty().get().ajouterParis(rouge, miseActuelle, "rouge");
+//                        bimontant(rouge);
+                            changerLabelInstructions("rouge");
+                            placerJeton("rouge");
+                            break;
+
+                        case "noir":
+                            ArrayList<Integer> noir = new ArrayList<>();
+                            for (int i = 1; i < 37; i++) {
+                                if (getCouleurPourNumero(i).equals(Color.BLACK)) {
+                                    noir.add(i);
+                                }
+                            }
+                            jeu.joueurCourantProperty().get().ajouterParis(noir, miseActuelle, "noir");
+//                        bimontant(noir);
+                            changerLabelInstructions("noir");
+                            placerJeton("noir");
+                            break;
+
+
+                        case "0":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(0);
+                            }}, miseActuelle, "0");
+//                        unimontant(0);
+                            changerLabelInstructions("0");
+                            placerJeton("0");
+                            break;
+
+                        case "1":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(1);
+                            }}, miseActuelle, "1");
+//                        unimontant(1);
+                            changerLabelInstructions("1");
+                            placerJeton("1");
+                            break;
+
+                        case "2":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(2);
+                            }}, miseActuelle, "2");
+//                        unimontant(2);
+                            changerLabelInstructions("2");
+                            placerJeton("2");
+                            break;
+
+                        case "3":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(3);
+                            }}, miseActuelle, "3");
+//                        unimontant(3);
+                            changerLabelInstructions("3");
+                            placerJeton("3");
+                            break;
+
+                        case "4":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(4);
+                            }}, miseActuelle, "4");
+//                        unimontant(4);
+                            changerLabelInstructions("4");
+                            placerJeton("4");
+                            break;
+
+                        case "5":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(5);
+                            }}, miseActuelle, "5");
+//                        unimontant(5);
+                            changerLabelInstructions("5");
+                            placerJeton("5");
+                            break;
+
+                        case "6":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(6);
+                            }}, miseActuelle, "6");
+//                        unimontant(6);
+                            changerLabelInstructions("6");
+                            placerJeton("6");
+                            break;
+
+                        case "7":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(7);
+                            }}, miseActuelle, "7");
+//                        unimontant(7);
+                            changerLabelInstructions("7");
+                            placerJeton("7");
+                            break;
+
+                        case "8":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(8);
+                            }}, miseActuelle, "8");
+//                        unimontant(8);
+                            changerLabelInstructions("8");
+                            placerJeton("8");
+                            break;
+
+                        case "9":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(9);
+                            }}, miseActuelle, "9");
+//                        unimontant(9);
+                            changerLabelInstructions("9");
+                            placerJeton("9");
+                            break;
+
+                        case "10":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(10);
+                            }}, miseActuelle, "10");
+//                        unimontant(10);
+                            changerLabelInstructions("10");
+                            placerJeton("10");
+                            break;
+
+                        case "11":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(11);
+                            }}, miseActuelle, "11");
+//                        unimontant(11);
+                            changerLabelInstructions("11");
+                            placerJeton("11");
+                            break;
+
+                        case "12":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(12);
+                            }}, miseActuelle, "12");
+//                        unimontant(12);
+                            changerLabelInstructions("12");
+                            placerJeton("12");
+                            break;
+
+                        case "13":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(13);
+                            }}, miseActuelle, "13");
+//                        unimontant(13);
+                            changerLabelInstructions("13");
+                            placerJeton("13");
+                            break;
+
+                        case "14":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(14);
+                            }}, miseActuelle, "14");
+//                        unimontant(14);
+                            changerLabelInstructions("14");
+                            placerJeton("14");
+                            break;
+
+                        case "15":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(15);
+                            }}, miseActuelle, "15");
+//                        unimontant(15);
+                            changerLabelInstructions("15");
+                            placerJeton("15");
+                            break;
+
+                        case "16":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(16);
+                            }}, miseActuelle, "16");
+//                        unimontant(16);
+                            changerLabelInstructions("16");
+                            placerJeton("16");
+                            break;
+
+                        case "17":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(17);
+                            }}, miseActuelle, "17");
+//                        unimontant(17);
+                            changerLabelInstructions("17");
+                            placerJeton("17");
+                            break;
+
+                        case "18":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(18);
+                            }}, miseActuelle, "18");
+//                        unimontant(18);
+                            changerLabelInstructions("18");
+                            placerJeton("18");
+                            break;
+
+                        case "19":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(19);
+                            }}, miseActuelle, "19");
+//                        unimontant(19);
+                            changerLabelInstructions("19");
+                            placerJeton("19");
+                            break;
+
+                        case "20":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(20);
+                            }}, miseActuelle, "20");
+//                        unimontant(20);
+                            changerLabelInstructions("20");
+                            placerJeton("20");
+                            break;
+
+                        case "21":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(21);
+                            }}, miseActuelle, "21");
+//                        unimontant(21);
+                            changerLabelInstructions("21");
+                            placerJeton("21");
+                            break;
+
+                        case "22":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(22);
+                            }}, miseActuelle, "22");
+//                        unimontant(22);
+                            changerLabelInstructions("22");
+                            placerJeton("22");
+                            break;
+
+                        case "23":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(23);
+                            }}, miseActuelle, "23");
+//                        unimontant(23);
+                            changerLabelInstructions("23");
+                            placerJeton("23");
+                            break;
+
+                        case "24":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(24);
+                            }}, miseActuelle, "24");
+//                        unimontant(24);
+                            changerLabelInstructions("24");
+                            placerJeton("24");
+                            break;
+
+                        case "25":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(25);
+                            }}, miseActuelle, "25");
+//                        unimontant(25);
+                            changerLabelInstructions("25");
+                            placerJeton("25");
+                            break;
+
+                        case "26":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(26);
+                            }}, miseActuelle, "26");
+//                        unimontant(26);
+                            changerLabelInstructions("26");
+                            placerJeton("26");
+                            break;
+
+                        case "27":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(27);
+                            }}, miseActuelle, "27");
+//                        unimontant(27);
+                            changerLabelInstructions("27");
+                            placerJeton("27");
+                            break;
+
+                        case "28":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(28);
+                            }}, miseActuelle, "28");
+//                        unimontant(28);
+                            changerLabelInstructions("28");
+                            placerJeton("28");
+                            break;
+
+                        case "29":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(29);
+                            }}, miseActuelle, "29");
+//                        unimontant(29);
+                            changerLabelInstructions("29");
+                            placerJeton("29");
+                            break;
+
+                        case "30":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(30);
+                            }}, miseActuelle, "30");
+//                        unimontant(30);
+                            changerLabelInstructions("30");
+                            placerJeton("30");
+                            break;
+
+                        case "31":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(31);
+                            }}, miseActuelle, "31");
+//                        unimontant(31);
+                            changerLabelInstructions("31");
+                            placerJeton("31");
+                            break;
+
+                        case "32":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(32);
+                            }}, miseActuelle, "32");
+//                        unimontant(32);
+                            changerLabelInstructions("32");
+                            placerJeton("32");
+                            break;
+
+                        case "33":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(33);
+                            }}, miseActuelle, "33");
+//                        unimontant(33);
+                            changerLabelInstructions("33");
+                            placerJeton("33");
+                            break;
+
+                        case "34":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(34);
+                            }}, miseActuelle, "34");
+//                        unimontant(34);
+                            changerLabelInstructions("34");
+                            placerJeton("34");
+                            break;
+
+                        case "35":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(35);
+                            }}, miseActuelle, "35");
+//                        unimontant(35);
+                            changerLabelInstructions("35");
+                            placerJeton("35");
+                            break;
+
+                        case "36":
+                            jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
+                                add(36);
+                            }}, miseActuelle, "36");
+//                        unimontant(36);
+                            changerLabelInstructions("36");
+                            placerJeton("36");
+                            break;
+
+                    }
+                }
+
+                if (textNode.getText().equals("0")) {
+                    vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
+                        Polygon polygon = (Polygon) n;
+                        polygon.setFill(Color.GREEN);
+                        polygon.setOpacity(0.7);
+                    });
+
+                } else {
+                    boolean nombre = false;
+                    for (int i = 1; i < 37; i++) {
+                        if (textNode.getText().equals(String.valueOf(i))) {
+                            nombre = true;
+                            break;
+                        }
+                    }
+
+                    if (nombre) {
+                        vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
+                            Rectangle rectangle = (Rectangle) n;
+                            if (getCouleurPourNumero(Integer.parseInt(textNode.getText())).equals(Color.RED)) {
+                                rectangle.setFill(Color.RED);
+                            } else {
+                                rectangle.setFill(Color.BLACK);
+                            }
+                            rectangle.setOpacity(0.7);
+                        });
+                    } else if (textNode.getText().equals("noir") || textNode.getText().equals("rouge")) {
+                        double x = START_X + (LARGEUR * 12);
+                        double y = START_Y;
+                        if (textNode.getText().equals("rouge")) {
+                            vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
+                                Rectangle rouge = (Rectangle) n;
+                                Rectangle losangeRouge = new Rectangle(x + 10, y + 10, 10, 10);
+                                losangeRouge.getTransforms().add(new Rotate(45, x + 10, y + 15));
+                                losangeRouge.setFill(Color.RED);
+                                losangeRouge.xProperty().bind(rouge.xProperty().add(9.7));
+                                losangeRouge.yProperty().bind(rouge.yProperty().add(1));
+                                losangeRouge.scaleXProperty().bind(rouge.widthProperty().divide(16));
+                                losangeRouge.scaleYProperty().bind(rouge.heightProperty().divide(16));
+                            });
+                        } else {
+                            Rectangle noir = (Rectangle) n;
+                            Rectangle losangeNoir = new Rectangle(x + 10, y + 10, 10, 10);
+                            losangeNoir.getTransforms().add(new Rotate(45, x + 10, y + 15));
+                            losangeNoir.setFill(Color.BLACK);
+                            losangeNoir.xProperty().bind(noir.xProperty().add(9.7));
+                            losangeNoir.yProperty().bind(noir.yProperty().add(1));
+                            losangeNoir.scaleXProperty().bind(noir.widthProperty().divide(16));
+                            losangeNoir.scaleYProperty().bind(noir.heightProperty().divide(16));
+                        }
+                    } else {
+                        vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
+                            if (n instanceof Circle c) {
+                                c.setFill(Color.TRANSPARENT);
+                                c.setOpacity(1.0);
+
+                            } else if (n instanceof Rectangle rectangle) {
+                                rectangle.setFill(Color.TRANSPARENT);
+                                rectangle.setOpacity(1.0);
+                            }
+                        });
+                    }
+                }
+
+                jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());
+                jeu.joueurCourantProperty().get().setMiseActuelle(0);
+            }
         };
         n.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, parisJoueur);
     }
