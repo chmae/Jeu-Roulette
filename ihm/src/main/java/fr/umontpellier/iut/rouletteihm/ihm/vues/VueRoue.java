@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Vue associée à la roulette.
+ */
 public class VueRoue {
     private Group Roue = new Group();
 
@@ -48,6 +51,9 @@ public class VueRoue {
     private GestionMusique musique = new GestionMusique();
 
 
+    /**
+     * Constructeur
+     */
     public VueRoue() {
         drawDecorationBottom();
         drawSegments();

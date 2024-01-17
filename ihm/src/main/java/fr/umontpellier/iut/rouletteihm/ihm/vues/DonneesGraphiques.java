@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Classe contenant les données graphiques du jeu de la roulette (plateau, cases, etc.)
+ */
 public class DonneesGraphiques {
+
 
     public final static Map<String, ArrayList<Coordonnees>> cheval;
     public final static Map<String, ArrayList<Coordonnees>> carre;
@@ -13,6 +17,7 @@ public class DonneesGraphiques {
     public final static Map<String, ArrayList<Coordonnees>> sixain;
     public final static Map<String, ArrayList<Coordonnees>> cases;
 
+    //Coordonnées des cases
     static {
         cheval = new LinkedHashMap<>();
 
@@ -570,6 +575,8 @@ public class DonneesGraphiques {
             this.yEnd = yEnd;
         }
 
+
+        //--------------------GETTERS--------------------
         public double getxStart() {
             return xStart;
         }
