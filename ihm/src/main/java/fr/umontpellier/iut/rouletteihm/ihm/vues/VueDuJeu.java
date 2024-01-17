@@ -29,6 +29,11 @@ import java.util.List;
 
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.StatistiquesRoulette;
 
+/**
+ * Classe VueDuJeu qui permet de créer la vue du jeu avec toutes les autres vues (VuePlateau, VueBet, VueJoueurCourant, VueAutresJoueurs, VueDroite, VueGauche, VuePlayerInfo)
+ * Elle permet aussi de créer les bindings entre les différentes vues
+ * Elle permet aussi de créer les actions des boutons
+ */
 public class VueDuJeu extends GridPane {
     private IJeu jeu;
     private VuePlateau plateau;
@@ -43,18 +48,14 @@ public class VueDuJeu extends GridPane {
     private Label labelInstructions;
 //    private ArrayList<ArrayList<Integer>> listesParis = new ArrayList<>(new ArrayList<>());
     private static VueDuJeu instance;
-//    private ArrayList<Integer> multiplicateursGain;
-//    private ArrayList<Integer> montantsParis;
-    private Boule boule = new Boule();
     private VueRoue vueRoue = new VueRoue();
     private StatistiquesRoulette statistiquesRoulette = new StatistiquesRoulette();
-
-    private RouletteIHM rouletteIHM;
     private StringProperty valeurGagneeProperty = new SimpleStringProperty("0");
     private IntegerProperty langue;
     private VueInscription vueInscription = new VueInscription();
     private List<Joueur> joueurs;
     private int numeroJoueurJouant = 0;
+    private Stage primaryStage = RouletteIHM.getPrimaryStage();
 
     public VueDuJeu(IJeu jeu, List<Joueur> joueurs) {
         this.jeu = jeu;
@@ -75,7 +76,7 @@ public class VueDuJeu extends GridPane {
         vueDroite = new VueDroite(jeu);
         vueGauche = new VueGauche(jeu);
         vuePlayerInfo = new VuePlayerInfo(jeu);
-        joueurCourantvue = new VueJoueurCourant(jeu, labelInstructions, vueInscription, autresJoueurs.getLangueChoisie());
+        joueurCourantvue = new VueJoueurCourant(jeu, labelInstructions, autresJoueurs.getLangueChoisie());
         elementsGauche = new HBox(10, vueGauche, autresJoueurs);
 
         add(vueRoue.getRoue(), 1, 1);
@@ -92,7 +93,7 @@ public class VueDuJeu extends GridPane {
         setValignment(joueurCourantvue, VPos.BOTTOM);
         joueurCourantvue.translateXProperty().bind(plateau.translateXProperty().add(plateau.getWidth() / 2).add(875));
         joueurCourantvue.translateYProperty().bind(plateau.translateYProperty().add(plateau.getHeight() / 2).add(-45));
-        vueRoue.getRoue().translateXProperty().bind(plateau.translateXProperty().add(plateau.getWidth() / 2).add(30));
+        vueRoue.getRoue().translateXProperty().bind(plateau.translateXProperty().add(plateau.getWidth() / 2).add(60));
         vueRoue.getRoue().translateYProperty().bind(plateau.translateYProperty().add(plateau.getHeight() / 2).add(0));
         vueBet.setTranslateY(-15);
 
@@ -154,7 +155,7 @@ public class VueDuJeu extends GridPane {
                 numeroJoueurJouant = 0;
             }
             jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
-
+            gererAnimation();
         });
 
         joueurCourantvue.getPasser1().setOnMouseClicked(mouseEvent -> {
@@ -208,13 +209,32 @@ public class VueDuJeu extends GridPane {
 
             }
             jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
+            gererAnimation();
         });
     }
+    private void gererAnimation() {
+        vueRoue.animation(jeu.getResultatTourActuel().getNombres());
 
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
+
+        statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
+        statistiquesRoulette.afficherStatistique();
+
+        pauseTransition.setOnFinished(event -> {
+            vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
+            vueDroite.afficherStats();
+            vueDroite.setStatistiquesRoulette(statistiquesRoulette);
+            jeu.tournerTour();
+        });
+        pauseTransition.play();
+    }
+
+    // Méthode qui permet de retourner la vue du plateau
     public CreationTable getTable() {
         return table;
     }
 
+    // Méthode qui permet de créer les bindings entre les différentes vues
     public void creerBindings() {
         plateau.prefWidthProperty().bind(widthProperty());
         plateau.prefHeightProperty().bind(heightProperty());
@@ -225,6 +245,8 @@ public class VueDuJeu extends GridPane {
         elementsGauche.prefWidthProperty().bind(widthProperty());
         elementsGauche.prefHeightProperty().bind(heightProperty());
         vueDroite.prefHeightProperty().bind(heightProperty());
+
+
 
         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue && numeroJoueurJouant==joueurs.size()-1) {
@@ -261,7 +283,7 @@ public class VueDuJeu extends GridPane {
                         } else if (jeu.getResultatTourActuel().getCouleur().equals("Rouge")) {
                             labelInstructions.setText("The Red " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
                         } else {
-                            labelInstructions.setText("The Green " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                            labelInstructions.setText("The Green " + jeu.getResultatTourActuel().getValeur() + " was selected !");
                         }
                     }
                     for (Joueur j : joueurs) {
@@ -317,8 +339,8 @@ public class VueDuJeu extends GridPane {
     }
 
 
-    Stage primaryStage = RouletteIHM.getPrimaryStage();
 
+    //Méthode qui permet d'afficher la popup de victoire
     public void whenWin() {
         System.out.println(jeu.joueurCourantProperty().get().getListeMontantsParis().toString());
         System.out.println(jeu.joueurCourantProperty().get().getListeMultiplicateursParis().toString());
@@ -333,10 +355,9 @@ public class VueDuJeu extends GridPane {
         vueWin.afficher();
 
 
-        Duration pauseDuration = Duration.seconds(10);
+        Duration pauseDuration = Duration.seconds(5);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> vueWin.getStage().close()));
         timeline.play();
-
     }
 
    /* private int calculPerteWin() {
@@ -344,6 +365,7 @@ public class VueDuJeu extends GridPane {
     }*/
 
 
+    //Méthode qui permet d'afficher la popup de défaite
     private void whenLose() {
 //        jeu.joueurCourantProperty().get().miseAJourBanque(-jeu.joueurCourantProperty().get().getMiseTotale());
 //        labelInstructions.setText("Perdu !");
@@ -351,11 +373,12 @@ public class VueDuJeu extends GridPane {
         VueLoose vueLoose = new VueLoose(primaryStage);
         vueLoose.afficher();
 
-        Duration pauseDuration = Duration.seconds(10);
+        Duration pauseDuration = Duration.seconds(3);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> vueLoose.getStage().close()));
         timeline.play();
     }
 
+    // Méthode qui permet de retourner l'instance de la classe
     public static VueDuJeu getInstance() {
         return instance;
     }
@@ -363,7 +386,6 @@ public class VueDuJeu extends GridPane {
     public void resetPartie() {
         jeu.tournerTour();
     }
-
 
     public IJeu getJeu() {
         return jeu;

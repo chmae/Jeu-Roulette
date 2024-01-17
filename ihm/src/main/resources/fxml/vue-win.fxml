@@ -1,42 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane id="win" fx:id="win" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="283.0" prefWidth="606.0" style="-fx-background-radius: 30;"
-      xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<Pane id="win" fx:id="win" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="606.0" style="-fx-background-radius: 30;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ImageView fitHeight="418.0" fitWidth="762.0" layoutX="-85.0" layoutY="-73.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="418.0" fitWidth="762.0" layoutX="-85.0" layoutY="-73.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../images/megaWin.gif"/>
+                <Image url="@../images/megaWin.gif" />
             </image>
         </ImageView>
         <Label layoutX="20.0" layoutY="195.0" text="Vous avez Gagnez :" textFill="#f0f8d5">
             <font>
-                <Font name="Chalkduster" size="30.0"/>
+                <Font name="Chalkduster" size="30.0" />
             </font>
         </Label>
         <Label fx:id="gainJeton" layoutX="389.0" layoutY="196.0" text="200" textFill="#f0f8d5">
             <font>
-                <Font name="Chalkduster" size="30.0"/>
+                <Font name="Chalkduster" size="30.0" />
             </font>
         </Label>
         <Label layoutX="462.0" layoutY="193.0" text="Jetons !" textFill="#f0f8d5" translateX="12.0">
             <font>
-                <Font name="Chalkduster" size="30.0"/>
+                <Font name="Chalkduster" size="30.0" />
             </font>
         </Label>
-        <Button fx:id="rejouer" layoutX="269.0" layoutY="246.0" mnemonicParsing="false" prefHeight="26.0"
-                prefWidth="105.0"
-                style="-fx-animated: true; -fx-background-color: #f0f8d5; -fx-background-radius: 30; -fx-border-color: #f0f8d5; -fx-border-radius: 30; -fx-border-width: 2; -fx-font-size: 13; -fx-text-fill: #000000; -fx-font-family: Chalkduster; -fx-font-weight: bold; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
-                text="Rejouer" textFill="#000000">
-            <font>
-                <Font name="Chalkduster" size="13.0"/>
-            </font>
-        </Button>
     </children>
 </Pane>

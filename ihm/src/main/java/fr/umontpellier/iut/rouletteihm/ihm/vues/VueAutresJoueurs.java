@@ -1,5 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
+import fr.umontpellier.iut.rouletteihm.RouletteIHM;
+import fr.umontpellier.iut.rouletteihm.application.controller.client.ControllerClient;
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
@@ -24,6 +26,9 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Vue correspondant à la fenêtre affichant les autres joueurs
+ */
 public class VueAutresJoueurs extends Pane {
 
     private IJeu jeu;
@@ -60,6 +65,14 @@ public class VueAutresJoueurs extends Pane {
     private ImageView lampe1;
     @FXML
     private ImageView lampe2;
+    @FXML
+    private Pane vueAutresJoueurs;
+    private static VueAutresJoueurs instance;
+
+    @FXML
+    private ImageView buttonQuit;
+
+    private static boolean boutonQuitterClicked = false;
 
     private List<Joueur> joueurs;
 
@@ -72,7 +85,7 @@ public class VueAutresJoueurs extends Pane {
             ImageView topBackground = (ImageView) root.lookup("#topBackground");
             ImageView CornerBackground = (ImageView) root.lookup("#CornerBackground");
             ImageView CornerQuit = (ImageView) root.lookup("#CornerQuit");
-            ImageView buttonQuit = (ImageView) root.lookup("#buttonQuit");
+            buttonQuit = (ImageView) root.lookup("#buttonQuit");
             ImageView parametre = (ImageView) root.lookup("#parametre");
             HBox autresJoueur = (HBox) root.lookup("#autresJoueur");
             ImageView lampe1 = (ImageView) root.lookup("#lampe1");
@@ -115,19 +128,20 @@ public class VueAutresJoueurs extends Pane {
             musiqueCasino.mettreLaMusiqueEnBoucle(true);
             musiqueCasino.lireMusiqueProgressivement(musiqueCasino.getVolume());
 
-            buttonQuit.setOnMouseClicked(event -> {
-                sonsBoutonParametre.lireMusique();
-                sonsBoutonParametre.remettreMusiqueAuDebut();
-                musiqueCasino.arreterMusique();
-                musiqueCasino.remettreMusiqueAuDebut();
+            if (ControllerClient.isUtilisateurConnecte()) {
+                buttonQuit.setDisable(true);
+            }
 
-                Stage stage = (Stage) buttonQuit.getScene().getWindow();
-                stage.close();
-                if (vueAccueil.getScene() == null) {
-                    primaryStage.setScene(new Scene(vueAccueil, 599, 390));
+            buttonQuit.setOnMouseClicked(event -> {
+                if (!ControllerClient.isUtilisateurConnecte()) {
+                    boutonQuitterClicked = true;
+                    sonsBoutonParametre.lireMusique();
+                    sonsBoutonParametre.remettreMusiqueAuDebut();
+                    musiqueCasino.arreterMusique();
+                    musiqueCasino.remettreMusiqueAuDebut();
+                    fermerFenetresEtLireMusiqueAccueil();
+                    vueAccueil.ouvrirFenetre();
                 }
-                primaryStage.setTitle("Accueil");
-                primaryStage.show();
             });
 
 
@@ -233,6 +247,37 @@ public class VueAutresJoueurs extends Pane {
         t.start();
     }
 
+    public void fermerVueAccueil() {
+        vueAccueil = RouletteIHM.getInstance().getVueAccueil();
+        if (vueAccueil != null) {
+            vueAccueil.fermerFenetre();
+            vueAccueil.getMusique().arreterMusique();
+        } else {
+            System.err.println("Erreur : VueAccueil est null");
+        }
+    }
+
+    public static boolean isBoutonQuitterClicked() {
+        return boutonQuitterClicked;
+    }
+
+    public void fermerFenetresEtLireMusiqueAccueil() {
+        Stage stageP = (Stage) vueAutresJoueurs.getScene().getWindow();
+        Stage stage = RouletteIHM.getPrimaryStage();
+
+        if (stage.isShowing() && stageP.isShowing()) {
+            stage.close();
+            stageP.close();
+            getMusiqueCasino().arreterMusique();
+            fermerVueAccueil();
+        }
+    }
+
+
+    public static VueAutresJoueurs getInstance() {
+        return instance;
+    }
+
     private void HoverImage(ImageView imageView) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), imageView);
         scaleTransition.setFromX(1.0);
@@ -300,4 +345,7 @@ public class VueAutresJoueurs extends Pane {
         });
     }
 
+    public GestionMusique getMusiqueCasino() {
+        return musiqueCasino;
+    }
 }

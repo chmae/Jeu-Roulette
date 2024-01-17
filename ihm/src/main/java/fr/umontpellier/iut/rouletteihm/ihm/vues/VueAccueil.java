@@ -1,5 +1,7 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
+import fr.umontpellier.iut.rouletteihm.RouletteIHM;
+import fr.umontpellier.iut.rouletteihm.application.controller.client.ControllerClient;
 import fr.umontpellier.iut.rouletteihm.ihm.IJoueur;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import javafx.application.Platform;
@@ -9,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -16,7 +19,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
+/**
+ * Classe VueAccueil qui permet d'afficher la vue d'accueil
+ * Cette classe est un Pane qui contient un Pane, un Label, deux ImageView et un Button qui permettent de naviguer entre les différentes vues
+ * Cette classe permet aussi de lancer la musique d'accueil
+ */
 public class VueAccueil extends Pane {
     private IJoueur joueur;
     @FXML
@@ -44,9 +51,15 @@ public class VueAccueil extends Pane {
 
     private VueChoixJoueurs vueChoixJoueurs;
     private GestionMusique musique = new GestionMusique();
-    private  VueRules vueRules;
+    private VueRules vueRules;
 
 
+    /**
+     * Constructeur de la classe VueAccueil
+     * Ce constructeur permet de charger le fichier FXML de la vue d'accueil
+     * Ce constructeur permet aussi de configurer les boutons de la vue d'accueil
+     * Ce constructeur permet aussi de lancer la musique d'accueil
+     */
     public VueAccueil() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueAccueil.fxml"));
@@ -63,10 +76,9 @@ public class VueAccueil extends Pane {
             vueRules = new VueRules();
             getChildren().add(root);
 
+
             // --Code de sauvegarde de la musique d'aceuil-- //
-            String cheminAudioGolde = "ihm/src/main/resources/musique/sonsVueAccueil.mp3";
-            musique.setMusique(cheminAudioGolde);
-            musique.setVolume(0.05);
+            configurerMusiqueAccueil();
 
             info.setOnMouseEntered(event -> info.setOpacity(0.7));
             info.setOnMouseExited(event -> info.setOpacity(1.0));
@@ -90,6 +102,12 @@ public class VueAccueil extends Pane {
 
     }
 
+    public void configurerMusiqueAccueil() {
+        String cheminAudioGolde = "ihm/src/main/resources/musique/sonsVueAccueil.mp3";
+        musique.setMusique(cheminAudioGolde);
+        musique.setVolume(0.05);
+    }
+
     public Label getConnexion() {
         return connexion;
     }
@@ -106,11 +124,18 @@ public class VueAccueil extends Pane {
         popupStage.setResizable(false);
         popupStage.initOwner(getScene().getWindow());
         popupStage.initModality(Modality.APPLICATION_MODAL);
+
         Scene scene = new Scene(vueConnexion, getScene().getWidth(), getScene().getHeight());
+
         popupStage.setScene(scene);
         popupStage.setTitle("Connexion");
         popupStage.showAndWait();
+
+        if (VueAutresJoueurs.isBoutonQuitterClicked()) {
+            VueAutresJoueurs.getInstance().fermerVueAccueil();
+        }
     }
+
 
     public void afficherRulesPopUp() {
         vueRules = new VueRules();
@@ -119,11 +144,20 @@ public class VueAccueil extends Pane {
         popupStage.setResizable(false);
         popupStage.initOwner(getScene().getWindow());
         popupStage.initModality(Modality.APPLICATION_MODAL);
-        Scene scene = new Scene(vueRules, getScene().getWidth(), getScene().getHeight());
+
+        Image backgroundImage = new Image("/images/background-rules.jpg");
+        ImageView backgroundImageView = new ImageView(backgroundImage);
+        backgroundImageView.setFitWidth(getScene().getWidth());
+        backgroundImageView.setFitHeight(getScene().getHeight());
+
+        Pane popupContent = new Pane(backgroundImageView, vueRules);
+
+        Scene scene = new Scene(popupContent, getScene().getWidth(), getScene().getHeight());
         popupStage.setScene(scene);
-        popupStage.setWidth(250);
-        popupStage.setHeight(465);
+        popupStage.setWidth(600);
+        popupStage.setHeight(350);
         popupStage.setTitle("Règles du jeu");
+
         popupStage.show();
     }
 
@@ -161,6 +195,8 @@ public class VueAccueil extends Pane {
         popupStage.show();
     }
 
+
+    // --Getters-- //
     public GestionMusique getMusique() {
         return musique;
     }
@@ -184,6 +220,9 @@ public class VueAccueil extends Pane {
         } else {
             System.err.println("Erreur : la scène est nulle, impossible de fermer la fenêtre.");
         }
+    }
+    public void ouvrirFenetre() {
+        RouletteIHM.getInstance().fonctionnaliteAccueil();
     }
 
     public ImageView getInfo() {

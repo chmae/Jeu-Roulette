@@ -16,10 +16,16 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe principale de l'application.
+ * <p>
+ * Cette classe gère les différentes vues de l'application.
+ * <p>
+ * Elle gère également la communication entre les vues et le modèle.
+ */
 
 public class RouletteIHM extends Application {
 
@@ -41,6 +47,13 @@ public class RouletteIHM extends Application {
     private BooleanProperty validationChoixJoueurs;
 
 
+    /**
+     * Méthode appelée au démarrage de l'application.
+     * <p>
+     * Cette méthode initialise la fenêtre principale de l'application.
+     *
+     * @param primaryStage la fenêtre principale de l'application
+     */
     @Override
     public void start(Stage primaryStage) {
         instance = this;
@@ -53,6 +66,7 @@ public class RouletteIHM extends Application {
 
     }
 
+    //methode pour lancer l'accueil avec les boutons
     public void fonctionnaliteAccueil() {
         if (avecAccueil) {
             vueAccueil = new VueAccueil();
@@ -116,7 +130,17 @@ public class RouletteIHM extends Application {
         });
     }
 
+    /**
+     * Méthode appelée pour démarrer une partie.
+     * <p>
+     * Cette méthode initialise la roulette et le joueur courant.
+     * Elle crée la vue du jeu et l'affiche dans la fenêtre principale.
+     *
+     * @param nomJoueur le nom du joueur
+     * @param solde     le solde du joueur
+     */
     public void demarrerPartie() {
+
         roulette = new Roulette();
         jeu = roulette;
 
@@ -138,7 +162,6 @@ public class RouletteIHM extends Application {
         table.getTable().setTranslateX(100);
 
         vueDuJeu.creerBindings();
-//        roulette.run(joueur);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("BigRoulette");
@@ -182,6 +205,8 @@ public class RouletteIHM extends Application {
         primaryStage.show();
     }
 
+
+    //-------------------- GETTERS --------------------
     public Roulette getRoulette() {
         return roulette;
     }

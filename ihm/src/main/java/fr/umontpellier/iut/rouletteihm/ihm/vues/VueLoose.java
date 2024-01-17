@@ -15,15 +15,21 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
+/**
+ * Vue associée à la fenêtre de fin de partie.
+ */
 public class VueLoose {
     private Stage stage;
     private Stage primaryStage;
-    @FXML
-    private Button rejouer = new Button();
-    private boolean rejouerClicked = false;
 
     private GestionMusique sonsTrompette;
 
+
+    /**
+     * Constructeur
+     *
+     * @param p Stage de la fenêtre principale
+     */
     public VueLoose(Stage p) {
         primaryStage = p;
 
@@ -32,7 +38,6 @@ public class VueLoose {
             loader.setController(this);
             Parent root = loader.load();
 
-            rejouer = (Button) root.lookup("#rejouer");
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
@@ -66,35 +71,11 @@ public class VueLoose {
             stage.close();
         });
 
-        Duration pauseDuration = Duration.seconds(10);
+        Duration pauseDuration = Duration.seconds(5);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> {
-            if (!isRejouerClicked()) {
-                stage.close();
-            }
         }));
         timeline.play();
-        rejouer.setOnAction(event -> {
-            timeline.stop();
-            setRejouerClicked(true);
-            stage.close();
-            VueDuJeu.getInstance().resetPartie();
-            if (isRejouerClicked()) {
-                primaryStage.show();
-            }
-        });
-    }
 
-
-    public Button getRejouerButton() {
-        return rejouer;
-    }
-
-    public boolean isRejouerClicked() {
-        return rejouerClicked;
-    }
-
-    public void setRejouerClicked(boolean rejouerClicked) {
-        this.rejouerClicked = rejouerClicked;
     }
 
     public Stage getStage() {

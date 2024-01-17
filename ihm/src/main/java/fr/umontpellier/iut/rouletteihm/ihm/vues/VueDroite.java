@@ -77,6 +77,7 @@ public class VueDroite extends VBox {
     }
 
 
+    // Méthode appelée automatiquement après que la vue ait été chargée. Pour afficher les statistiques.
     public void afficherStats() {
         Platform.runLater(() -> {
             statistiquesRoulette.mettreAJourProbabilites();

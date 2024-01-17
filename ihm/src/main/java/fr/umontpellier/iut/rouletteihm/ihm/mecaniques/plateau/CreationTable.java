@@ -802,12 +802,9 @@ public class CreationTable {
                 ajouterEffetHover(r);
                 creerBindingParis(r, new Text(String.valueOf(i)));
 
+
                 table.getChildren().addAll(r, textNode);
                 rectangleMap.put(i, r);
-
-                if (i > 1) {
-                    survolerEspaceEntreCases(i - 1, i);
-                }
 
                 // Lignes horizontales
                 Line ligneHaut = new Line(x, y, x + LARGEUR, y);
@@ -826,7 +823,7 @@ public class CreationTable {
                 ligneDroite.setStroke(Color.WHITE);
                 ligneDroite.setStrokeWidth(3);
 
-                // Ajout des lignes au groupe parent
+
                 table.getChildren().addAll(ligneHaut, ligneBas, ligneGauche, ligneDroite);
                 ajouteHoverCasesCheval();
                 ajouterHoverCasesCarre();
@@ -1009,39 +1006,93 @@ public class CreationTable {
         }
     }
 
+                Rectangle rectTransversale1 = new Rectangle(rectX, rectY, largeurRect, hauteurRect);
+                rectTransversale1.setFill(Color.TRANSPARENT);
 
-    private void survolerEspaceEntreCases(int numeroCase1, int numeroCase2) {
-        Rectangle case1 = rectangleMap.get(numeroCase1);
-        Rectangle case2 = rectangleMap.get(numeroCase2);
+                double rectX2 = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2 + rectangle3.getX() + rectangle3.getWidth()) / 3 - 10 - largeurRect / 2;
+                double rectY2 = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() + rectangle3.getY() + rectangle3.getHeight() / 2) / 3 - 108 + 2 - hauteurRect / 2;
 
-        if (case1 != null && case2 != null) {
-            double x = case1.getX() + LARGEUR;
-            double y = Math.min(case1.getY(), case2.getY());
-            double width = case2.getX() - case1.getX() - LARGEUR;
-            double height = Math.max(case1.getHeight(), case2.getHeight());
+                Rectangle rectTransversale2 = new Rectangle(rectX2, rectY2, largeurRect, hauteurRect);
+                rectTransversale2.setFill(Color.TRANSPARENT);
 
-            Rectangle espaceEntreCases = new Rectangle(x, y, width, height);
-            espaceEntreCases.setFill(Color.TRANSPARENT);
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3), rectTransversale1);
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3), rectTransversale2);
 
-            ajouterEffetHover(espaceEntreCases);
+                table.getChildren().addAll(rectTransversale1, rectTransversale2);
 
-            espaceEntreCases.setOnMouseEntered(event -> {
-                case1.setFill(Color.GREY);
-                case2.setFill(Color.GREY);
+                Text textNode = new Text(key);
+
+                creerBindingParis(rectTransversale1, textNode);
+                creerBindingParis(rectTransversale2, textNode);
+
+            }
+        });
+
+    }
+
+    public void ajouterHoverCasesSixain() {
+        DonneesGraphiques.sixain.forEach((key, value) -> {
+            int index1 = Integer.parseInt(key.split("-")[0]);
+            int index2 = Integer.parseInt(key.split("-")[1]);
+            int index3 = Integer.parseInt(key.split("-")[2]);
+            int index4 = Integer.parseInt(key.split("-")[3]);
+            int index5 = Integer.parseInt(key.split("-")[4]);
+            int index6 = Integer.parseInt(key.split("-")[5]);
+
+            Rectangle rectangle1 = rectangleMap.get(index1);
+            Rectangle rectangle2 = rectangleMap.get(index2);
+            Rectangle rectangle3 = rectangleMap.get(index3);
+            Rectangle rectangle4 = rectangleMap.get(index4);
+            Rectangle rectangle5 = rectangleMap.get(index5);
+            Rectangle rectangle6 = rectangleMap.get(index6);
+
+            if (rectangle1 != null && rectangle2 != null && rectangle3 != null && rectangle4 != null && rectangle5 != null && rectangle6 != null) {
+                double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX() + rectangle5.getX() + rectangle6.getX()) / 6 + 20;
+                double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY() + rectangle5.getY() + rectangle6.getY()) / 6 - 61.5;
+                double circleRadius = Math.min(rectangle1.getWidth(), rectangle1.getHeight()) / 6;
+
+                Circle circle = new Circle(centerX, centerY, circleRadius);
+                circle.setFill(Color.TRANSPARENT);
+                circle.setRadius(4);
+
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4, rectangle5, rectangle6), circle);
+
+                table.getChildren().add(circle);
+
+                Text textNode = new Text(key);
+
+                creerBindingParis(circle, textNode);
+            }
+        });
+    }
+
+
+    public void ajouterHoverCasesComplexes(List<Rectangle> rectangles, Node node) {
+        if (!node.getProperties().containsKey("hoverAdded")) {
+            Map<Rectangle, Color> couleursOriginales = new HashMap<>();
+
+            rectangles.forEach(rectangle -> {
+                couleursOriginales.put(rectangle, (Color) rectangle.getFill());
             });
 
-            espaceEntreCases.setOnMouseExited(event -> {
-                case1.setFill(getCouleurPourNumero(numeroCase1));
-                case2.setFill(getCouleurPourNumero(numeroCase2));
+            node.setOnMouseEntered(event -> {
+                rectangles.forEach(rect -> {
+                    rect.setFill(Color.GREY);
+                    rect.setOpacity(0.7);
+                });
             });
 
-            espacesEntreCases.add(espaceEntreCases);
-            table.getChildren().add(espaceEntreCases);
+            node.setOnMouseExited(event -> {
+                rectangles.forEach(rect -> {
+                    rect.setFill(couleursOriginales.get(rect));
+                    rect.setOpacity(1.0);
+                });
+            });
 
-            ajouterEffetHover(case1);
-            ajouterEffetHover(case2);
+            node.getProperties().put("hoverAdded", true);
         }
     }
+
 
     private void creerTopLine() {
         double x = START_X;
@@ -1334,7 +1385,7 @@ public class CreationTable {
         x = START_X + LARGEUR + 20;
     }
 
-    private boolean caseCliquee = false;
+
     private Map<Node, Boolean> casesJetonPlace = new HashMap<>();
 
     private void ajouterEffetHover(Node node) {
@@ -1385,19 +1436,6 @@ public class CreationTable {
                 }
             }
         });
-
-//            node.setOnMouseClicked(event -> {
-//                scaleTransition.stop();
-//                fadeTransition.stop();
-//
-//                casesJetonPlace.put(node, true);
-//
-//                if (node instanceof Rectangle) {
-//                    placerJeton((Rectangle) node);
-//                } else if (node instanceof Polygon) {
-//                    placerJetonZero((Polygon) node);
-//                }
-//            });
     }
 
 
@@ -1415,6 +1453,7 @@ public class CreationTable {
 //            listeParis.add(nb);
 //        }
 //    }
+
 
     private void changerLabelInstructions(String pari) {
         if (langueChoisie.intValue() == 0) {
@@ -2133,7 +2172,12 @@ public class CreationTable {
                             losangeNoir.scaleXProperty().bind(noir.widthProperty().divide(16));
                             losangeNoir.scaleYProperty().bind(noir.heightProperty().divide(16));
                         }
-                    } else {
+                        rectangle.setOpacity(1.0);
+                    });
+                } else if (textNode.getText().equals("noir") || textNode.getText().equals("rouge")) {
+                    double x = START_X + (LARGEUR * 12);
+                    double y = START_Y;
+                    if (textNode.getText().equals("rouge")) {
                         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
                             if (n instanceof Circle c) {
                                 c.setFill(Color.TRANSPARENT);
@@ -2145,6 +2189,20 @@ public class CreationTable {
                             }
                         });
                     }
+                } else {
+                    vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
+                        if (n instanceof Circle) {
+                            Circle c = (Circle) n;
+                            c.setFill(Color.TRANSPARENT);
+                            c.setOpacity(1.0);
+
+                        } else if (n instanceof Rectangle) {
+                            Rectangle rectangle = (Rectangle) n;
+                            rectangle.setFill(Color.TRANSPARENT);
+                            rectangle.setOpacity(1.0);
+                        }
+
+                    });
                 }
 
                 jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());
