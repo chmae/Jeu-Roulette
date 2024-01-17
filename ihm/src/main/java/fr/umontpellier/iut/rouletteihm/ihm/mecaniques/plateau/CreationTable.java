@@ -6,8 +6,6 @@ import fr.umontpellier.iut.rouletteihm.ihm.vues.VueBet;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.IntegerProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -15,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
@@ -43,9 +40,6 @@ public class CreationTable {
     private List<Pair<Rectangle, Paint>> originalColors = new ArrayList<>();
     private Label labelInstructions;
     private IntegerProperty langueChoisie;
-    //    private ArrayList<Integer> listeParis;
-//    private ArrayList<Integer> multiplicateursParis;
-//    private ArrayList<Integer> montantParis;
     private VueBet vueBet;
     private Map<Integer, Rectangle> rectangleMap = new HashMap<>();
     private List<Rectangle> espacesEntreCases = new ArrayList<>();
@@ -57,71 +51,11 @@ public class CreationTable {
         this.jeu = jeu;
         this.labelInstructions = labelInstructions;
         this.langueChoisie = langueChoisie;
-//        listeParis = new ArrayList<>();
-//        multiplicateursParis = new ArrayList<>();
-//        for (int i = 0; i < 37; i++) {
-//            multiplicateursParis.add(0);
-//        }
-//        montantParis = new ArrayList<>();
-//        for (int i = 0; i < 37; i++) {
-//            montantParis.add(0);
-//        }
-
-        //TODO : supprimer la fonction suite à la fin de la création des DonneesGraphiques
-//        table.setOnMouseMoved(event -> {
-//            double x = event.getX();
-//            double y = event.getY();
-//            System.out.println("Coordonnées du curseur : (" + x + ", " + y + ")");
-//        });
     }
-
-    //TODO : supprimer la fonction suite à la fin de la création des DonneesGraphiques
-//    private void dessinerLigne(double startX, double startY, double endX, double endY) {
-//        Line ligne = new Line(startX, startY, endX, endY);
-//        ligne.setStrokeWidth(2);
-//        ligne.setStroke(Color.WHITE);
-//        ligne.setFill(Color.WHITE);
-//        table.getChildren().add(ligne);
-//    }
-
 
     public Group getTable() {
         return table;
     }
-
-//    public ArrayList<Integer> getListeParis(int numeroJoueur) {
-//        System.out.println(listeParis.toString());
-//        return listeParis;
-//    }
-
-//    public ObservableList<Integer> getListeParisObserver() {
-//        return FXCollections.observableList(listeParis);
-//    }
-
-
-//    public void viderListeParis() {
-//        listeParis.clear();
-//    }
-
-//    public ArrayList<Integer> getMultiplicateursParis() {
-//        return multiplicateursParis;
-//    }
-
-//    public void viderMultiplicateursParis() {
-//        for (int i = 0; i < 37; i++) {
-//            multiplicateursParis.set(i, 0);
-//        }
-//    }
-
-//    public ArrayList<Integer> getMontantParis() {
-//        return montantParis;
-//    }
-
-//    public void viderMontantsParis() {
-//        for (int i = 0; i < 37; i++) {
-//            montantParis.set(i, 0);
-//        }
-//    }
 
     private void dessinerGrille() {
         double x = START_X;
@@ -979,94 +913,6 @@ public class CreationTable {
         });
     }
 
-
-    public void ajouterHoverCasesComplexes(List<Rectangle> rectangles, Node node) {
-        if (!node.getProperties().containsKey("hoverAdded")) {
-            Map<Rectangle, Color> couleursOriginales = new HashMap<>();
-
-            rectangles.forEach(rectangle -> {
-                couleursOriginales.put(rectangle, (Color) rectangle.getFill());
-            });
-
-            node.setOnMouseEntered(event -> {
-                rectangles.forEach(rect -> {
-                    rect.setFill(Color.GREY);
-                    rect.setOpacity(0.7);
-                });
-            });
-
-            node.setOnMouseExited(event -> {
-                rectangles.forEach(rect -> {
-                    rect.setFill(couleursOriginales.get(rect));
-                    rect.setOpacity(1.0);
-                });
-            });
-
-            node.getProperties().put("hoverAdded", true);
-        }
-    }
-
-                Rectangle rectTransversale1 = new Rectangle(rectX, rectY, largeurRect, hauteurRect);
-                rectTransversale1.setFill(Color.TRANSPARENT);
-
-                double rectX2 = (rectangle1.getX() + rectangle1.getWidth() / 2 + rectangle2.getX() + rectangle2.getWidth() / 2 + rectangle3.getX() + rectangle3.getWidth()) / 3 - 10 - largeurRect / 2;
-                double rectY2 = (rectangle1.getY() + rectangle1.getHeight() / 2 + rectangle2.getY() + rectangle2.getHeight() + rectangle3.getY() + rectangle3.getHeight() / 2) / 3 - 108 + 2 - hauteurRect / 2;
-
-                Rectangle rectTransversale2 = new Rectangle(rectX2, rectY2, largeurRect, hauteurRect);
-                rectTransversale2.setFill(Color.TRANSPARENT);
-
-                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3), rectTransversale1);
-                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3), rectTransversale2);
-
-                table.getChildren().addAll(rectTransversale1, rectTransversale2);
-
-                Text textNode = new Text(key);
-
-                creerBindingParis(rectTransversale1, textNode);
-                creerBindingParis(rectTransversale2, textNode);
-
-            }
-        });
-
-    }
-
-    public void ajouterHoverCasesSixain() {
-        DonneesGraphiques.sixain.forEach((key, value) -> {
-            int index1 = Integer.parseInt(key.split("-")[0]);
-            int index2 = Integer.parseInt(key.split("-")[1]);
-            int index3 = Integer.parseInt(key.split("-")[2]);
-            int index4 = Integer.parseInt(key.split("-")[3]);
-            int index5 = Integer.parseInt(key.split("-")[4]);
-            int index6 = Integer.parseInt(key.split("-")[5]);
-
-            Rectangle rectangle1 = rectangleMap.get(index1);
-            Rectangle rectangle2 = rectangleMap.get(index2);
-            Rectangle rectangle3 = rectangleMap.get(index3);
-            Rectangle rectangle4 = rectangleMap.get(index4);
-            Rectangle rectangle5 = rectangleMap.get(index5);
-            Rectangle rectangle6 = rectangleMap.get(index6);
-
-            if (rectangle1 != null && rectangle2 != null && rectangle3 != null && rectangle4 != null && rectangle5 != null && rectangle6 != null) {
-                double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX() + rectangle5.getX() + rectangle6.getX()) / 6 + 20;
-                double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY() + rectangle5.getY() + rectangle6.getY()) / 6 - 61.5;
-                double circleRadius = Math.min(rectangle1.getWidth(), rectangle1.getHeight()) / 6;
-
-                Circle circle = new Circle(centerX, centerY, circleRadius);
-                circle.setFill(Color.TRANSPARENT);
-                circle.setRadius(4);
-
-                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4, rectangle5, rectangle6), circle);
-
-                table.getChildren().add(circle);
-
-                Text textNode = new Text(key);
-
-                creerBindingParis(circle, textNode);
-            }
-        });
-    }
-
-
     public void ajouterHoverCasesComplexes(List<Rectangle> rectangles, Node node) {
         if (!node.getProperties().containsKey("hoverAdded")) {
             Map<Rectangle, Color> couleursOriginales = new HashMap<>();
@@ -1438,23 +1284,6 @@ public class CreationTable {
         });
     }
 
-
-//    private void ajouterParis(ArrayList<Integer> paris) {
-//        for (int i : paris) {
-//            if (!listeParis.contains(i)) {
-//                listeParis.add(i);
-//            }
-//        }
-//        System.out.println(listeParis.toString());
-//    }
-
-//    private void ajouterNombreParis(int nb) {
-//        if (!listeParis.contains(nb)) {
-//            listeParis.add(nb);
-//        }
-//    }
-
-
     private void changerLabelInstructions(String pari) {
         if (langueChoisie.intValue() == 0) {
             labelInstructions.setText("Paris sur " + pari);
@@ -1462,26 +1291,6 @@ public class CreationTable {
             labelInstructions.setText("Bet on " + pari);
         }
     }
-
-//    private void multimontant(ArrayList<Integer> nombresGagnants) {
-//        for (int nombre : nombresGagnants) {
-//            multiplicateursParis.set(nombre, multiplicateursParis.get(nombre) + 3);
-//            montantParis.set(nombre, jeu.joueurCourantProperty().get().getMiseActuelle() + montantParis.get(nombre));
-//        }
-//    }
-//
-//    private void bimontant(ArrayList<Integer> nombresGagnants) {
-//        for (int nombre : nombresGagnants) {
-//            multiplicateursParis.set(nombre, multiplicateursParis.get(nombre) + 2);
-//            montantParis.set(nombre, jeu.joueurCourantProperty().get().getMiseActuelle() + montantParis.get(nombre));
-//        }
-//    }
-//
-//    private void unimontant(int nombreGagnant) {
-//        multiplicateursParis.set(nombreGagnant, multiplicateursParis.get(nombreGagnant) + 36);
-//        montantParis.set(nombreGagnant, jeu.joueurCourantProperty().get().getMiseActuelle() + montantParis.get(nombreGagnant));
-//    }
-
 
     public void placerJeton(String caseInt) {
         ImageView imageCase = new ImageView();
@@ -1676,7 +1485,6 @@ public class CreationTable {
                         case "2 pour 1-1":
                             ArrayList<Integer> nombresGagnants2pour11 = new ArrayList<>(Arrays.asList(1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34));
                             jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants2pour11, miseActuelle, "2 pour 1-1");
-//                        multimontant(nombresGagnants2pour11);
                             changerLabelInstructions("2 pour 1-1");
                             placerJeton("2pour1-1");
                             break;
@@ -1684,7 +1492,6 @@ public class CreationTable {
                         case "2 pour 1-2":
                             ArrayList<Integer> nombresGagnants2pour12 = new ArrayList<>(Arrays.asList(2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35));
                             jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants2pour12, miseActuelle, "2 pour 1-2");
-//                        multimontant(nombresGagnants2pour12);
                             changerLabelInstructions("2 pour 1-2");
                             placerJeton("2pour1-2");
                             break;
@@ -1692,7 +1499,6 @@ public class CreationTable {
                         case "2 pour 1-3":
                             ArrayList<Integer> nombresGagnants2pour13 = new ArrayList<>(Arrays.asList(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36));
                             jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants2pour13, miseActuelle, "2 pour 1-3");
-//                        multimontant(nombresGagnants2pour13);
                             changerLabelInstructions("2 pour 1-3");
                             placerJeton("2pour1-3");
                             break;
@@ -1700,7 +1506,6 @@ public class CreationTable {
                         case "1 à 18":
                             ArrayList<Integer> nombresGagnants1a18 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18));
                             jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants1a18, miseActuelle, "1 à 18");
-//                        bimontant(nombresGagnants1a18);
                             changerLabelInstructions("1 à 18");
                             placerJeton("1 à 18");
                             break;
@@ -1708,7 +1513,6 @@ public class CreationTable {
                         case "19 à 36":
                             ArrayList<Integer> nombresGagnants19a36 = new ArrayList<>(Arrays.asList(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36));
                             jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants19a36, miseActuelle, "19 à 36");
-//                        bimontant(nombresGagnants19a36);
                             changerLabelInstructions("19 à 36");
                             placerJeton("19 à 36");
                             break;
@@ -1717,14 +1521,12 @@ public class CreationTable {
                             ArrayList<Integer> nombresGagnants1a12 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
                             jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants1a12, miseActuelle, "1-12");
                             changerLabelInstructions("1-12");
-//                        multimontant(nombresGagnants1a12);
                             placerJeton("1-12");
                             break;
 
                         case "13-24":
                             ArrayList<Integer> nombresGagnants13a24 = new ArrayList<>(Arrays.asList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24));
                             jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants13a24, miseActuelle, "13-24");
-//                        multimontant(nombresGagnants13a24);
                             changerLabelInstructions("13-24");
                             placerJeton("13-24");
                             break;
@@ -1732,7 +1534,6 @@ public class CreationTable {
                         case "25-36":
                             ArrayList<Integer> nombresGagnants25a36 = new ArrayList<>(Arrays.asList(25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36));
                             jeu.joueurCourantProperty().get().ajouterParis(nombresGagnants25a36, miseActuelle, "25-36");
-//                        multimontant(nombresGagnants25a36);
                             changerLabelInstructions("25-36");
                             placerJeton("25-36");
                             break;
@@ -1743,7 +1544,6 @@ public class CreationTable {
                                 impaire.add(i);
                             }
                             jeu.joueurCourantProperty().get().ajouterParis(impaire, miseActuelle, "impair");
-//                        bimontant(impaire);
                             changerLabelInstructions("IMPAIR");
                             placerJeton("impair");
                             break;
@@ -1754,7 +1554,6 @@ public class CreationTable {
                                 paire.add(i);
                             }
                             jeu.joueurCourantProperty().get().ajouterParis(paire, miseActuelle, "pair");
-//                        bimontant(paire);
                             changerLabelInstructions("PAIR");
                             placerJeton("pair");
                             break;
@@ -1767,7 +1566,6 @@ public class CreationTable {
                                 }
                             }
                             jeu.joueurCourantProperty().get().ajouterParis(rouge, miseActuelle, "rouge");
-//                        bimontant(rouge);
                             changerLabelInstructions("rouge");
                             placerJeton("rouge");
                             break;
@@ -1780,7 +1578,6 @@ public class CreationTable {
                                 }
                             }
                             jeu.joueurCourantProperty().get().ajouterParis(noir, miseActuelle, "noir");
-//                        bimontant(noir);
                             changerLabelInstructions("noir");
                             placerJeton("noir");
                             break;
@@ -1790,7 +1587,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(0);
                             }}, miseActuelle, "0");
-//                        unimontant(0);
                             changerLabelInstructions("0");
                             placerJeton("0");
                             break;
@@ -1799,7 +1595,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(1);
                             }}, miseActuelle, "1");
-//                        unimontant(1);
                             changerLabelInstructions("1");
                             placerJeton("1");
                             break;
@@ -1808,7 +1603,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(2);
                             }}, miseActuelle, "2");
-//                        unimontant(2);
                             changerLabelInstructions("2");
                             placerJeton("2");
                             break;
@@ -1817,7 +1611,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(3);
                             }}, miseActuelle, "3");
-//                        unimontant(3);
                             changerLabelInstructions("3");
                             placerJeton("3");
                             break;
@@ -1826,7 +1619,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(4);
                             }}, miseActuelle, "4");
-//                        unimontant(4);
                             changerLabelInstructions("4");
                             placerJeton("4");
                             break;
@@ -1835,7 +1627,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(5);
                             }}, miseActuelle, "5");
-//                        unimontant(5);
                             changerLabelInstructions("5");
                             placerJeton("5");
                             break;
@@ -1844,7 +1635,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(6);
                             }}, miseActuelle, "6");
-//                        unimontant(6);
                             changerLabelInstructions("6");
                             placerJeton("6");
                             break;
@@ -1853,7 +1643,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(7);
                             }}, miseActuelle, "7");
-//                        unimontant(7);
                             changerLabelInstructions("7");
                             placerJeton("7");
                             break;
@@ -1862,7 +1651,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(8);
                             }}, miseActuelle, "8");
-//                        unimontant(8);
                             changerLabelInstructions("8");
                             placerJeton("8");
                             break;
@@ -1871,7 +1659,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(9);
                             }}, miseActuelle, "9");
-//                        unimontant(9);
                             changerLabelInstructions("9");
                             placerJeton("9");
                             break;
@@ -1880,7 +1667,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(10);
                             }}, miseActuelle, "10");
-//                        unimontant(10);
                             changerLabelInstructions("10");
                             placerJeton("10");
                             break;
@@ -1889,7 +1675,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(11);
                             }}, miseActuelle, "11");
-//                        unimontant(11);
                             changerLabelInstructions("11");
                             placerJeton("11");
                             break;
@@ -1898,7 +1683,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(12);
                             }}, miseActuelle, "12");
-//                        unimontant(12);
                             changerLabelInstructions("12");
                             placerJeton("12");
                             break;
@@ -1907,7 +1691,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(13);
                             }}, miseActuelle, "13");
-//                        unimontant(13);
                             changerLabelInstructions("13");
                             placerJeton("13");
                             break;
@@ -1916,7 +1699,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(14);
                             }}, miseActuelle, "14");
-//                        unimontant(14);
                             changerLabelInstructions("14");
                             placerJeton("14");
                             break;
@@ -1925,7 +1707,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(15);
                             }}, miseActuelle, "15");
-//                        unimontant(15);
                             changerLabelInstructions("15");
                             placerJeton("15");
                             break;
@@ -1934,7 +1715,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(16);
                             }}, miseActuelle, "16");
-//                        unimontant(16);
                             changerLabelInstructions("16");
                             placerJeton("16");
                             break;
@@ -1943,7 +1723,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(17);
                             }}, miseActuelle, "17");
-//                        unimontant(17);
                             changerLabelInstructions("17");
                             placerJeton("17");
                             break;
@@ -1952,7 +1731,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(18);
                             }}, miseActuelle, "18");
-//                        unimontant(18);
                             changerLabelInstructions("18");
                             placerJeton("18");
                             break;
@@ -1961,7 +1739,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(19);
                             }}, miseActuelle, "19");
-//                        unimontant(19);
                             changerLabelInstructions("19");
                             placerJeton("19");
                             break;
@@ -1970,7 +1747,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(20);
                             }}, miseActuelle, "20");
-//                        unimontant(20);
                             changerLabelInstructions("20");
                             placerJeton("20");
                             break;
@@ -1979,7 +1755,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(21);
                             }}, miseActuelle, "21");
-//                        unimontant(21);
                             changerLabelInstructions("21");
                             placerJeton("21");
                             break;
@@ -1988,7 +1763,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(22);
                             }}, miseActuelle, "22");
-//                        unimontant(22);
                             changerLabelInstructions("22");
                             placerJeton("22");
                             break;
@@ -1997,7 +1771,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(23);
                             }}, miseActuelle, "23");
-//                        unimontant(23);
                             changerLabelInstructions("23");
                             placerJeton("23");
                             break;
@@ -2006,7 +1779,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(24);
                             }}, miseActuelle, "24");
-//                        unimontant(24);
                             changerLabelInstructions("24");
                             placerJeton("24");
                             break;
@@ -2015,7 +1787,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(25);
                             }}, miseActuelle, "25");
-//                        unimontant(25);
                             changerLabelInstructions("25");
                             placerJeton("25");
                             break;
@@ -2024,7 +1795,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(26);
                             }}, miseActuelle, "26");
-//                        unimontant(26);
                             changerLabelInstructions("26");
                             placerJeton("26");
                             break;
@@ -2033,7 +1803,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(27);
                             }}, miseActuelle, "27");
-//                        unimontant(27);
                             changerLabelInstructions("27");
                             placerJeton("27");
                             break;
@@ -2042,7 +1811,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(28);
                             }}, miseActuelle, "28");
-//                        unimontant(28);
                             changerLabelInstructions("28");
                             placerJeton("28");
                             break;
@@ -2051,7 +1819,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(29);
                             }}, miseActuelle, "29");
-//                        unimontant(29);
                             changerLabelInstructions("29");
                             placerJeton("29");
                             break;
@@ -2060,7 +1827,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(30);
                             }}, miseActuelle, "30");
-//                        unimontant(30);
                             changerLabelInstructions("30");
                             placerJeton("30");
                             break;
@@ -2069,7 +1835,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(31);
                             }}, miseActuelle, "31");
-//                        unimontant(31);
                             changerLabelInstructions("31");
                             placerJeton("31");
                             break;
@@ -2078,7 +1843,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(32);
                             }}, miseActuelle, "32");
-//                        unimontant(32);
                             changerLabelInstructions("32");
                             placerJeton("32");
                             break;
@@ -2087,7 +1851,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(33);
                             }}, miseActuelle, "33");
-//                        unimontant(33);
                             changerLabelInstructions("33");
                             placerJeton("33");
                             break;
@@ -2096,7 +1859,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(34);
                             }}, miseActuelle, "34");
-//                        unimontant(34);
                             changerLabelInstructions("34");
                             placerJeton("34");
                             break;
@@ -2105,7 +1867,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(35);
                             }}, miseActuelle, "35");
-//                        unimontant(35);
                             changerLabelInstructions("35");
                             placerJeton("35");
                             break;
@@ -2114,7 +1875,6 @@ public class CreationTable {
                             jeu.joueurCourantProperty().get().ajouterParis(new ArrayList<>() {{
                                 add(36);
                             }}, miseActuelle, "36");
-//                        unimontant(36);
                             changerLabelInstructions("36");
                             placerJeton("36");
                             break;
@@ -2172,12 +1932,7 @@ public class CreationTable {
                             losangeNoir.scaleXProperty().bind(noir.widthProperty().divide(16));
                             losangeNoir.scaleYProperty().bind(noir.heightProperty().divide(16));
                         }
-                        rectangle.setOpacity(1.0);
-                    });
-                } else if (textNode.getText().equals("noir") || textNode.getText().equals("rouge")) {
-                    double x = START_X + (LARGEUR * 12);
-                    double y = START_Y;
-                    if (textNode.getText().equals("rouge")) {
+                    } else {
                         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
                             if (n instanceof Circle c) {
                                 c.setFill(Color.TRANSPARENT);
@@ -2189,20 +1944,6 @@ public class CreationTable {
                             }
                         });
                     }
-                } else {
-                    vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
-                        if (n instanceof Circle) {
-                            Circle c = (Circle) n;
-                            c.setFill(Color.TRANSPARENT);
-                            c.setOpacity(1.0);
-
-                        } else if (n instanceof Rectangle) {
-                            Rectangle rectangle = (Rectangle) n;
-                            rectangle.setFill(Color.TRANSPARENT);
-                            rectangle.setOpacity(1.0);
-                        }
-
-                    });
                 }
 
                 jeu.joueurCourantProperty().get().setMiseTotale(jeu.joueurCourantProperty().get().getMiseTotale() + jeu.joueurCourantProperty().get().getMiseActuelle());

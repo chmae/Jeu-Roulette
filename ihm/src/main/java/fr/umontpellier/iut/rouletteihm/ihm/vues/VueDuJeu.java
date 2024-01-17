@@ -46,7 +46,6 @@ public class VueDuJeu extends GridPane {
     private HBox elementsGauche;
     private CreationTable table;
     private Label labelInstructions;
-//    private ArrayList<ArrayList<Integer>> listesParis = new ArrayList<>(new ArrayList<>());
     private static VueDuJeu instance;
     private VueRoue vueRoue = new VueRoue();
     private StatistiquesRoulette statistiquesRoulette = new StatistiquesRoulette();
@@ -67,11 +66,6 @@ public class VueDuJeu extends GridPane {
         vueBet = VueBet.getInstance(jeu, autresJoueurs.getLangueChoisie());
         labelInstructions = vueBet.getLabelInstruction();
         table = new CreationTable(jeu, labelInstructions, vueBet, autresJoueurs.getLangueChoisie());
-//        listesParis = new ArrayList<>();
-//        listesParis.add(table.getListeParis(0));
-//        listesParis.add(table.getListeParis(1));
-//        listesParis.add(table.getListeParis(2));
-//        listesParis.add(table.getListeParis(3));
         plateau = new VuePlateau(jeu);
         vueDroite = new VueDroite(jeu);
         vueGauche = new VueGauche(jeu);
@@ -86,7 +80,6 @@ public class VueDuJeu extends GridPane {
         add(vueBet, 0, 1);
         add(joueurCourantvue, 1, 2);
         add(autresJoueurs, 0, 0);
-//        listesParis = table.getListeParis();
 
         vueDroite.setTranslateX(1020);
         setHalignment(joueurCourantvue, HPos.RIGHT);
@@ -103,113 +96,20 @@ public class VueDuJeu extends GridPane {
         joueurCourantvue.toFront();
         plateau.toBack();
 
-//        multiplicateursGain = table.getMultiplicateursParis();
-//        montantsParis = table.getMontantParis();
-
         joueurCourantvue.getPasser().setOnMouseClicked(mouseEvent -> {
             labelInstructions.setText("Vous avez décidé de passer !");
             numeroJoueurJouant++;
             if (numeroJoueurJouant>joueurs.size()-1) {
-                vueRoue.animation(jeu.getResultatTourActuel().getNombres());
-                PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
-
-                pauseTransition.setOnFinished(event -> {
-                    vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
-                    vueDroite.afficherStats();
-                    vueDroite.setStatistiquesRoulette(statistiquesRoulette);
-
-                    for (Joueur j : joueurs) {
-                        if (!j.getListeParis().isEmpty() && j.getListeParis().contains(jeu.getResultatTourActuel().getValeur())) {
-                            int n = j.getListeMontantsParis().get(jeu.getResultatTourActuel().getValeur()) * j.getListeMultiplicateursParis().get(jeu.getResultatTourActuel().getValeur());
-                            j.miseAJourBanque(n);
-                            if (joueurs.get(0)==j) {
-                                whenWin();
-                            }
-                        } else if (!j.getListeParis().isEmpty()){
-                            j.miseAJourBanque(-jeu.joueurCourantProperty().get().getMiseTotale());
-                            if (joueurs.get(0)==j) {
-                                whenLose();
-                            }
-                        }
-                    }
-
-                    for (Joueur j : joueurs) {
-                        if (!j.getListeParis().isEmpty()) {
-                            j.viderListeParis();
-                            j.viderMontantsParis();
-                            j.viderMultiplicateursParis();
-                            j.setMiseTotale(0);
-                        }
-                    }
-                    for (Node node : table.getTable().getChildren()) {
-                        if (node instanceof ImageView) {
-                            ImageView imageView = (ImageView) node;
-                            imageView.setVisible(false);
-                        }
-                    }
-                    jeu.tournerTour();
-                });
-                pauseTransition.play();
-                statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
-                statistiquesRoulette.afficherStatistique();
-                numeroJoueurJouant = 0;
+                gererAnimation();
             }
-            jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
-            gererAnimation();
         });
 
         joueurCourantvue.getPasser1().setOnMouseClicked(mouseEvent -> {
             labelInstructions.setText("Vous avez décidé de passer !");
             numeroJoueurJouant++;
             if (numeroJoueurJouant>joueurs.size()-1) {
-                vueRoue.animation(jeu.getResultatTourActuel().getNombres());
-                PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
-
-                pauseTransition.setOnFinished(event -> {
-                    vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
-                    vueDroite.afficherStats();
-                    vueDroite.setStatistiquesRoulette(statistiquesRoulette);
-
-                    for (Joueur j : joueurs) {
-                        if (!j.getListeParis().isEmpty() && j.getListeParis().contains(jeu.getResultatTourActuel().getValeur())) {
-                            int n = j.getListeMontantsParis().get(jeu.getResultatTourActuel().getValeur()) * j.getListeMultiplicateursParis().get(jeu.getResultatTourActuel().getValeur());
-                            j.miseAJourBanque(n);
-                            if (joueurs.get(0)==j) {
-                                whenWin();
-                            }
-                        } else if (!j.getListeParis().isEmpty()){
-                            j.miseAJourBanque(-jeu.joueurCourantProperty().get().getMiseTotale());
-                            if (joueurs.get(0)==j) {
-                                whenLose();
-                            }
-                        }
-                    }
-
-                    for (Joueur j : joueurs) {
-                        if (!j.getListeParis().isEmpty()) {
-                            j.viderListeParis();
-                            j.viderMontantsParis();
-                            j.viderMultiplicateursParis();
-                            j.setMiseTotale(0);
-                        }
-                    }
-                    for (Node node : table.getTable().getChildren()) {
-                        if (node instanceof ImageView) {
-                            ImageView imageView = (ImageView) node;
-                            imageView.setVisible(false);
-                        }
-                    }
-                    jeu.tournerTour();
-                });
-                pauseTransition.play();
-                statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
-                statistiquesRoulette.afficherStatistique();
-                numeroJoueurJouant = 0;
-                vueBet.validationProperty().set(false);
-
+                gererAnimation();
             }
-            jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
-            gererAnimation();
         });
     }
     private void gererAnimation() {
@@ -217,16 +117,50 @@ public class VueDuJeu extends GridPane {
 
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
 
-        statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
-        statistiquesRoulette.afficherStatistique();
-
         pauseTransition.setOnFinished(event -> {
             vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
             vueDroite.afficherStats();
             vueDroite.setStatistiquesRoulette(statistiquesRoulette);
+            statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
+            statistiquesRoulette.afficherStatistique();
+            for (Joueur j : joueurs) {
+                if (!j.getListeParis().isEmpty() && j.getListeParis().contains(jeu.getResultatTourActuel().getValeur())) {
+                    int n = j.getListeMontantsParis().get(jeu.getResultatTourActuel().getValeur()) * j.getListeMultiplicateursParis().get(jeu.getResultatTourActuel().getValeur());
+                    j.miseAJourBanque(n);
+                    if (joueurs.get(0)==j) {
+                        whenWin();
+                    }
+                } else if (!j.getListeParis().isEmpty()){
+                    j.miseAJourBanque(-jeu.joueurCourantProperty().get().getMiseTotale());
+                    if (joueurs.get(0)==j) {
+                        whenLose();
+                    }
+                }
+            }
+
+            for (Joueur j : joueurs) {
+                if (!j.getListeParis().isEmpty()) {
+                    j.viderListeParis();
+                    j.viderMontantsParis();
+                    j.viderMultiplicateursParis();
+                    j.setMiseTotale(0);
+                }
+            }
+            for (Node node : table.getTable().getChildren()) {
+                if (node instanceof ImageView) {
+                    ImageView imageView = (ImageView) node;
+                    imageView.setVisible(false);
+                }
+            }
             jeu.tournerTour();
         });
         pauseTransition.play();
+        statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
+        statistiquesRoulette.afficherStatistique();
+        numeroJoueurJouant = 0;
+        vueBet.validationProperty().set(false);
+        jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
+
     }
 
     // Méthode qui permet de retourner la vue du plateau
@@ -295,9 +229,6 @@ public class VueDuJeu extends GridPane {
                         }
                     }
                     jeu.tournerTour();
-//                    table.viderListeParis();
-//                    table.viderMontantsParis();
-//                    table.viderMultiplicateursParis();
                     for (Joueur j : joueurs) {
                         if (!j.getListeParis().isEmpty()) {
                             j.viderListeParis();
@@ -347,8 +278,6 @@ public class VueDuJeu extends GridPane {
         int n = jeu.joueurCourantProperty().get().getListeMontantsParis().get(jeu.getResultatTourActuel().getValeur()) * jeu.joueurCourantProperty().get().getListeMultiplicateursParis().get(jeu.getResultatTourActuel().getValeur());
         System.out.println("Valeur gagnée : " + n);
         valeurGagneeProperty.set(String.valueOf(n));
-//        jeu.joueurCourantProperty().get().miseAJourBanque(n);
-//        labelInstructions.setText("Gagné !");
 
         VueWin vueWin = new VueWin(primaryStage);
         vueWin.getGainJeton().textProperty().bind(valeurGagneeProperty);
@@ -367,8 +296,6 @@ public class VueDuJeu extends GridPane {
 
     //Méthode qui permet d'afficher la popup de défaite
     private void whenLose() {
-//        jeu.joueurCourantProperty().get().miseAJourBanque(-jeu.joueurCourantProperty().get().getMiseTotale());
-//        labelInstructions.setText("Perdu !");
 
         VueLoose vueLoose = new VueLoose(primaryStage);
         vueLoose.afficher();
@@ -391,18 +318,9 @@ public class VueDuJeu extends GridPane {
         return jeu;
     }
 
-//    public ArrayList<Integer> getListeParis() {
-//        return listesParis;
-//    }
-
     public Label getLabelInstructions() {
         return labelInstructions;
     }
-
-//    public VueBet getVueBet() {
-//        return vueBet;
-//    }
-
 
 }
 

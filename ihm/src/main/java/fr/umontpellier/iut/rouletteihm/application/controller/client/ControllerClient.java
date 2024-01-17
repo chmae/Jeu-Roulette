@@ -53,10 +53,6 @@ public class ControllerClient {
 
     private RouletteIHM rouletteIHM = RouletteIHM.getInstance();
 
-    public static boolean isUtilisateurConnecte() {
-        return utilisateurConnecte;
-    }
-
     private static boolean utilisateurConnecte = false;
 
     private static int idClientConnecte;
@@ -71,11 +67,6 @@ public class ControllerClient {
     public static String getPrenomClient() {
         return prenomClient;
     }
-
-    @FXML
-    private TextField nom;
-    @FXML
-    private TextField solde;
     private final StringProperty prenomProperty = new SimpleStringProperty();
     private final IntegerProperty soldeProperty = new SimpleIntegerProperty();
 
@@ -359,7 +350,7 @@ public class ControllerClient {
                     System.out.println("Solde mis à jour avec succès : " + nouveauSolde);
                     solde.setText("");
                 });
-                rouletteIHM.demarrerPartie(prenomClient, nouveauSolde);
+                rouletteIHM.demarrerPartie();
             } else {
                 System.out.println("Aucune mise à jour du solde n'est nécessaire.");
             }
