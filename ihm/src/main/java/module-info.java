@@ -11,4 +11,3 @@ open module fr.umontpellier.iut.ihm {
     requires javafx.media;
 
 }
-

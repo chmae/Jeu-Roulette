@@ -46,14 +46,32 @@ public class ControllerClient {
     private Pane pane;
     @FXML
     private Pane parametrePane;
+    @FXML
+    private static TextField nom;
+    @FXML
+    private static TextField solde;
 
     private RouletteIHM rouletteIHM = RouletteIHM.getInstance();
+
+    public static boolean isUtilisateurConnecte() {
+        return utilisateurConnecte;
+    }
+
     private static boolean utilisateurConnecte = false;
 
     private static int idClientConnecte;
 
     private static String prenomClient;
     private static ControllerClient instance;
+
+    public static int getSoldeClient() {
+        return soldeClient;
+    }
+
+    public static String getPrenomClient() {
+        return prenomClient;
+    }
+
     @FXML
     private TextField nom;
     @FXML
@@ -138,10 +156,16 @@ public class ControllerClient {
                             NouvelClientController nouvelClientController = rouletteIHM.getNouvelClientController();
 
                             if (nouvelClientController != null) {
-                                rouletteIHM.demarrerPartie(prenomClient, soldeClient);
-                                vueAccueil.fermerFenetre();
-                                VueAutresJoueurs.getInstance().fermerVueAccueil();
-
+                                rouletteIHM.ajouterJoueur(prenomClient, soldeClient);
+                                // -----------------------------------------------------------------------------------------------------------------------------------
+                              if (vueAccueil.getMultiplayer().isSelected()) {
+                                  vueAccueil.getVueChoixJoueurs().utilisateurConnecte();
+                                  vueAccueil.afficherChoixJoueur();
+                              } else {
+                                  rouletteIHM.demarrerPartie();
+                                  vueAccueil.fermerFenetre();
+                              }
+                              
                             } else {
                                 System.err.println("Erreur : nouvelClientController est null");
                             }

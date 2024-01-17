@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.CheckBox?>
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="388.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -64,5 +65,17 @@
                 <Image url="@../images/button-game-info.png"/>
             </image>
         </ImageView>
+        <CheckBox fx:id="multiplayer" layoutX="531.0" layoutY="339.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="18.0" />
+<!--        <CheckBox fx:id="solo" layoutX="531.0" layoutY="339.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="18.0" />-->
+        <Label layoutX="530.0" layoutY="362.0" text="multiplayer" textFill="WHITE">
+            <font>
+                <Font name="Chalkboard SE Light" size="5.0" />
+            </font>
+        </Label>
+<!--        <Label layoutX="536.0" layoutY="361.0" text="solo" textFill="WHITE">-->
+<!--            <font>-->
+<!--                <Font name="Chalkboard SE Light" size="5.0" />-->
+<!--            </font>-->
+<!--        </Label>-->
     </children>
 </Pane>
