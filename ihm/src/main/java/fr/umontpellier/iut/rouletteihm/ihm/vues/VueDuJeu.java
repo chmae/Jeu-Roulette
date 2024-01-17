@@ -102,6 +102,7 @@ public class VueDuJeu extends GridPane {
             if (numeroJoueurJouant>joueurs.size()-1) {
                 gererAnimation();
             }
+            jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
         });
 
         joueurCourantvue.getPasser1().setOnMouseClicked(mouseEvent -> {
@@ -110,6 +111,7 @@ public class VueDuJeu extends GridPane {
             if (numeroJoueurJouant>joueurs.size()-1) {
                 gererAnimation();
             }
+            jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
         });
     }
     private void gererAnimation() {
@@ -159,7 +161,6 @@ public class VueDuJeu extends GridPane {
         statistiquesRoulette.afficherStatistique();
         numeroJoueurJouant = 0;
         vueBet.validationProperty().set(false);
-        jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
 
     }
 
