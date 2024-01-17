@@ -12,19 +12,15 @@ public class Nombres {
     private int colonne; // Numéro de colonne
     private int angleRoulette; // Angle sur la roulette
 
-    // Constructeur par défaut
-    public Nombres() {
-    }
-
     // Constructeur prenant des paramètres pour initialiser les attributs
     public Nombres(int num, String col, int angle) {
         this.nombre = num;
         this.couleur = col;
-        this.pair = pair(num); // Vérification si le nombre est pair
-        this.demi = firstEighteen(num); // Vérification si le nombre est dans la première moitié (1-18)
-        this.section = section(num); // Détermination de la section du nombre
-        this.colonne = column(num); // Détermination de la colonne du nombre
-        this.angleRoulette = angle; // Attribution de l'angle sur la roulette
+        this.pair = pair(num);
+        this.demi = firstEighteen(num);
+        this.section = section(num);
+        this.colonne = column(num);
+        this.angleRoulette = angle;
     }
 
     // Méthode pour obtenir le numéro du nombre
@@ -64,33 +60,49 @@ public class Nombres {
 
     // Méthode privée pour vérifier si le nombre est pair
     private boolean pair(int num) {
-        return num % 2 == 0; // Retourne vrai si le nombre est pair
+        if (num % 2 == 0) {
+            return false;
+        }
+        return true;
     }
 
     // Méthode privée pour vérifier si le nombre est dans la première moitié (1-18)
     private boolean firstEighteen(int num) {
-        return num >= 1 && num <= 18; // Retourne vrai si le nombre est entre 1 et 18 inclus
+        for (int i = 1; i < 19; i++) {
+            if (i == num) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Méthode privée pour déterminer la section du nombre
     private int section(int num) {
-        if (num >= 1 && num <= 12) {
-            return 1; // Section 1 : 1 à 12
-        } else if (num >= 13 && num <= 24) {
-            return 2; // Section 2 : 13 à 24
-        } else {
-            return 3; // Section 3 : 25 à 36
+        for (int i = 1; i < 13; i++) {
+            if (i == num) {
+                return 1;
+            }
         }
+        for (int i = 13; i < 25; i++) {
+            if (i == num) {
+                return 2;
+            }
+        }
+        return 3;
     }
 
     // Méthode privée pour déterminer la colonne du nombre
     private int column(int num) {
-        if (num % 3 == 1) {
-            return 1; // Colonne 1
-        } else if (num % 3 == 2) {
-            return 2; // Colonne 2
-        } else {
-            return 3; // Colonne 3
+        for (int i = 1; i < 35; i += 3) {
+            if (i == num) {
+                return 1;
+            }
         }
+        for (int i = 2; i < 36; i += 3) {
+            if (i == num) {
+                return 2;
+            }
+        }
+        return 3;
     }
 }

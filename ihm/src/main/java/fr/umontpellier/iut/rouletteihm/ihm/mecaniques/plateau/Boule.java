@@ -9,14 +9,14 @@ import javafx.scene.transform.*;
 public class Boule {
 
     // Attribut représentant la boule
-    public Circle ball = new Circle(420, 140, 6);
+    public Circle ball = new Circle(0, 0, 6);
 
     // Constructeur de la boule
     public Boule() {
         ball.setFill(Color.GOLD);
-        ball.setTranslateY(-190);
-        ball.setTranslateX(-310);
-        ball.getTransforms().add(new Translate(0, 240));
+//        ball.setTranslateY(-190);
+//        ball.setTranslateX(-310);
+//        ball.getTransforms().add(new Translate(0, 240));
     }
 
     // Méthode pour obtenir la forme (Circle) de la boule
@@ -29,4 +29,3 @@ public class Boule {
         ball.setVisible(b);
     }
 }
-
