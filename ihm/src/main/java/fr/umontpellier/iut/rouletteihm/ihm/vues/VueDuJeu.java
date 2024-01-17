@@ -50,6 +50,7 @@ public class VueDuJeu extends GridPane {
     private VueRoue vueRoue = new VueRoue();
     private StatistiquesRoulette statistiquesRoulette = new StatistiquesRoulette();
     private StringProperty valeurGagneeProperty = new SimpleStringProperty("0");
+    private Stage primaryStage = RouletteIHM.getPrimaryStage();
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
@@ -82,7 +83,7 @@ public class VueDuJeu extends GridPane {
         setValignment(joueurCourantvue, VPos.BOTTOM);
         joueurCourantvue.translateXProperty().bind(plateau.translateXProperty().add(plateau.getWidth() / 2).add(875));
         joueurCourantvue.translateYProperty().bind(plateau.translateYProperty().add(plateau.getHeight() / 2).add(-45));
-        vueRoue.getRoue().translateXProperty().bind(plateau.translateXProperty().add(plateau.getWidth() / 2).add(30));
+        vueRoue.getRoue().translateXProperty().bind(plateau.translateXProperty().add(plateau.getWidth() / 2).add(60));
         vueRoue.getRoue().translateYProperty().bind(plateau.translateYProperty().add(plateau.getHeight() / 2).add(0));
         vueBet.setTranslateY(-15);
 
@@ -97,37 +98,29 @@ public class VueDuJeu extends GridPane {
 
         joueurCourantvue.getPasser().setOnMouseClicked(mouseEvent -> {
             labelInstructions.setText("Vous avez décidé de passer !");
-            vueRoue.animation(jeu.getResultatTourActuel().getNombres());
-            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
-
-            pauseTransition.setOnFinished(event -> {
-                vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
-                vueDroite.afficherStats();
-                vueDroite.setStatistiquesRoulette(statistiquesRoulette);
-            });
-            pauseTransition.play();
-            jeu.tournerTour();
-            statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
-            statistiquesRoulette.afficherStatistique();
-
+            gererAnimation();
         });
 
         joueurCourantvue.getPasser1().setOnMouseClicked(mouseEvent -> {
             labelInstructions.setText("Vous avez décidé de passer !");
-            vueRoue.animation(jeu.getResultatTourActuel().getNombres());
-            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
-
-            pauseTransition.setOnFinished(event -> {
-                vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
-                vueDroite.afficherStats();
-                vueDroite.setStatistiquesRoulette(statistiquesRoulette);
-            });
-            pauseTransition.play();
-            jeu.tournerTour();
-            statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
-            statistiquesRoulette.afficherStatistique();
-
+            gererAnimation();
         });
+    }
+    private void gererAnimation() {
+        vueRoue.animation(jeu.getResultatTourActuel().getNombres());
+
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
+
+        statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
+        statistiquesRoulette.afficherStatistique();
+
+        pauseTransition.setOnFinished(event -> {
+            vueGauche.afficherDerniersResultats(jeu.getResultatTourActuel());
+            vueDroite.afficherStats();
+            vueDroite.setStatistiquesRoulette(statistiquesRoulette);
+            jeu.tournerTour();
+        });
+        pauseTransition.play();
     }
 
     // Méthode qui permet de retourner la vue du plateau
@@ -146,6 +139,8 @@ public class VueDuJeu extends GridPane {
         elementsGauche.prefWidthProperty().bind(widthProperty());
         elementsGauche.prefHeightProperty().bind(heightProperty());
         vueDroite.prefHeightProperty().bind(heightProperty());
+
+
 
         vueBet.validationProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -216,7 +211,6 @@ public class VueDuJeu extends GridPane {
     }
 
 
-    Stage primaryStage = RouletteIHM.getPrimaryStage();
 
     //Méthode qui permet d'afficher la popup de victoire
     public void whenWin() {
@@ -283,3 +277,4 @@ public class VueDuJeu extends GridPane {
 
 
 }
+

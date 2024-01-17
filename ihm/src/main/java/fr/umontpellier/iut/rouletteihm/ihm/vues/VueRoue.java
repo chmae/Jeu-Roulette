@@ -5,12 +5,11 @@ import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Nombres;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.setNombres;
-import javafx.animation.Interpolator;
-import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
-import javafx.animation.RotateTransition;
+import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -25,36 +24,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Vue associée à la roulette.
- */
+import static javafx.scene.control.PopupControl.USE_PREF_SIZE;
+
 public class VueRoue {
-    private Group Roue = new Group();
-
+    private Pane Roue = new Pane();
     private Boule boule = new Boule();
-    // début de l'angle de la roue
+    private Group rotateBouleSegment = new Group();
     private static final double START_ANGLE = 85.135135135f;
-    // utiliser pour set les nombres
     private setNombres numberSet = new setNombres();
-
-    //boule rotate
-    private static final int xOrigin = 0;
-    private static final int yOrigin = -80;
-    private static final double angleInitial = 180;
+    private int angleRotation = 0;
     private static final double angle = 9.72972973f;
     private static final int rotation = 1800;
-    private double currentRotationAngle = 0.0;
     private ArrayList<Double> listeX = new ArrayList<>();
     private ArrayList<Double> listeY = new ArrayList<>();
     private Map<Integer, Coordonnees> coordonneesChiffres;
-
     private GestionMusique musique = new GestionMusique();
 
 
-    /**
-     * Constructeur
-     */
     public VueRoue() {
+        Roue.setPrefSize(220, 220);
+        Roue.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
+        Roue.setMinSize(USE_PREF_SIZE, USE_PREF_SIZE);
+
         drawDecorationBottom();
         drawSegments();
 
@@ -67,13 +58,21 @@ public class VueRoue {
 
         drawNumbers();
         drawDecorationTop();
-        Roue.getChildren().add(boule.getShape());
+
+        Circle wire = new Circle(110, 110, 80);
+        boule.getShape().setCenterX(110);
+        boule.getShape().setCenterY(30);
+        wire.setFill(Color.TRANSPARENT);
+        wire.setStroke(Color.GOLD);
+        rotateBouleSegment.getChildren().addAll(wire, boule.getShape());
+        Roue.getChildren().add(rotateBouleSegment);
+
         //coordonnes 0 => 0,-160;
         //centre de rotation 0,-80
 
     }
 
-    public Group getRoue() {
+    public Pane getRoue() {
         return Roue;
     }
 
@@ -84,13 +83,9 @@ public class VueRoue {
         for (int i = 0; i < 37; i++) {
             Arc arc = new Arc();
             arc.setStroke(Color.GOLD);
-            if (i == 0) {
-                arc.setFill(Color.GREEN);
-            } else if (i % 2 == 0) {
-                arc.setFill(Color.RED);
-            } else {
-                arc.setFill(Color.BLACK);
-            }
+            if (i == 0) arc.setFill(Color.GREEN);
+            else if (i % 2 == 0) arc.setFill(Color.RED);
+            else arc.setFill(Color.BLACK);
             arc.setCenterX(110.0f);
             arc.setCenterY(110.0f);
             arc.setRadiusX(110.0f);
@@ -163,11 +158,6 @@ public class VueRoue {
         wheelCentre.setEffect(dropShadow());
         decoration.getChildren().add(wheelCentre);
 
-        Circle wire = new Circle(110, 110, 80);
-        wire.setFill(Color.TRANSPARENT);
-        wire.setStroke(Color.GOLD);
-        decoration.getChildren().add(wire);
-
         Circle circle = new Circle(110, 110, 25);
         Rectangle rec1 = new Rectangle(105, 100, 5, 50);
         Rectangle rec2 = new Rectangle(100, 105, 50, 5);
@@ -188,33 +178,34 @@ public class VueRoue {
     }
 
     public void animation(Nombres gagnant) {
-        double angleRotation = START_ANGLE + gagnant.getAngle();  // Angle de rotation de la boule
 
-        // -- sons de la roue -- //
         String sonsRoulette = "ihm/src/main/resources/musique/sonsRoulette.mp3";
         musique.setMusique(sonsRoulette);
         musique.setVolume(0.2);
         musique.lireMusique();
 
-        // Création du cercle
-        Circle path = new Circle(110, -130, 80);
+        double numberAngle = numberSet.getAngle(gagnant.getNumber());
+        int finalAngleRotation = (int) (360 * 2.5 + numberAngle);
 
-        // Création de l'animation de déplacement le long du cercle
-        PathTransition pathTransition = new PathTransition(Duration.seconds(1), path, boule.getShape());
-        pathTransition.setCycleCount(5);
-        pathTransition.setInterpolator(Interpolator.LINEAR);
-
-        Duration tempsRoue = Duration.seconds(5);
-        RotateTransition rotateTransitionRoue = new RotateTransition(tempsRoue, Roue);
-        rotateTransitionRoue.setFromAngle(-currentRotationAngle);
-        rotateTransitionRoue.setToAngle(-currentRotationAngle - 1631);
-        rotateTransitionRoue.play();
-
-        // Lecture simultanée des deux animations
+        RotateTransition rotateTransitionBoule = new RotateTransition(Duration.seconds(4), rotateBouleSegment);
+        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(4), Roue);
         ParallelTransition parallelTransition = new ParallelTransition();
-        parallelTransition.getChildren().addAll(pathTransition, rotateTransitionRoue);
+
+        rotateTransitionBoule.setFromAngle(angleRotation);
+        rotateTransitionBoule.setToAngle(finalAngleRotation);
+        rotateTransition.setFromAngle(angleRotation);
+        rotateTransition.setToAngle(-finalAngleRotation);
+        parallelTransition.getChildren().addAll(rotateTransitionBoule, rotateTransition);
         parallelTransition.play();
+
+        parallelTransition.setOnFinished(event -> {
+            angleRotation = finalAngleRotation;
+        });
     }
+
+
+
+
 
     public Map<Integer, Coordonnees> getCoordonneesChiffres() {
         return coordonneesChiffres;

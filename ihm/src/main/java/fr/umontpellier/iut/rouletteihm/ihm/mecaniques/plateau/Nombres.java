@@ -10,9 +10,6 @@ public class Nombres {
     private int colonne;
     private int angleRoulette;
 
-    public Nombres() {
-    }
-
     public Nombres(int num, String col, int angle) {
         this.nombre = num;
         this.couleur = col;
