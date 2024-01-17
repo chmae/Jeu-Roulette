@@ -164,7 +164,7 @@ public class RouletteIHM extends Application {
         vueDuJeu.creerBindings();
 
         primaryStage.setScene(scene);
-        primaryStage.setTitle("BigRoulette");
+        primaryStage.setTitle("🎰SteamRoulette🎰");
         primaryStage.show();
 
         roulette.finDePartieProperty().addListener(finDuJeu);

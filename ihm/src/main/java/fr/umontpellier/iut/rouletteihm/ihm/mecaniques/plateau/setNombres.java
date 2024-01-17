@@ -3,11 +3,15 @@ package fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau;
 
 import java.util.*;
 
+// Classe représentant l'ensemble des nombres possibles sur la roulette
 public class setNombres {
 
+    // Liste pour stocker les objets Nombres représentant les nombres possibles
     private List<Nombres> numberSet = new ArrayList<Nombres>();
 
+    // Constructeur de la classe pour initialiser l'ensemble des nombres possibles
     public setNombres() {
+        // Ajout de chaque nombre avec ses caractéristiques dans la liste
         numberSet.add(new Nombres(0, "V", 180));
         numberSet.add(new Nombres(1, "R", 44));
         numberSet.add(new Nombres(2, "B", 238));
@@ -45,8 +49,10 @@ public class setNombres {
         numberSet.add(new Nombres(34, "R", 268));
         numberSet.add(new Nombres(35, "B", 151));
         numberSet.add(new Nombres(36, "R", 306));
+        // Note: "V" pour "Vert", "R" pour "Rouge" et "B" pour "Noir" (peut varier selon la convention)
     }
 
+    // Méthode pour obtenir l'ensemble des nombres possibles
     public List<Nombres> getNumberSet() {
         return numberSet;
     }

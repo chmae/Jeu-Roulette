@@ -6,9 +6,13 @@ import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.utils.Interaction;
 
 import java.util.ArrayList;
 
-
+//CLasse qui permet de jouer une partie de roulette
 public class JouerPartie {
+
+    // Attributs privés de la classe JouerPartie
     private static final String nomJeu = "roulette";
+
+    // Tableau de paris possibles
     private final Bet[] bets = {
             new RougeNoir("Rouge ou Noir", 2),
             new PairImpair("Pair ou impair", 2),
@@ -21,18 +25,23 @@ public class JouerPartie {
 //            new Transversale("Transversale", 12),
 //            new Sixain("Sixain", 6),
     };
+
+    // Attributs privés de la classe JouerPartie
     private final Roulette roulette;
     private Roulette.resultatTour resultatTour;
 
 
+    // Constructeur de la classe JouerPartie
     public JouerPartie() {
         roulette = new Roulette();
     }
 
+    // Méthode pour obtenir le nom du jeu
     public void setResultatTour(Roulette.resultatTour resultatTour) {
         this.resultatTour = resultatTour;
     }
 
+    // Méthode pour obtenir le résultat du tour de roulette
     public void jouerOuPasser(Joueur joueur) {
         String jouerOuAttendre = Interaction.saisirParmiChoix("Voulez-vous jouer ou passer ? ", "jouer", "passer");
         if (jouerOuAttendre.equals("passer")) {
@@ -42,6 +51,7 @@ public class JouerPartie {
         }
     }
 
+    // Méthode pour passer le tour
     public void passerTour() {
         System.out.println("\nVous avez choisi de passer votre tour.");
         System.out.println("La roulette commence à tourner !");
@@ -57,12 +67,14 @@ public class JouerPartie {
         System.out.println("Le numéro tiré est : " + resultatTour.getValeur() + " " + resultatTour.getCouleur());
     }
 
+    // Méthode pour miser un certain nombre de jetons
     public int miser(Joueur joueur) {
         int mise = Interaction.saisirPlageMinMax("Veuillez saisir votre mise :", 1, joueur.getMonArgent());
         joueur.miseAJourBanque(-mise);
         return mise;
     }
 
+    // Méthode pour choisir un pari
     public Bet choisirBet() {
         System.out.println("\nVeuillez choisir un pari parmis les suivants :");
         for (int i = 0; i < bets.length; i++) {
@@ -72,6 +84,7 @@ public class JouerPartie {
         return bets[choix - 1];
     }
 
+    // Méthode pour calculer le gain par pari
     public int[] gainParBet(ArrayList<Bet> bets, ArrayList<Integer> mise) {
         int[] gainTotaux = new int[bets.size()];
         for (int i = 0; i < bets.size(); i++) {
@@ -82,6 +95,7 @@ public class JouerPartie {
         return gainTotaux;
     }
 
+    // Méthode pour jouer une partie de roulette
     public void jouer(Joueur joueur) {
         System.out.println("\nVous avez choisi de jouer !");
         ArrayList<Bet> bets = new ArrayList<>();
