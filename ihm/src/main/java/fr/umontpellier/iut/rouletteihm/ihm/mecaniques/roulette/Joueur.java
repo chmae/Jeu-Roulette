@@ -139,6 +139,14 @@ public class Joueur implements IJoueur {
             listeNomsParis.add(nomParis);
             if (nombreParies.size() == 1) {
                 ajouterMultiplicateurParis(36, nombreParies);
+            } else if (nombreParies.size() == 2){
+                ajouterMultiplicateurParis(18, nombreParies);
+            } else if (nombreParies.size() == 3){
+                ajouterMultiplicateurParis(12, nombreParies);
+            } else if (nombreParies.size() == 4){
+                ajouterMultiplicateurParis(9, nombreParies);
+            } else if (nombreParies.size() == 6){
+                ajouterMultiplicateurParis(6, nombreParies);
             } else if (nombreParies.size() == 12) {
                 ajouterMultiplicateurParis(3, nombreParies);
             } else {
