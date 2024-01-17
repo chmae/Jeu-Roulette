@@ -2,11 +2,8 @@ package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.RouletteIHM;
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.Boule;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.CreationTable;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.Joueur;
-import fr.umontpellier.iut.rouletteihm.ihm.vues.VueInscription;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.beans.property.IntegerProperty;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -23,8 +20,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.StatistiquesRoulette;
@@ -289,11 +284,6 @@ public class VueDuJeu extends GridPane {
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> vueWin.getStage().close()));
         timeline.play();
     }
-
-   /* private int calculPerteWin() {
-        return jeu.joueurCourantProperty().get().getMiseTotale()-montantsParis.get(jeu.getResultatTourActuel().getValeur());
-    }*/
-
 
     //Méthode qui permet d'afficher la popup de défaite
     private void whenLose() {
