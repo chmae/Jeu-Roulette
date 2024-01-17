@@ -46,12 +46,13 @@ public class VueBet extends GridPane {
     private BooleanProperty validation;
     private boolean ok;
     private IntegerProperty langueChoisie;
+    private static VueBet instance;
 
     public void setOk(boolean bool) {
         ok = bool;
     }
 
-    public VueBet(IJeu jeu, IntegerProperty langueChoisie) {
+    private VueBet(IJeu jeu, IntegerProperty langueChoisie) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueBet.fxml"));
             loader.setController(this);
@@ -104,6 +105,13 @@ public class VueBet extends GridPane {
             LabelInstruction.setText("How much do you want to bet ?");
         }
         ok = false;
+    }
+
+    public synchronized static VueBet getInstance(IJeu jeu, IntegerProperty langueChoisie) {
+        if (instance == null) {
+            instance = new VueBet(jeu, langueChoisie);
+        }
+        return instance;
     }
 
     private void HoverImage(ImageView imageView) {
@@ -212,9 +220,9 @@ public class VueBet extends GridPane {
                 }
             } else {
                 if (this.langueChoisie.getValue() == 0) {
-                    LabelInstruction.setText("Paris confirmé(s), roulette lancée ! ");
+                    LabelInstruction.setText("Paris confirmé(s) !");
                 } else {
-                    LabelInstruction.setText("Bets confirmed, roulette launched !");
+                    LabelInstruction.setText("Bets confirmed !");
                 }
                 try {
                     Thread.sleep(500);

@@ -63,7 +63,7 @@ public class VueDuJeu extends GridPane {
 
         autresJoueurs = new VueAutresJoueurs(jeu, joueurs);
 
-        vueBet = new VueBet(jeu, autresJoueurs.getLangueChoisie());
+        vueBet = VueBet.getInstance(jeu, autresJoueurs.getLangueChoisie());
         labelInstructions = vueBet.getLabelInstruction();
         table = new CreationTable(jeu, labelInstructions, vueBet, autresJoueurs.getLangueChoisie());
 //        listesParis = new ArrayList<>();
@@ -204,6 +204,7 @@ public class VueDuJeu extends GridPane {
                 statistiquesRoulette.enregistrerResultat(jeu.getResultatTourActuel());
                 statistiquesRoulette.afficherStatistique();
                 numeroJoueurJouant = 0;
+                vueBet.validationProperty().set(false);
 
             }
             jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
@@ -285,6 +286,7 @@ public class VueDuJeu extends GridPane {
                     }
                     jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
                     numeroJoueurJouant=0;
+                    vueBet.validationProperty().set(false);
 
                     try {
                         Thread.sleep(1000);
@@ -294,7 +296,7 @@ public class VueDuJeu extends GridPane {
                 });
 
                 pauseTransition.play();
-            } else if(newValue){
+            } else if(newValue) {
                 numeroJoueurJouant++;
                 vueBet.validationProperty().set(false);
                 jeu.joueurCourantProperty().set(joueurs.get(numeroJoueurJouant));
