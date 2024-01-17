@@ -26,6 +26,11 @@ import java.util.ArrayList;
 
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.StatistiquesRoulette;
 
+/**
+ * Classe VueDuJeu qui permet de créer la vue du jeu avec toutes les autres vues (VuePlateau, VueBet, VueJoueurCourant, VueAutresJoueurs, VueDroite, VueGauche, VuePlayerInfo)
+ * Elle permet aussi de créer les bindings entre les différentes vues
+ * Elle permet aussi de créer les actions des boutons
+ */
 public class VueDuJeu extends GridPane {
     private IJeu jeu;
     private VuePlateau plateau;
@@ -125,10 +130,12 @@ public class VueDuJeu extends GridPane {
         });
     }
 
+    // Méthode qui permet de retourner la vue du plateau
     public CreationTable getTable() {
         return table;
     }
 
+    // Méthode qui permet de créer les bindings entre les différentes vues
     public void creerBindings() {
         plateau.prefWidthProperty().bind(widthProperty());
         plateau.prefHeightProperty().bind(heightProperty());
@@ -167,14 +174,15 @@ public class VueDuJeu extends GridPane {
                     // Uniquement pour le sprint 2 (1 joueur)
                     vueBet.validationProperty().set(false);
                     if (autresJoueurs.getLangueChoisie().getValue() == 0) {
-                        labelInstructions.setText("Le " + jeu.getResultatTourActuel().getValeur() + " " + jeu.getResultatTourActuel().getCouleur() + " est tombé ! Misez pour rejouer");
+                        labelInstructions.setText("Le " + jeu.getResultatTourActuel().getValeur() + " " + jeu.getResultatTourActuel().getCouleur() + " est tombé !");
+
                     } else {
                         if (jeu.getResultatTourActuel().getCouleur().equals("Noir")) {
-                            labelInstructions.setText("The Black " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                            labelInstructions.setText("The Black " + jeu.getResultatTourActuel().getValeur() + " was selected !");
                         } else if (jeu.getResultatTourActuel().getCouleur().equals("Rouge")) {
-                            labelInstructions.setText("The Red " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                            labelInstructions.setText("The Red " + jeu.getResultatTourActuel().getValeur() + " was selected !");
                         } else {
-                            labelInstructions.setText("The Green " + jeu.getResultatTourActuel().getValeur() + " was selected ! Bet to play again");
+                            labelInstructions.setText("The Green " + jeu.getResultatTourActuel().getValeur() + " was selected !");
                         }
                     }
                     jeu.tournerTour();
@@ -210,6 +218,7 @@ public class VueDuJeu extends GridPane {
 
     Stage primaryStage = RouletteIHM.getPrimaryStage();
 
+    //Méthode qui permet d'afficher la popup de victoire
     public void whenWin() {
         System.out.println(montantsParis.toString());
         System.out.println(multiplicateursGain.toString());
@@ -227,7 +236,6 @@ public class VueDuJeu extends GridPane {
         Duration pauseDuration = Duration.seconds(5);
         Timeline timeline = new Timeline(new KeyFrame(pauseDuration, event -> vueWin.getStage().close()));
         timeline.play();
-
     }
 
    /* private int calculPerteWin() {
@@ -235,6 +243,7 @@ public class VueDuJeu extends GridPane {
     }*/
 
 
+    //Méthode qui permet d'afficher la popup de défaite
     private void whenLose() {
         jeu.joueurCourantProperty().get().miseAJourBanque(-jeu.joueurCourantProperty().get().getMiseTotale());
         labelInstructions.setText("Perdu !");
@@ -247,6 +256,7 @@ public class VueDuJeu extends GridPane {
         timeline.play();
     }
 
+    // Méthode qui permet de retourner l'instance de la classe
     public static VueDuJeu getInstance() {
         return instance;
     }
@@ -254,7 +264,6 @@ public class VueDuJeu extends GridPane {
     public void resetPartie() {
         jeu.tournerTour();
     }
-
 
     public IJeu getJeu() {
         return jeu;

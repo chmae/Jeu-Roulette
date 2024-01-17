@@ -22,7 +22,9 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
-
+/**
+ * Vue associée à la fenêtre de réglages.
+ */
 public class VueParametre {
 
     @FXML
@@ -62,6 +64,11 @@ public class VueParametre {
     private ImageView music;
 
 
+    /**
+     * Constructeur
+     *
+     * @param p Stage de la fenêtre principale
+     */
     private VueParametre(Stage p, GestionMusique gestionmusique) {
         primaryStage = p;
 
@@ -190,6 +197,7 @@ public class VueParametre {
         this.show();
     }
 
+    // Cette méthode permet de faire un effet de zoom sur un label
     private void scaleLabel(Label label, double scaleFactor) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), label);
         scaleTransition.setToX(scaleFactor);
@@ -235,6 +243,7 @@ public class VueParametre {
         });
     }
 
+    // Cette méthode permet de changer la langue de l'application
     private void creerBindingsLangue(ImageView imageView, int langue) {
         EventHandler<MouseEvent> langueChange = mouseEvent -> {
             this.langue.set(langue);
