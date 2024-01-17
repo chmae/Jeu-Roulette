@@ -102,9 +102,9 @@ public class VueJoueurCourant extends GridPane {
             joueur.setMiseTotale(0);
             joueur.setMiseActuelle(0);
             if (langueChoisie.intValue() == 0) {
-                labelInstructions.setText("Quelle valeur voulez-vous miser ?");
+                labelInstructions.setText(jeu.joueurCourantProperty().get().getNom()+", à toi de jouer !");
             } else {
-                labelInstructions.setText("Which value do you want to bet?");
+                labelInstructions.setText(jeu.joueurCourantProperty().get().getNom()+", it's your turn !");
             }
         });
 
