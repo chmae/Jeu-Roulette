@@ -148,6 +148,26 @@ public class ClientService {
             throw new ServiceException("Erreur lors de la création de la session Hibernate.");
         }
     }
+    /**
+     * Récupère le solde d'un client depuis la base de données.
+     *
+     * @param clientId L'identifiant du client dont on veut récupérer le solde.
+     * @return Le solde du client.
+     * @throws ServiceException Si une erreur survient lors de la récupération du solde.
+     */
+    public int getSolde(int clientId) throws ServiceException {
+        try (Session session = DBUtils.getSession()) {
+            Client client = session.get(Client.class, clientId);
+            if (client != null) {
+                return client.getSolde();
+            } else {
+                throw new ServiceException("Client non trouvé avec l'ID : " + clientId);
+            }
+        } catch (HibernateException e) {
+            throw new ServiceException("Erreur lors de la récupération du solde depuis la base de données.");
+        }
+    }
+
 
 
     /**

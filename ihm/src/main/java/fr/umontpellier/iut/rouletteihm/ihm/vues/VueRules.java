@@ -1,56 +1,63 @@
 package fr.umontpellier.iut.rouletteihm.ihm.vues;
 
-import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.image.ImageView;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+
 public class VueRules extends Pane {
-    @FXML
-    private ImageView quit;
-
-    @FXML
-    private Pane pane;
-
 
     public VueRules() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueRules.fxml"));
-            loader.setController(this);
-            Parent root = loader.load();
-            quit = (ImageView) root.lookup("#quit");
-            pane = (Pane) root.lookup("#pane");
-            getChildren().add(root);
-            quit.setOnMouseClicked(event -> {
-                // sons bouton quit //
-                GestionMusique sonsBoutonQuit = new GestionMusique();
-                String cheminAudioBouton = "ihm/src/main/resources/musique/sonsBouton.mp3";
-                sonsBoutonQuit.setMusique(cheminAudioBouton);
-                sonsBoutonQuit.setVolume(0.2);
-                sonsBoutonQuit.lireMusique();
-                sonsBoutonQuit.remettreMusiqueAuDebut();
-                fermerFenetre();
-
-            });
-
-            quit.setOnMouseEntered(event -> quit.setOpacity(0.7));
-            quit.setOnMouseExited(event -> quit.setOpacity(1.0));
+            String lienPDF = "ihm/src/main/resources/documents/Casino-Rules.pdf";
+            getChildren().add(createCenteredNode(createPDFLink(lienPDF)));
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
-    public void fermerFenetre() {
-        if (pane.getScene() != null) {
-            Stage stage = (Stage) pane.getScene().getWindow();
-            stage.close();
-        } else {
-            System.err.println("Erreur : la scène est nulle, impossible de fermer la fenêtre.");
-        }
+    private Node createCenteredNode(Node content) {
+        VBox centeredBox = new VBox(content);
+        centeredBox.setAlignment(Pos.CENTER);
+        return centeredBox;
+    }
+
+    private Node createPDFLink(String lienPDF) {
+        Hyperlink pdfLink = new Hyperlink("Règles du jeu !");
+
+        DropShadow dropShadow = new DropShadow();
+        pdfLink.setEffect(dropShadow);
+
+        pdfLink.setOnAction(event -> {
+            try {
+                if (Desktop.isDesktopSupported()) {
+                    Desktop desktop = Desktop.getDesktop();
+                    if (desktop.isSupported(Desktop.Action.OPEN)) {
+                        URI pdfURI = new File(lienPDF).toURI();
+                        desktop.open(new File(pdfURI));
+                    } else {
+                        System.err.println("L'ouverture de fichiers n'est pas prise en charge sur cette plateforme.");
+                    }
+                } else {
+                    System.err.println("Le bureau n'est pas pris en charge sur cette plateforme.");
+                }
+            } catch (IOException e) {
+                System.err.println("Erreur lors de l'ouverture du fichier PDF : " + e.getMessage());
+            }
+        });
+        pdfLink.setStyle("-fx-font-size: 20; -fx-text-fill: white; -fx-font-weight: bold;  -fx-border-width: 0; -fx-border-radius: 0;");
+
+        pdfLink.setTranslateX(250);
+        pdfLink.setTranslateY(150);
+
+        return pdfLink;
     }
 }

@@ -50,4 +50,9 @@ public class setNombres {
     public List<Nombres> getNumberSet() {
         return numberSet;
     }
+
+    public int getAngle(int num) {
+        for (Nombres n : numberSet) if (n.getNumber() == num) return n.getAngle();
+        return 0;
+    }
 }

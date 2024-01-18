@@ -36,6 +36,12 @@ public class NouvelClientController {
     private RouletteIHM rouletteIHM = RouletteIHM.getInstance();
     private String prenoom;
 
+    /**
+     * Méthode appelée lors de la création d'un nouveau client.
+     * Effectue des vérifications sur les champs du formulaire, puis crée le client et le connecte.
+     *
+     * @throws ServiceException Si une erreur survient lors de la création du client.
+     */
     @FXML
     public void creerClient() throws ServiceException {
         String nom = this.nom.getText();
@@ -51,7 +57,20 @@ public class NouvelClientController {
             alert.showAndWait();
             return;
         }
+        if (!nom.matches("[a-zA-Z]+") || !prenoom.matches("[a-zA-Z]+")) {
+            AfficherErreur("Erreur de format", "Le nom ou le prénom contient des caractères non autorisés.");
+            return;
+        }
 
+        if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
+            AfficherErreur("Format d'email incorrect", "Veuillez saisir une adresse email valide.");
+            return;
+        }
+
+        if (password.length() < 6 || passwordConfirm.length() < 6) {
+            AfficherErreur("Mot de passe trop court", "Le mot de passe doit contenir au moins 6 caractères.");
+            return;
+        }
         ChoixSoldeDialog dialog = new ChoixSoldeDialog();
         dialog.initOwner(pane.getScene().getWindow());
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -82,7 +101,27 @@ public class NouvelClientController {
             System.out.println("Annulation de la création du compte.");
         }
     }
+    /**
+     * Affiche une boîte de dialogue d'erreur avec le titre et le message spécifiés.
+     *
+     * @param titre   Le titre de la boîte de dialogue.
+     * @param message Le message de la boîte de dialogue.
+     */
+    private void AfficherErreur(String titre, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(titre);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
+    /**
+     * Méthode appelée lors de la validation du formulaire avec la touche ENTER.
+     * Appelle la méthode `creerClient` pour effectuer la création du client.
+     *
+     * @param keyEvent L'événement de la touche clavier.
+     * @throws ServiceException Si une erreur survient lors de la création du client.
+     */
     @FXML
     public void validerFormulaire(KeyEvent keyEvent) throws ServiceException {
         if (keyEvent.getCode() == KeyCode.ENTER) {
