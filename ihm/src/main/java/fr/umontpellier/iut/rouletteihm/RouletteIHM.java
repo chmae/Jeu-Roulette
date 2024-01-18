@@ -1,6 +1,7 @@
 package fr.umontpellier.iut.rouletteihm;
 
 import fr.umontpellier.iut.rouletteihm.application.controller.client.NouvelClientController;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.CreationTable;
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.roulette.Joueur;
@@ -64,9 +65,11 @@ public class RouletteIHM extends Application {
                 stage.close();
             });
             vueAccueil.getConnexion().setOnMouseClicked(mouseEvent -> {
+                vueAccueil.getMusique().arreterMusique();
                 vueAccueil.afficherConnexionPopup();
             });
             vueAccueil.getInscription().setOnMouseClicked(mouseEvent -> {
+                vueAccueil.getMusique().arreterMusique();
                 vueAccueil.afficherInscriptionPopup();
             });
             vueAccueil.getInfo().setOnMouseClicked(mouseEvent -> {
@@ -82,6 +85,8 @@ public class RouletteIHM extends Application {
     }
 
     public void demarrerPartie(String nomJoueur, int solde) {
+        GestionMusique g = new GestionMusique();
+        g.arreterMusique();
         roulette = new Roulette();
         jeu = roulette;
 
@@ -108,37 +113,9 @@ public class RouletteIHM extends Application {
         roulette.run(joueur);
 
         primaryStage.setScene(scene);
-        primaryStage.setTitle("BigRoulette");
+        primaryStage.setTitle("SteamRoulette");
         primaryStage.show();
 
-        roulette.finDePartieProperty().addListener(finDuJeu);
-    }
-
-
-    ChangeListener<Boolean> finDuJeu = new ChangeListener<>() {
-        @Override
-        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-            if (t1) {
-                closeStage();
-                if (conditionDeFinDeJeu()) {
-                    openStage();
-                    System.out.println("Fin du jeu. Résultat final :");
-
-                    // Peut-être on pourra ajouter une fin de jeu genre en mode la gérer
-
-                    primaryStage.close();//si on veut fermer la fenêtre principale
-                } else {
-                    String choix = Interaction.saisirParmiChoix("Voulez-vous continuer ou quitter ?", "continuer", "quitter");
-                    if (choix.equals("quitter")) {
-                        primaryStage.close();
-                    }
-                }
-            }
-        }
-    };
-
-    private boolean conditionDeFinDeJeu() {
-        return false;
     }
 
     public void closeStage() {
@@ -159,10 +136,6 @@ public class RouletteIHM extends Application {
 
     public VueAccueil getVueAccueil() {
         return vueAccueil;
-    }
-
-    public VueInscription getVueInscription() {
-        return vueInscription;
     }
 
     public static RouletteIHM getInstance() {

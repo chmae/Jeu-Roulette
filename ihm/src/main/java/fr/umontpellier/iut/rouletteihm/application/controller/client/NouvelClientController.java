@@ -71,6 +71,11 @@ public class NouvelClientController {
             AfficherErreur("Mot de passe trop court", "Le mot de passe doit contenir au moins 6 caractères.");
             return;
         }
+        if (!password.equals(passwordConfirm)) {
+            AfficherErreur("Mots de passe non identiques", "Les mots de passe saisis ne sont pas identiques.");
+            return;
+        }
+
         ChoixSoldeDialog dialog = new ChoixSoldeDialog();
         dialog.initOwner(pane.getScene().getWindow());
         dialog.initModality(Modality.APPLICATION_MODAL);

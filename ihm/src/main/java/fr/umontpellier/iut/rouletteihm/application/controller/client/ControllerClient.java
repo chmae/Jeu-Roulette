@@ -280,13 +280,27 @@ public class ControllerClient {
      */
     @FXML
     public void updatePrenom() {
+        if (!isUtilisateurConnecte()) {
+            afficherErreurNonConnecte();
+            nom.setText("");
+            return;
+        }
+
+        String nouveauPrenom = nom.getText().trim();
+
+        // Vérification que le nouveau prénom ne contient que des lettres
+        if (!nouveauPrenom.matches("^[a-zA-Z]+$")) {
+            afficherErreurFormat();
+            nom.setText("");
+            return;
+        }
+
         try (Session session = DBUtils.getSession()) {
             Transaction transaction = session.beginTransaction();
             try {
                 ClientService clientService = ClientService.getInstance();
                 int idClientConnecte = getIdClientConnecte();
 
-                String nouveauPrenom = nom.getText();
                 clientService.updatePrenom(idClientConnecte, nouveauPrenom);
                 Platform.runLater(() -> {
                     setPrenomClient(nouveauPrenom);
@@ -297,7 +311,6 @@ public class ControllerClient {
                     System.out.println("Nom joueur mis à jour avec succès : " + nouveauPrenom);
                     nom.setText("");
                 });
-
 
                 transaction.commit();
             } catch (ServiceException e) {
@@ -317,12 +330,26 @@ public class ControllerClient {
      */
     @FXML
     public void updateSolde() {
+        if (!isUtilisateurConnecte()) {
+            afficherErreurNonConnecte();
+            solde.setText("");
+            return;
+        }
+
+        String nouveauSoldeText = solde.getText().trim();
+
+        if (!nouveauSoldeText.matches("^\\d+$") || Integer.parseInt(nouveauSoldeText) <= 0) {
+            afficherErreurFormat();
+            solde.setText("");
+            return;
+        }
+
         try {
             ClientService clientService = ClientService.getInstance();
 
             int idClientConnecte = getIdClientConnecte();
             int soldeActuel = clientService.getSolde(idClientConnecte);
-            int nouveauSolde = Integer.parseInt(solde.getText());
+            int nouveauSolde = Integer.parseInt(nouveauSoldeText);
 
             if (nouveauSolde != soldeActuel) {
                 clientService.mettreAJourSolde(idClientConnecte, nouveauSolde);
@@ -343,5 +370,23 @@ public class ControllerClient {
             e.printStackTrace();
         }
     }
+
+
+    private void afficherErreurNonConnecte() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText("Action non autorisée");
+        alert.setContentText("Vous devez être connecté pour effectuer cette action.");
+        alert.showAndWait();
+    }
+
+    private void afficherErreurFormat() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur de format");
+        alert.setHeaderText(null);
+        alert.setContentText("Format incorrect. Veuillez saisir des données valides.");
+        alert.showAndWait();
+    }
+
 
 }

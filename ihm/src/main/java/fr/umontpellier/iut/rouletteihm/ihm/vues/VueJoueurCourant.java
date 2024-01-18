@@ -23,9 +23,6 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-/**
- * Vue associée au joueur courant.
- */
 public class VueJoueurCourant extends GridPane {
 
     private IJoueur joueur;
@@ -65,7 +62,6 @@ public class VueJoueurCourant extends GridPane {
     private ImageView passer1;
 
     private static VueJoueurCourant instance;
-
     public VueJoueurCourant(IJeu jeu, Label labelInstructions, IntegerProperty langueChoisie) {
         instance = this;
         try {
@@ -99,9 +95,6 @@ public class VueJoueurCourant extends GridPane {
         clignoterThread.start();
     }
 
-    /**
-     * Crée les bindings entre les propriétés du joueur courant et les éléments graphiques JavaFX.
-     */
     public void creerBindings() {
         jeu.joueurCourantProperty().addListener((observableValue, iJoueur, t1) -> {
             joueur = t1;
@@ -127,13 +120,13 @@ public class VueJoueurCourant extends GridPane {
         });
     }
 
+
     private void hoverImagePasser(ImageView imageView) {
         DropShadow dropShadow = new DropShadow();
         dropShadow.setColor(Color.GOLD);
         dropShadow.setRadius(11);
         dropShadow.setSpread(0.6);
 
-        // Création des transitions
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(200), imageView);
         FillTransition fillTransition = new FillTransition(Duration.millis(200));
 
@@ -187,7 +180,6 @@ public class VueJoueurCourant extends GridPane {
             this.couronne = couronne;
         }
 
-        // Méthode exécutée dans le thread
         @Override
         public void run() {
             try {
@@ -230,3 +222,4 @@ public class VueJoueurCourant extends GridPane {
     }
 
 }
+

@@ -22,7 +22,7 @@
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="45.0" layoutY="72.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
-                <Image url="@../images/title.png"/>
+                <Image url="@../images/steamroulette.png"/>
             </image>
         </ImageView>
         <ImageView fx:id="jouer" fitHeight="50.0" fitWidth="100.0" layoutX="100.0" layoutY="187.0" pickOnBounds="true"

@@ -9,3 +9,4 @@ public class VueRoulette {
 
     private final Boule ball = new Boule();
 }
+
