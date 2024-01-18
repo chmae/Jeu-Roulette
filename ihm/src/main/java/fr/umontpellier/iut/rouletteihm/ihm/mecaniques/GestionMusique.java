@@ -115,8 +115,5 @@ public class GestionMusique {
             mediaPlayer.setVolume(volume);
         }
     }
-    public boolean estEnCoursDeLecture() {
-        return (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING);
-    }
 }
 

@@ -85,8 +85,6 @@ public class RouletteIHM extends Application {
     }
 
     public void demarrerPartie(String nomJoueur, int solde) {
-        GestionMusique g = new GestionMusique();
-        g.arreterMusique();
         roulette = new Roulette();
         jeu = roulette;
 

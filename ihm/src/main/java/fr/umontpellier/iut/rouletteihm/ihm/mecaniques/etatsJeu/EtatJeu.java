@@ -12,11 +12,6 @@ public class EtatJeu {
         joueurCourant = roulette.getJoueurCourant();
     }
 
-    public void demarrerPartie() {
-    }
-
-    public void prochainTour() {
-    }
 
 
 }

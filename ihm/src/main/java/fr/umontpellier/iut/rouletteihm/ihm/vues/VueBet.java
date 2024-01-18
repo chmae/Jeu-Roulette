@@ -52,6 +52,7 @@ public class VueBet extends GridPane {
     }
 
     public VueBet(IJeu jeu, IntegerProperty langueChoisie) {
+        this.jeu = jeu;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueBet.fxml"));
             loader.setController(this);
@@ -95,7 +96,6 @@ public class VueBet extends GridPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.jeu = jeu;
         this.langueChoisie = langueChoisie;
         setId("vueBet");
         if (langueChoisie.getValue() == 0) {
@@ -148,7 +148,6 @@ public class VueBet extends GridPane {
         };
 
         jeton.addEventHandler(MouseEvent.MOUSE_CLICKED, miseJoueurChange);
-
     }
 
     private void HoverImageValider(ImageView imageView) {
@@ -226,5 +225,11 @@ public class VueBet extends GridPane {
         };
 
         valider.addEventHandler(MouseEvent.MOUSE_CLICKED, validationJoueur);
+        jeu.joueurCourantProperty().get().getMiseTotaleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() == 0) {
+                validation.set(false);
+            }
+        });
+
     }
 }

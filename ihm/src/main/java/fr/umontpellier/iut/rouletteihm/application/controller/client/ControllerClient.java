@@ -4,9 +4,11 @@ import com.gasquet.hrepositories.utils.DBUtils;
 import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.application.service.ClientService;
 import fr.umontpellier.iut.rouletteihm.application.service.exception.ServiceException;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueAccueil;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueAutresJoueurs;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueJoueurCourant;
+import fr.umontpellier.iut.rouletteihm.ihm.vues.VueParametre;
 import fr.umontpellier.iut.rouletteihm.metier.entite.Client;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -87,7 +89,6 @@ public class ControllerClient {
         }
         return instance;
     }
-
     /**
      * Méthode appelée lors de la tentative de connexion.
      * Vérifie les informations d'identification et connecte l'utilisateur le cas échéant.
@@ -288,7 +289,6 @@ public class ControllerClient {
 
         String nouveauPrenom = nom.getText().trim();
 
-        // Vérification que le nouveau prénom ne contient que des lettres
         if (!nouveauPrenom.matches("^[a-zA-Z]+$")) {
             afficherErreurFormat();
             nom.setText("");
