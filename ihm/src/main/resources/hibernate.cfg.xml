@@ -5,7 +5,8 @@
 <hibernate-configuration>
     <session-factory>
 
-        <property name="hibernate.connection.url">jdbc:mariadb://webinfo.iutmontp.univ-montp2.fr:3316/asiamarc</property>
+        <property name="hibernate.connection.url">jdbc:mariadb://webinfo.iutmontp.univ-montp2.fr:3316/asiamarc
+        </property>
 
         <property name="connection.username">asiamarc</property>
         <property name="connection.password">jorklanJ4*</property>

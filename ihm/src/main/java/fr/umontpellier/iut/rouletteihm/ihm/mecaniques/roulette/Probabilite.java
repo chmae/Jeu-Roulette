@@ -20,6 +20,7 @@ public class Probabilite {
 
     /**
      * Constructeur de la classe Probabilite
+     *
      * @param seed la seed à utiliser pour le calcul
      */
     public Probabilite(long seed) {
@@ -30,6 +31,7 @@ public class Probabilite {
 
     /**
      * Méthode permettant de calculer le prochain nombre aléatoire
+     *
      * @param min le minimum du nombre aléatoire
      * @param max le maximum du nombre aléatoire
      * @return le nombre aléatoire
@@ -41,10 +43,11 @@ public class Probabilite {
     }
 
 
-/**
+    /**
      * Méthode permettant de calculer la probabilité d'un nombre
-     * @param min le minimum du nombre aléatoire
-     * @param max le maximum du nombre aléatoire
+     *
+     * @param min   le minimum du nombre aléatoire
+     * @param max   le maximum du nombre aléatoire
      * @param value le nombre dont on veut calculer la probabilité
      * @return la probabilité du nombre
      */

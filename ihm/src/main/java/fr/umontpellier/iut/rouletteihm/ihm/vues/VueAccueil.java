@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,14 +41,6 @@ public class VueAccueil extends Pane {
     @FXML
     private ImageView info;
 
-    public CheckBox getMultiplayer() {
-        return multiplayer;
-    }
-
-    @FXML
-    private CheckBox multiplayer;
-
-    private VueChoixJoueurs vueChoixJoueurs;
     private GestionMusique musique = new GestionMusique();
     private VueRules vueRules;
 
@@ -69,10 +60,8 @@ public class VueAccueil extends Pane {
             inscription = (Label) root.lookup("#inscription");
             pane = (Pane) root.lookup("#pane");
             info = (ImageView) root.lookup("#info");
-            multiplayer = (CheckBox) root.lookup("#multiplayer");
             vueInscription = new VueInscription();
             vueConnexion = new VueConnexion();
-            vueChoixJoueurs = new VueChoixJoueurs();
             vueRules = new VueRules();
             getChildren().add(root);
 
@@ -179,22 +168,6 @@ public class VueAccueil extends Pane {
         popupStage.show();
     }
 
-    public void afficherChoixJoueur() {
-        Stage popupStage = new Stage();
-        popupStage.setResizable(false);
-        popupStage.initOwner(getScene().getWindow());
-        popupStage.initModality(Modality.APPLICATION_MODAL);
-        if (!multiplayer.isSelected()) {
-            vueChoixJoueurs.multiplayerIsntSelected();
-        }
-
-        Scene scene = new Scene(vueChoixJoueurs, getScene().getWidth(), getScene().getHeight());
-
-        popupStage.setScene(scene);
-        popupStage.setTitle("Choix joueur");
-        popupStage.show();
-    }
-
 
     // --Getters-- //
     public GestionMusique getMusique() {
@@ -221,15 +194,12 @@ public class VueAccueil extends Pane {
             System.err.println("Erreur : la scène est nulle, impossible de fermer la fenêtre.");
         }
     }
+
     public void ouvrirFenetre() {
         RouletteIHM.getInstance().fonctionnaliteAccueil();
     }
 
     public ImageView getInfo() {
         return info;
-    }
-
-    public VueChoixJoueurs getVueChoixJoueurs() {
-        return vueChoixJoueurs;
     }
 }

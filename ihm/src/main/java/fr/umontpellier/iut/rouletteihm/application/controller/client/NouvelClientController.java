@@ -89,15 +89,8 @@ public class NouvelClientController {
             VueAccueil vueAccueil = rouletteIHM.getVueAccueil();
             if (vueAccueil != null) {
                 vueAccueil.afficherConnexionPopup();
-                rouletteIHM.ajouterJoueur(prenoom, soldeChoisi);
-                //--------------------------------------------------------------------------------------------------------------------------------------
-                if (vueAccueil.getMultiplayer().isSelected()) {
-                    vueAccueil.getVueChoixJoueurs().utilisateurConnecte();
-                    vueAccueil.afficherChoixJoueur();
-                } else {
-                    rouletteIHM.demarrerPartie();
-                    vueAccueil.fermerFenetre();
-                }
+                rouletteIHM.demarrerPartie(prenoom, soldeChoisi);
+                vueAccueil.fermerFenetre();
             } else {
                 System.err.println("Erreur : VueAccueil est null");
             }
@@ -108,6 +101,7 @@ public class NouvelClientController {
             System.out.println("Annulation de la création du compte.");
         }
     }
+
     /**
      * Affiche une boîte de dialogue d'erreur avec le titre et le message spécifiés.
      *

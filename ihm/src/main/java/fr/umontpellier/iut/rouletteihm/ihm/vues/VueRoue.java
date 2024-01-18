@@ -204,9 +204,6 @@ public class VueRoue {
     }
 
 
-
-
-
     public Map<Integer, Coordonnees> getCoordonneesChiffres() {
         return coordonneesChiffres;
     }

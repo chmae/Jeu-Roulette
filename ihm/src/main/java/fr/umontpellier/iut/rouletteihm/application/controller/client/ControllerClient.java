@@ -46,27 +46,18 @@ public class ControllerClient {
     private Pane pane;
     @FXML
     private Pane parametrePane;
-    @FXML
-    private static TextField nom;
-    @FXML
-    private static TextField solde;
 
     private RouletteIHM rouletteIHM = RouletteIHM.getInstance();
-
     private static boolean utilisateurConnecte = false;
 
     private static int idClientConnecte;
 
     private static String prenomClient;
     private static ControllerClient instance;
-
-    public static int getSoldeClient() {
-        return soldeClient;
-    }
-
-    public static String getPrenomClient() {
-        return prenomClient;
-    }
+    @FXML
+    private TextField nom;
+    @FXML
+    private TextField solde;
     private final StringProperty prenomProperty = new SimpleStringProperty();
     private final IntegerProperty soldeProperty = new SimpleIntegerProperty();
 
@@ -147,16 +138,10 @@ public class ControllerClient {
                             NouvelClientController nouvelClientController = rouletteIHM.getNouvelClientController();
 
                             if (nouvelClientController != null) {
-                                rouletteIHM.ajouterJoueur(prenomClient, soldeClient);
-                                // -----------------------------------------------------------------------------------------------------------------------------------
-                              if (vueAccueil.getMultiplayer().isSelected()) {
-                                  vueAccueil.getVueChoixJoueurs().utilisateurConnecte();
-                                  vueAccueil.afficherChoixJoueur();
-                              } else {
-                                  rouletteIHM.demarrerPartie();
-                                  vueAccueil.fermerFenetre();
-                              }
-                              
+                                rouletteIHM.demarrerPartie(prenomClient, soldeClient);
+                                vueAccueil.fermerFenetre();
+                                VueAutresJoueurs.getInstance().fermerVueAccueil();
+
                             } else {
                                 System.err.println("Erreur : nouvelClientController est null");
                             }
@@ -350,7 +335,7 @@ public class ControllerClient {
                     System.out.println("Solde mis à jour avec succès : " + nouveauSolde);
                     solde.setText("");
                 });
-                rouletteIHM.demarrerPartie();
+                rouletteIHM.demarrerPartie(prenomClient, nouveauSolde);
             } else {
                 System.out.println("Aucune mise à jour du solde n'est nécessaire.");
             }

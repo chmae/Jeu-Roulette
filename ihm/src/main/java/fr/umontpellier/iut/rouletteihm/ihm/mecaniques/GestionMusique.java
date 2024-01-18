@@ -17,6 +17,7 @@ public class GestionMusique {
 
     /**
      * Constructeur de la classe GestionMusique
+     *
      * @param cheminFichier
      */
     public void setMusique(String cheminFichier) {

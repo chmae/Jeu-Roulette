@@ -89,6 +89,7 @@ public class StatistiquesRoulette {
 
     /**
      * Enregistre le résultat d'un tour de jeu
+     *
      * @param resultat
      */
     public void enregistrerResultat(Roulette.resultatTour resultat) {
@@ -158,6 +159,7 @@ public class StatistiquesRoulette {
 
     /**
      * Retourne les 3 numéros les plus sortis
+     *
      * @return
      */
     public int[] numerosLesPlusSortis() {
@@ -200,6 +202,7 @@ public class StatistiquesRoulette {
 
     /**
      * Retourne le nombre de tours joués
+     *
      * @return
      */
     public int getNbToursJoues() {

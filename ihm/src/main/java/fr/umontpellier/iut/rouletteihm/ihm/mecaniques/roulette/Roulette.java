@@ -55,6 +55,7 @@ public class Roulette implements IJeu {
 
     /**
      * Renvoie le résultat du tour actuel
+     *
      * @return
      */
     public resultatTour getResultatTourActuel() {
@@ -85,6 +86,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer le joueur courant
+     *
      * @return le joueur courant
      */
     @Override
@@ -94,6 +96,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer la propriété finDePartie
+     *
      * @return la propriété finDePartie
      */
     @Override
@@ -103,6 +106,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer la liste des joueurs
+     *
      * @return la liste des joueurs
      */
     @Override
@@ -125,6 +129,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer le joueur
+     *
      * @return le joueur
      */
     public void setJoueur(Joueur joueur) {
@@ -133,6 +138,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer l'état courant du jeu
+     *
      * @return l'état courant du jeu
      */
     public EtatJeu getEtatCourantDuJeu() {
@@ -141,6 +147,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de modifier l'état courant du jeu
+     *
      * @param etatCourantDuJeu le nouvel état courant du jeu
      */
     public void setEtatCourantDuJeu(EtatJeu etatCourantDuJeu) {
@@ -149,6 +156,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer le joueur
+     *
      * @return le joueur
      */
     public void run(Joueur joueur) {
@@ -159,6 +167,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer le nombre de tours de la roulette
+     *
      * @return le nombre de tours de la roulette
      */
     public int getNbToursRoulette() {
@@ -167,6 +176,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer la valeur du résultat
+     *
      * @return la valeur du résultat
      */
     private static String getCouleur() {
@@ -175,6 +185,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer la valeur du résultat
+     *
      * @return la valeur du résultat
      */
     private static int getValeur() {
@@ -183,6 +194,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer les cases
+     *
      * @return les cases
      */
     public String[] getCases() {
@@ -191,6 +203,7 @@ public class Roulette implements IJeu {
 
     /**
      * Méthode permettant de récupérer le résultat du tour
+     *
      * @return le résultat du tour
      */
     public resultatTour resultatTour() {

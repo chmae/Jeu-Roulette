@@ -1,6 +1,5 @@
 package fr.umontpellier.iut.rouletteihm;
 
-import fr.umontpellier.iut.rouletteihm.application.controller.client.ControllerClient;
 import fr.umontpellier.iut.rouletteihm.application.controller.client.NouvelClientController;
 import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.plateau.CreationTable;
 import fr.umontpellier.iut.rouletteihm.ihm.IJeu;
@@ -10,14 +9,11 @@ import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.utils.Interaction;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.*;
 import fr.umontpellier.iut.rouletteihm.metier.entite.Client;
 import javafx.application.Application;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Classe principale de l'application.
@@ -26,7 +22,6 @@ import java.util.List;
  * <p>
  * Elle gère également la communication entre les vues et le modèle.
  */
-
 public class RouletteIHM extends Application {
 
     private static Stage primaryStage;
@@ -42,9 +37,6 @@ public class RouletteIHM extends Application {
 
     private NouvelClientController nouvelClientController = new NouvelClientController();
     private Client client = new Client();
-    private List<Joueur> joueurs;
-    private VueChoixJoueurs vueChoixJoueurs;
-    private BooleanProperty validationChoixJoueurs;
 
 
     /**
@@ -71,8 +63,6 @@ public class RouletteIHM extends Application {
         if (avecAccueil) {
             vueAccueil = new VueAccueil();
             vueInscription = new VueInscription();
-            vueChoixJoueurs = vueAccueil.getVueChoixJoueurs();
-            joueurs = new ArrayList<>();
             stage = new Stage();
             stage.setResizable(false);
 
@@ -80,7 +70,8 @@ public class RouletteIHM extends Application {
 
             vueAccueil.getBoutonJouer().setOnMouseClicked(mouseEvent -> {
                 vueAccueil.getMusique().arreterMusique();
-                vueAccueil.afficherChoixJoueur();
+                demarrerPartie("Chollet", 9999);
+                vueAccueil.fermerFenetre();
             });
 
             vueAccueil.getBoutonQuitter().setOnMouseClicked(mouseEvent -> {
@@ -100,34 +91,8 @@ public class RouletteIHM extends Application {
             scene.getRoot().getProperties().put("RouletteIHM", this);
             stage.setScene(scene);
             stage.show();
-
-            creerBindings();
         }
 
-    }
-
-    public void ajouterJoueur(String nomJoueur, int soldeJoueur) {
-        joueurs.add(new Joueur(nomJoueur, soldeJoueur));
-    }
-
-    public void creerBindings() {
-        vueChoixJoueurs.validationChoixJoueurs().addListener((observable, oldValue, newValue) -> {
-            if(!ControllerClient.isUtilisateurConnecte()) {
-                ajouterJoueur(vueChoixJoueurs.getNom1().getText(), Integer.parseInt(vueChoixJoueurs.getSolde1().getText()));
-            }
-            int nbJoueurs = vueChoixJoueurs.getNombreJoueurs();
-            if(nbJoueurs>1) {
-                ajouterJoueur(vueChoixJoueurs.getNom2().getText(), Integer.parseInt(vueChoixJoueurs.getSolde2().getText()));
-                if(nbJoueurs>2) {
-                    ajouterJoueur(vueChoixJoueurs.getNom3().getText(), Integer.parseInt(vueChoixJoueurs.getSolde3().getText()));
-                    if(nbJoueurs>3) {
-                        ajouterJoueur(vueChoixJoueurs.getNom4().getText(), Integer.parseInt(vueChoixJoueurs.getSolde4().getText()));
-                    }
-                }
-            }
-            demarrerPartie();
-            vueAccueil.fermerFenetre();
-        });
     }
 
     /**
@@ -139,15 +104,16 @@ public class RouletteIHM extends Application {
      * @param nomJoueur le nom du joueur
      * @param solde     le solde du joueur
      */
-    public void demarrerPartie() {
-
+    public void demarrerPartie(String nomJoueur, int solde) {
         roulette = new Roulette();
         jeu = roulette;
 
-        jeu.joueurCourantProperty().setValue(joueurs.get(0));
+        Joueur joueur = new Joueur(nomJoueur, solde);
+        jeu.joueurCourantProperty().set(joueur);
+        jeu.joueurCourantProperty().setValue(joueur);
         jeu.tournerTour();
 
-        VueDuJeu vueDuJeu = new VueDuJeu(jeu, joueurs);
+        VueDuJeu vueDuJeu = new VueDuJeu(jeu);
         labelInstruction = vueDuJeu.getLabelInstructions();
         Scene scene = new Scene(vueDuJeu);
 
@@ -162,6 +128,7 @@ public class RouletteIHM extends Application {
         table.getTable().setTranslateX(100);
 
         vueDuJeu.creerBindings();
+        roulette.run(joueur);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("🎰SteamRoulette🎰");

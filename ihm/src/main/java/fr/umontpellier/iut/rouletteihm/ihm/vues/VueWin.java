@@ -15,6 +15,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+
 /**
  * Vue associée à la fenêtre de fin de partie.
  */

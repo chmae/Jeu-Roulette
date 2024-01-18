@@ -46,13 +46,12 @@ public class VueBet extends GridPane {
     private BooleanProperty validation;
     private boolean ok;
     private IntegerProperty langueChoisie;
-    private static VueBet instance;
 
     public void setOk(boolean bool) {
         ok = bool;
     }
 
-    private VueBet(IJeu jeu, IntegerProperty langueChoisie) {
+    public VueBet(IJeu jeu, IntegerProperty langueChoisie) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueBet.fxml"));
             loader.setController(this);
@@ -105,13 +104,6 @@ public class VueBet extends GridPane {
             LabelInstruction.setText("How much do you want to bet ?");
         }
         ok = false;
-    }
-
-    public synchronized static VueBet getInstance(IJeu jeu, IntegerProperty langueChoisie) {
-        if (instance == null) {
-            instance = new VueBet(jeu, langueChoisie);
-        }
-        return instance;
     }
 
     private void HoverImage(ImageView imageView) {
@@ -206,13 +198,14 @@ public class VueBet extends GridPane {
             sonsBoutonValider.lireMusique();
             sonsBoutonValider.remettreMusiqueAuDebut();
 
-            if (jeu.joueurCourantProperty().get().soldeProperty().getValue() < jeu.joueurCourantProperty().get().getMiseActuelle()) {
+            // gestion des mises
+            if (jeu.joueurCourantProperty().get().soldeProperty().getValue() < jeu.joueurCourantProperty().get().getMiseTotale()) {
                 if (this.langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("Vous n'avez pas assez d'argent pour faire ce paris !");
                 } else {
                     LabelInstruction.setText("You don't have enough money to make this bet!");
                 }
-            } else if (jeu.joueurCourantProperty().get().getMiseTotale() == 0/*&& ok*/) {
+            } else if (jeu.joueurCourantProperty().get().getMiseTotale() == 0 && ok) {
                 if (this.langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("Vous n'avez pas encore parié !");
                 } else {
@@ -220,9 +213,9 @@ public class VueBet extends GridPane {
                 }
             } else {
                 if (this.langueChoisie.getValue() == 0) {
-                    LabelInstruction.setText("Paris confirmé(s) !");
+                    LabelInstruction.setText("Paris confirmé(s), roulette lancée ! ");
                 } else {
-                    LabelInstruction.setText("Bets confirmed !");
+                    LabelInstruction.setText("Bets confirmed, roulette launched !");
                 }
                 try {
                     Thread.sleep(500);

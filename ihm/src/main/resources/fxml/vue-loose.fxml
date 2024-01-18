@@ -6,16 +6,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0"
+      prefWidth="603.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ImageView fitHeight="396.0" fitWidth="611.0" layoutX="-3.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="396.0" fitWidth="611.0" layoutX="-3.0" layoutY="-1.0" pickOnBounds="true"
+                   preserveRatio="true">
             <image>
-                <Image url="@../images/big-black-screen.png" />
+                <Image url="@../images/big-black-screen.png"/>
             </image>
         </ImageView>
         <Label layoutX="155.0" layoutY="151.0" prefHeight="87.0" prefWidth="344.0" text="Perdu !!!" textFill="#d32a2a">
             <font>
-                <Font name="Chalkduster" size="64.0" />
+                <Font name="Chalkduster" size="64.0"/>
             </font>
         </Label>
     </children>

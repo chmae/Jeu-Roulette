@@ -22,6 +22,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+
 /**
  * Vue associée à la fenêtre de réglages.
  */
@@ -153,6 +154,7 @@ public class VueParametre {
             e.printStackTrace();
         }
     }
+
     public void configurerMusique(GestionMusique gestionmusique) {
         Image playImage = new Image("images/button-music-On.png");
         Image pauseImage = new Image("images/button-music-Off.png");

@@ -65,6 +65,7 @@ public class VueJoueurCourant extends GridPane {
     private ImageView passer1;
 
     private static VueJoueurCourant instance;
+
     public VueJoueurCourant(IJeu jeu, Label labelInstructions, IntegerProperty langueChoisie) {
         instance = this;
         try {
@@ -106,13 +107,11 @@ public class VueJoueurCourant extends GridPane {
             joueur = t1;
             SoldePlayer.setText(String.valueOf(joueur.soldeProperty().getValue()));
             soldePlayer2.setText(String.valueOf(joueur.getMiseActuelle()));
-            nomJoueur.setText(joueur.getNom());
-            joueur.setMiseTotale(0);
-            joueur.setMiseActuelle(0);
+            jeu.tournerTour();
             if (langueChoisie.intValue() == 0) {
-                labelInstructions.setText(jeu.joueurCourantProperty().get().getNom()+", à toi de jouer !");
+                labelInstructions.setText("Quelle valeur voulez-vous miser ?");
             } else {
-                labelInstructions.setText(jeu.joueurCourantProperty().get().getNom()+", it's your turn !");
+                labelInstructions.setText("Which value do you want to bet?");
             }
         });
 

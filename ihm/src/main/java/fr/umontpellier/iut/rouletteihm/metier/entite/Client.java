@@ -32,6 +32,7 @@ public class Client {
 
     /**
      * Constructeur.
+     *
      * @param nom
      * @param prenom
      * @param email
