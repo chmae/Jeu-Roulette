@@ -9,14 +9,24 @@ import javafx.util.Duration;
 
 import java.io.File;
 
+/**
+ * Classe permettant de gérer la musique
+ */
 public class GestionMusique {
     private MediaPlayer mediaPlayer;
 
+    /**
+     * Constructeur de la classe GestionMusique
+     *
+     * @param cheminFichier
+     */
     public void setMusique(String cheminFichier) {
         Media sound = new Media(new File(cheminFichier).toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
     }
 
+
+    // Méthodes permettant de gérer la musique (lire, mettre en pause, arrêter, etc.)
     public void arreterMusique() {
         if (mediaPlayer != null) {
             final double fadeDurationInSeconds = 2.0;

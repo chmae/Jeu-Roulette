@@ -17,6 +17,11 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Vue associée au panneau de gauche de l'application.
+ * <p>
+ * Cette vue est définie dans le fichier VueGauche.fxml.
+ */
 public class VueGauche extends VBox {
 
     private IJeu jeu;
@@ -30,6 +35,7 @@ public class VueGauche extends VBox {
 
     private Probabilite probabilite;
 
+    // Constructeur
     public VueGauche(IJeu jeu) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/VueGauche.fxml"));
@@ -78,6 +84,7 @@ public class VueGauche extends VBox {
     }
 
 
+    // Méthode appelée par le controleur lorsqu'un nouveau résultat est disponible
     public void afficherDerniersResultats(Roulette.resultatTour nouveauResultat) {
         ArrayList<Roulette.resultatTour> listeResultats = new ArrayList<>();
         if (listeResultats.size() > 5) {

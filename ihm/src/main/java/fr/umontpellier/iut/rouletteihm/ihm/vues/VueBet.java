@@ -197,6 +197,7 @@ public class VueBet extends GridPane {
             sonsBoutonValider.lireMusique();
             sonsBoutonValider.remettreMusiqueAuDebut();
 
+            // gestion des mises
             if (jeu.joueurCourantProperty().get().soldeProperty().getValue() < jeu.joueurCourantProperty().get().getMiseTotale()) {
                 if (this.langueChoisie.getValue() == 0) {
                     LabelInstruction.setText("Vous n'avez pas assez d'argent pour faire ce paris !");
