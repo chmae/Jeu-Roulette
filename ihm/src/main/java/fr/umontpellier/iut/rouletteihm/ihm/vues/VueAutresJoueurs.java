@@ -22,9 +22,6 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-/**
- * Vue correspondant à la fenêtre affichant les autres joueurs
- */
 public class VueAutresJoueurs extends Pane {
 
     private IJeu jeu;

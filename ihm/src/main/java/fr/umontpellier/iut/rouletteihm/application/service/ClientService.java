@@ -27,7 +27,7 @@ public class ClientService {
     private HasheurSHA256 hasher = new HasheurSHA256();
     private EntityRepository<Client> repository = RepositoryManager.getRepository(Client.class);
 
-    private ClientService() {
+    public ClientService() {
     }
 
     public static ClientService getInstance() {
@@ -124,13 +124,6 @@ public class ClientService {
         }
     }
 
-    /**
-     * Met à jour le prénom d'un client dans la base de données.
-     *
-     * @param idClient      L'identifiant du client dont on veut mettre à jour le prénom.
-     * @param nouveauPrenom Le nouveau prénom à enregistrer.
-     * @throws ServiceException Si une erreur survient lors de la mise à jour du prénom.
-     */
     public void updatePrenom(int idClient, String nouveauPrenom) throws ServiceException {
         try (Session session = DBUtils.getSession()) {
             Transaction transaction = session.beginTransaction();
@@ -175,26 +168,6 @@ public class ClientService {
         }
     }
 
-
-    /**
-     * Récupère le solde d'un client depuis la base de données.
-     *
-     * @param clientId L'identifiant du client dont on veut récupérer le solde.
-     * @return Le solde du client.
-     * @throws ServiceException Si une erreur survient lors de la récupération du solde.
-     */
-    public int getSolde(int clientId) throws ServiceException {
-        try (Session session = DBUtils.getSession()) {
-            Client client = session.get(Client.class, clientId);
-            if (client != null) {
-                return client.getSolde();
-            } else {
-                throw new ServiceException("Client non trouvé avec l'ID : " + clientId);
-            }
-        } catch (HibernateException e) {
-            throw new ServiceException("Erreur lors de la récupération du solde depuis la base de données.");
-        }
-    }
 
 
     /**

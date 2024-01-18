@@ -4,6 +4,7 @@ import com.gasquet.hrepositories.utils.DBUtils;
 import fr.umontpellier.iut.rouletteihm.RouletteIHM;
 import fr.umontpellier.iut.rouletteihm.application.service.ClientService;
 import fr.umontpellier.iut.rouletteihm.application.service.exception.ServiceException;
+import fr.umontpellier.iut.rouletteihm.ihm.mecaniques.GestionMusique;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueAccueil;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueAutresJoueurs;
 import fr.umontpellier.iut.rouletteihm.ihm.vues.VueJoueurCourant;
