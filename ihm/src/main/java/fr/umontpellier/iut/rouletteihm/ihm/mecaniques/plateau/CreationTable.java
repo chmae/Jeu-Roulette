@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -866,6 +867,9 @@ public class CreationTable {
                 table.getChildren().add(liaisonRect);
 
                 Text textNode = new Text(key);
+                Tooltip tooltip = new Tooltip("Cheval");
+                Tooltip.install(liaisonRect, tooltip);
+
 
                 creerBindingParis(liaisonRect, textNode);
             }
@@ -899,6 +903,8 @@ public class CreationTable {
                 table.getChildren().add(circle);
 
                 Text textNode = new Text(key);
+                Tooltip tooltip = new Tooltip("Carré");
+                Tooltip.install(circle, tooltip);
 
                 creerBindingParis(circle, textNode);
             }
@@ -937,6 +943,9 @@ public class CreationTable {
                 table.getChildren().addAll(rectTransversale1, rectTransversale2);
 
                 Text textNode = new Text(key);
+                Tooltip tooltip = new Tooltip("Transversale");
+                Tooltip.install(rectTransversale1, tooltip);
+                Tooltip.install(rectTransversale2, tooltip);
 
                 creerBindingParis(rectTransversale1, textNode);
                 creerBindingParis(rectTransversale2, textNode);
@@ -967,17 +976,34 @@ public class CreationTable {
                 double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY() + rectangle5.getY() + rectangle6.getY()) / 6 - 61.5;
                 double circleRadius = Math.min(rectangle1.getWidth(), rectangle1.getHeight()) / 6;
 
+                double centerX2 = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX() + rectangle5.getX() + rectangle6.getX()) / 6 + 20;
+                double centerY2 = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY() + rectangle5.getY() + rectangle6.getY()) / 6 + 125.5;
+                double circleRadius2 = Math.min(rectangle1.getWidth(), rectangle1.getHeight()) / 6;
+
                 Circle circle = new Circle(centerX, centerY, circleRadius);
                 circle.setFill(Color.TRANSPARENT);
                 circle.setRadius(4);
 
+                Circle circle2 = new Circle(centerX2, centerY2, circleRadius2);
+                circle2.setFill(Color.TRANSPARENT);
+                circle2.setRadius(4);
+
                 ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4, rectangle5, rectangle6), circle);
+                ajouterHoverCasesComplexes(Arrays.asList(rectangle1, rectangle2, rectangle3, rectangle4, rectangle5, rectangle6), circle2);
 
                 table.getChildren().add(circle);
+                table.getChildren().add(circle2);
 
                 Text textNode = new Text(key);
+                Tooltip tooltip = new Tooltip("Sixain");
+                Tooltip.install(circle, tooltip);
+                Tooltip.install(circle2, tooltip);
 
                 creerBindingParis(circle, textNode);
+                creerBindingParis(circle2, textNode);
+
+                creerBindingParis(circle, textNode);
+                creerBindingParis(circle2, textNode);
             }
         });
     }
@@ -1525,13 +1551,17 @@ public class CreationTable {
             double centerX = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX() + rectangle5.getX() + rectangle6.getX()) / 6 + 20;
             double centerY = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY() + rectangle5.getY() + rectangle6.getY()) / 6 - 61.5;
 
+            double centerX2 = (rectangle1.getX() + rectangle2.getX() + rectangle3.getX() + rectangle4.getX() + rectangle5.getX() + rectangle6.getX()) / 6 + 20;
+            double centerY2 = (rectangle1.getY() + rectangle2.getY() + rectangle3.getY() + rectangle4.getY() + rectangle5.getY() + rectangle6.getY()) / 6 + 125.5;
+
 
             imageCase.setFitWidth(38);
             imageCase.setFitHeight(38);
             imageCase.setPreserveRatio(false);
             imageCase.setLayoutX(centerX - 16);
             imageCase.setLayoutY(centerY - 14);
-
+            imageCase.setLayoutX(centerX2 - 16);
+            imageCase.setLayoutY(centerY2 - 14);
         } else {
             DonneesGraphiques.Coordonnees coordonnees = DonneesGraphiques.cases.get(caseInt).get(0);
             double startX = coordonnees.getxStart();
